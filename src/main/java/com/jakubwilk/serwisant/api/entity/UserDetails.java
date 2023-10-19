@@ -1,10 +1,7 @@
 package com.jakubwilk.serwisant.api.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
 @Table(name="user_details")
@@ -12,6 +9,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
+@ToString
 public class UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,6 +31,7 @@ public class UserDetails {
     @Column(name="city")
     private String city;
 
+    @ToString.Exclude
     @OneToOne(mappedBy = "userDetails",
                 fetch = FetchType.EAGER,
                 cascade = CascadeType.ALL)

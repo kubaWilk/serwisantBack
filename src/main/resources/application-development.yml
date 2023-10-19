@@ -16,5 +16,8 @@ spring:
 #              drop-target: 'drop.sql'
 #              create-source: metadata
 #              drop-source: metadata
+logging:
+  level:
+    root: debug
 
 
