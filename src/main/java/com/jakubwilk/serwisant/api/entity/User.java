@@ -12,6 +12,7 @@ import java.util.List;
 @Getter
 @Setter
 @ToString
+@Builder(toBuilder = true)
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,8 +31,8 @@ public class User {
     @Column(name="email")
     private String email;
 
-
-    @OneToOne(fetch = FetchType.EAGER ,cascade = CascadeType.ALL)
+    @ToString.Exclude
+    @OneToOne(fetch = FetchType.LAZY ,cascade = CascadeType.ALL)
     @JoinColumn(name = "user_detail_id")
     private UserDetails userDetails;
 }

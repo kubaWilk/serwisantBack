@@ -1,21 +1,34 @@
 package com.jakubwilk.serwisant.api.controller;
 
-import com.jakubwilk.serwisant.api.dao.UserDAO;
+import com.jakubwilk.serwisant.api.dao.UserRepository;
+import com.jakubwilk.serwisant.api.entity.User;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Optional;
+
+
 @RestController
-@RequestMapping("/api/v1/user")
+@RequestMapping("/v1/user")
 public class UserController {
-    private UserDAO userDAO;
+    private UserRepository userRepository;
 
-    public UserController(UserDAO userDAO) {
-        this.userDAO = userDAO;
+    public UserController(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
+    @GetMapping("/{id}")
+    public ResponseEntity<String> findUserById(@PathVariable("id") int id){
+        Optional<User> result = userRepository.findById(id);
 
-    @GetMapping("test")
-    public String getUser(){
-        return userDAO.findById(1).toString();
+        if(result.isPresent()){
+            return ResponseEntity.ok(result.get().toString());
+        }
+        else{
+            return ResponseEntity.notFound().build();
+        }
     }
 }

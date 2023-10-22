@@ -10,6 +10,7 @@ import lombok.*;
 @Getter
 @Setter
 @ToString
+@Builder
 public class UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,7 +34,7 @@ public class UserDetails {
 
     @ToString.Exclude
     @OneToOne(mappedBy = "userDetails",
-                fetch = FetchType.EAGER,
+                fetch = FetchType.LAZY,
                 cascade = CascadeType.ALL)
     private User user;
 }

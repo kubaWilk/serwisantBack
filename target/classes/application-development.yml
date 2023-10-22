@@ -5,7 +5,7 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
-#      use to auto-generate db ddl
+    #      use to auto-generate db ddl
 #    properties:
 #      jakarta:
 #        persistence:
@@ -16,8 +16,6 @@ spring:
 #              drop-target: 'drop.sql'
 #              create-source: metadata
 #              drop-source: metadata
-logging:
-  level:
-    root: debug
-
-
+#logging:
+#  level:
+#    root: debug
