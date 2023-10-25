@@ -4,7 +4,6 @@ import com.jakubwilk.serwisant.api.dao.UserRepository;
 import com.jakubwilk.serwisant.api.entity.User;
 import com.jakubwilk.serwisant.api.entity.UserDetails;
 import jakarta.persistence.TypedQuery;
-import org.junit.Before;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,26 +67,6 @@ public class UserRepositoryTests {
         List<User> repoUsers = userRepository.findAll();
 
         assertEquals(emUsers, repoUsers);
-    }
-
-    @Test
-    public void shouldReturnAListOfUsersWithUserDetails(){
-        entityManager.persist(testUser);
-        TypedQuery<User> query = entityManager.getEntityManager()
-                .createQuery("SELECT u FROM User u " +
-                        "JOIN FETCH u.userDetails", User.class);
-
-        List<User> emUsers = query.getResultList();
-        List<User> repoUsers = userRepository.findAllFetchUserDetailsEagerly();
-
-        assertEquals(emUsers, repoUsers);
-    }
-
-    @Test
-    public void shouldReturnUserWithUserDetailsById(){
-        entityManager.persist(testUser);
-        User repoUser = userRepository.findByIdAndFetchUserDetailsEagerly(testUser.getId());
-        assertThat(repoUser.getUserDetails()).isEqualTo(testUserDetails);
     }
 
     @Test

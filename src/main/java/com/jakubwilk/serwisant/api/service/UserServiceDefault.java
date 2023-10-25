@@ -3,7 +3,10 @@ package com.jakubwilk.serwisant.api.service;
 import com.jakubwilk.serwisant.api.dao.UserRepository;
 import com.jakubwilk.serwisant.api.entity.User;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
 import java.util.Optional;
@@ -19,6 +22,11 @@ public class UserServiceDefault implements UserService{
     @Override
     public User findById(int id) {
         Optional<User> result = userRepository.findById(id);
+
+        return handleUserOptional(result, id);
+    }
+
+    private User handleUserOptional(Optional<User> result, int id) {
         User user;
 
         if(result.isPresent()){
@@ -32,30 +40,26 @@ public class UserServiceDefault implements UserService{
     }
 
     @Override
-    public User findByIdWithUserDetails(int id) {
-        return userRepository.findByIdAndFetchUserDetailsEagerly(id);
-    }
-
-    @Override
     public List<User> findAll() {
-        return userRepository.findAll();
-    }
+        List<User> users = userRepository.findAll();
 
-    @Override
-    public List<User> findAllWithUserDetails() {
-        return userRepository.findAllFetchUserDetailsEagerly();
-    }
-
-    @Override
-    @Transactional
-    public User save(User user) {
-        userRepository.saveAndFlush(user);
-        return user;
+        if(users.isEmpty()){
+            throw new RuntimeException("Did not find any users, check database connection");
+        }
+        else{
+            return userRepository.findAll();
+        }
     }
 
     @Override
     @Transactional
-    public User update(User user) {
+    public User save(@NotNull User user) {
+        return userRepository.saveAndFlush(user);
+    }
+
+    @Override
+    @Transactional
+    public User update(@NotNull User user) {
         userRepository.saveAndFlush(user);
         return user;
     }

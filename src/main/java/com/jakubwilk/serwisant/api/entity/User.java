@@ -13,6 +13,7 @@ import java.util.List;
 @Setter
 @ToString
 @Builder(toBuilder = true)
+@EqualsAndHashCode
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,8 +32,7 @@ public class User {
     @Column(name="email")
     private String email;
 
-    @ToString.Exclude
-    @OneToOne(fetch = FetchType.LAZY ,cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.EAGER ,cascade = CascadeType.ALL)
     @JoinColumn(name = "user_detail_id")
     private UserDetails userDetails;
 }

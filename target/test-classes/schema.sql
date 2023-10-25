@@ -29,7 +29,7 @@ create table if not exists  users (
 create table authorities (
     username varchar(50) not null,
     authority varchar(50) not null,
-    constraint fk_authorities_users foreign key(username) references users(username)
+    constraint fk_authorities_users foreign key(username) references users(username) on delete cascade
 );
 
 alter table if exists users

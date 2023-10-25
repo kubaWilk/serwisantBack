@@ -6,11 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User, Integer> {
-    @Query("SELECT u FROM User u JOIN FETCH u.userDetails WHERE u.id = (:id)")
-    User findByIdAndFetchUserDetailsEagerly(@Param("id") int id);
-
-    @Query("SELECT u FROM User u JOIN FETCH u.userDetails")
-    List<User> findAllFetchUserDetailsEagerly();
 }

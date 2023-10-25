@@ -34,7 +34,6 @@ public class UserDetails {
 
     @ToString.Exclude
     @OneToOne(mappedBy = "userDetails",
-                fetch = FetchType.LAZY,
-                cascade = CascadeType.ALL)
+                fetch = FetchType.EAGER)
     private User user;
 }
