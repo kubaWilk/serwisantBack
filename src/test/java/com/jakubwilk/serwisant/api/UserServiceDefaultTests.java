@@ -1,5 +1,6 @@
 package com.jakubwilk.serwisant.api;
 
+import com.jakubwilk.serwisant.api.controller.user.UserNotFoundException;
 import com.jakubwilk.serwisant.api.dao.UserRepository;
 import com.jakubwilk.serwisant.api.entity.User;
 import com.jakubwilk.serwisant.api.entity.UserDetails;
@@ -62,11 +63,11 @@ public class UserServiceDefaultTests {
     }
 
     @Test
-    public void findByIdshouldThrowRuntimeExceptionOnNotExistingUser(){
+    public void findByIdshouldThrowUserNotFoundExceptionOnNotExistingUser(){
         int theId = testUser.getId();
         userRepository.delete(testUser);
 
-        Exception exception = assertThrows(RuntimeException.class, () -> {
+        Exception exception = assertThrows(UserNotFoundException.class, () -> {
             userService.findById(theId);
         });
         String expectedMessage = "Did not find User with id of: " + theId;
@@ -83,10 +84,10 @@ public class UserServiceDefaultTests {
     }
 
     @Test
-    public void findALlShouldThrowRuntimeExceptionWhenNoUsersAreFound(){
+    public void findALlShouldThrowUserNotFoundExceptionWhenNoUsersAreFound(){
         userRepository.deleteAll();
 
-        Exception exception = assertThrows(RuntimeException.class, () ->{
+        Exception exception = assertThrows(UserNotFoundException.class, () ->{
             userService.findAll();
         });
 

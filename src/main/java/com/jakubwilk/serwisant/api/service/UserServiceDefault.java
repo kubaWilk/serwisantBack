@@ -1,12 +1,11 @@
 package com.jakubwilk.serwisant.api.service;
 
+import com.jakubwilk.serwisant.api.controller.user.UserNotFoundException;
 import com.jakubwilk.serwisant.api.dao.UserRepository;
 import com.jakubwilk.serwisant.api.entity.User;
 import jakarta.transaction.Transactional;
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
 import java.util.Optional;
@@ -33,7 +32,7 @@ public class UserServiceDefault implements UserService{
             user = result.get();
         }
         else{
-            throw new RuntimeException("Did not find User with id of: " + id);
+            throw new UserNotFoundException("Did not find User with id of: " + id);
         }
 
         return user;
@@ -44,7 +43,7 @@ public class UserServiceDefault implements UserService{
         List<User> users = userRepository.findAll();
 
         if(users.isEmpty()){
-            throw new RuntimeException("Did not find any users, check database connection");
+            throw new UserNotFoundException("Did not find any users, check database connection");
         }
         else{
             return userRepository.findAll();

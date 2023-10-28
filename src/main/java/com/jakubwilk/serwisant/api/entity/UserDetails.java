@@ -1,5 +1,6 @@
 package com.jakubwilk.serwisant.api.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -32,7 +33,7 @@ public class UserDetails {
     @Column(name="city")
     private String city;
 
-    @ToString.Exclude
+    @JsonIgnore
     @OneToOne(mappedBy = "userDetails",
                 fetch = FetchType.EAGER)
     private User user;
