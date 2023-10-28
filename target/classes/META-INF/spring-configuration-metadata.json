@@ -1,0 +1,22 @@
+{
+  "groups": [
+    {
+      "name": "rsa",
+      "type": "com.jakubwilk.serwisant.api.security.RsaKeyProperties",
+      "sourceType": "com.jakubwilk.serwisant.api.security.RsaKeyProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "rsa.private-key",
+      "type": "java.security.interfaces.RSAPrivateKey",
+      "sourceType": "com.jakubwilk.serwisant.api.security.RsaKeyProperties"
+    },
+    {
+      "name": "rsa.public-key",
+      "type": "java.security.interfaces.RSAPublicKey",
+      "sourceType": "com.jakubwilk.serwisant.api.security.RsaKeyProperties"
+    }
+  ],
+  "hints": []
+}
