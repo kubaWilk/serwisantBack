@@ -1,10 +1,12 @@
 package com.jakubwilk.serwisant.api.service;
 
-import com.jakubwilk.serwisant.api.controller.user.UserNotFoundException;
+import com.jakubwilk.serwisant.api.exception.UserAlreadyExistsException;
+import com.jakubwilk.serwisant.api.exception.UserNotFoundException;
 import com.jakubwilk.serwisant.api.dao.UserRepository;
 import com.jakubwilk.serwisant.api.entity.User;
 import jakarta.transaction.Transactional;
 import jakarta.validation.constraints.NotNull;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,10 +24,6 @@ public class UserServiceDefault implements UserService{
     public User findById(int id) {
         Optional<User> result = userRepository.findById(id);
 
-        return handleUserOptional(result, id);
-    }
-
-    private User handleUserOptional(Optional<User> result, int id) {
         User user;
 
         if(result.isPresent()){
@@ -37,7 +35,6 @@ public class UserServiceDefault implements UserService{
 
         return user;
     }
-
     @Override
     public List<User> findAll() {
         List<User> users = userRepository.findAll();
@@ -52,20 +49,51 @@ public class UserServiceDefault implements UserService{
 
     @Override
     @Transactional
-    public User save(@NotNull User user) {
+    public User save(User user) {
+        if(doesUserExists(user)) throw new IllegalArgumentException("User already exists!");
+        User persisted;
+
+        try{
+            persisted = userRepository.saveAndFlush(user);
+        }catch(DataIntegrityViolationException exception){
+            throw new IllegalArgumentException(
+                    "User has to be provided with no ID, unique username and unique e-mail"
+            );
+        }
+
+
+        return persisted;
+    }
+
+
+
+    @Override
+    @Transactional
+    public User update(User user) {
+        if(user.getId() == 0) throw new IllegalArgumentException("Provide user id!");
+
+        if(!doesUserExists(user)) {
+            throw new IllegalArgumentException("Can't find user with id: " + user.getId());
+        }
+
         return userRepository.saveAndFlush(user);
     }
 
     @Override
     @Transactional
-    public User update(@NotNull User user) {
-        userRepository.saveAndFlush(user);
-        return user;
+    public void delete(int id) {
+        if(!doesUserExists(id)){
+            throw new UserNotFoundException("Can't find user with id: " + id);
+        }
+
+        userRepository.deleteById(id);
+    }
+    private boolean doesUserExists(User user){
+        return userRepository.findById(user.getId()).isPresent();
     }
 
-    @Override
-    @Transactional
-    public void delete(int id) {
-        userRepository.deleteById(id);
+    private boolean doesUserExists(int id){
+        Optional<User> result = userRepository.findById(id);
+        return result.isPresent();
     }
 }

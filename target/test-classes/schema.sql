@@ -21,7 +21,7 @@ create table if not exists  users (
     username varchar(255) unique,
     password varchar(255),
     active boolean not null,
-    email varchar(255),
+    email varchar(255) unique,
     user_detail_id integer unique,
     primary key (user_id)
                    );

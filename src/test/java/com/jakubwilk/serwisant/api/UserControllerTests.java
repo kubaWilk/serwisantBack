@@ -1,5 +1,6 @@
 package com.jakubwilk.serwisant.api;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jakubwilk.serwisant.api.controller.user.UserController;
 import com.jakubwilk.serwisant.api.dao.UserRepository;
 import com.jakubwilk.serwisant.api.entity.User;
@@ -11,11 +12,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+import java.util.Optional;
+
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -66,13 +75,100 @@ public class UserControllerTests {
 
     @AfterEach
     void cleanUp(){
-        userRepository.deleteAll();
+        userRepository.delete(testUser);
     }
 
     @Test
-    void shouldReturnAUser() throws Exception {
-        System.out.println(testUser);
-        this.mockMvc.perform(get("/v1/user/" + testUser.getId()).with(SecurityMockMvcRequestPostProcessors.jwt())).andDo(print()).andExpect(status().isOk())
+    void findByIdShouldReturnAUser() throws Exception {
+        this.mockMvc.perform(get("/v1/user/" + testUser.getId())
+                        .with(jwt()))
+                .andExpect(status().isOk())
                 .andExpect(content().string(containsString(testUser.getUsername())));
     }
+
+    @Test
+    void findByIdShouldReturnNotFoundIfNoUser() throws Exception {
+        userRepository.delete(testUser);
+
+        this.mockMvc.perform(get("/v1/user/" + testUser.getId())
+                        .with(jwt()))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    void findAllShouldReturnAllUsers() throws Exception {
+        this.mockMvc.perform(get("/v1/user/")
+                .with(jwt()))
+                .andExpect(status().isOk())
+                .andExpect(content().string(containsString(testUser.getUsername())))
+                .andExpect(content().string(containsString("root")));
+    }
+
+    @Test
+    void findAllShouldThrowUserNotFoundExceptionWhenNoUsers() throws Exception {
+        userRepository.deleteAll();
+
+        this.mockMvc.perform(get("/v1/user/")
+                        .with(jwt()))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    void postShouldSaveTheUser() throws Exception {
+        User newUser = User.builder()
+                .username("UniqueUserName")
+                .password("test")
+                .isActive(true)
+                .email("UniqueE-Mail@test.com")
+                .userDetails(UserDetails.builder()
+                        .firstName("test")
+                        .lastName("test")
+                        .street("test")
+                        .postCode("test")
+                        .city("test")
+                        .user(testUser)
+                        .build())
+                .build();
+
+        userRepository.delete(newUser);
+
+        this.mockMvc.perform(post("/v1/user/")
+                .with(jwt())
+                .content(new ObjectMapper().writeValueAsString(newUser))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+        )
+                .andExpect(status().isCreated());
+
+        assertThat(userRepository.findById(newUser.getId())).isNotNull();
+    }
+
+    @Test
+    void putShouldUpdateUser() throws Exception{
+        String userName = "newUserName";
+        testUser.setUsername(userName);
+        this.mockMvc.perform(put("/v1/user/")
+                .with(jwt())
+                .content(new ObjectMapper().writeValueAsString(testUser))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+        )
+                .andExpect(status().isCreated());
+        Optional<User> check = userRepository.findById(testUser.getId());
+        assertThat(check.get().getUsername()).isEqualTo(userName);
+    }
+
+    @Test
+    void deleteShouldDeleteUser() throws Exception{
+        int theId = testUser.getId();
+        this.mockMvc.perform(delete("/v1/user/" + theId)
+                        .with(jwt())
+                )
+                .andExpect(status().isOk());
+        Optional<User> check = userRepository.findById(theId);
+        assertThat(check.isPresent()).isFalse();
+    }
+
+
+
 }

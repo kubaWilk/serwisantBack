@@ -1,6 +1,6 @@
 package com.jakubwilk.serwisant.api;
 
-import com.jakubwilk.serwisant.api.controller.user.UserNotFoundException;
+import com.jakubwilk.serwisant.api.exception.UserNotFoundException;
 import com.jakubwilk.serwisant.api.dao.UserRepository;
 import com.jakubwilk.serwisant.api.entity.User;
 import com.jakubwilk.serwisant.api.entity.UserDetails;
@@ -13,6 +13,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
@@ -102,7 +103,7 @@ public class UserServiceDefaultTests {
                 .username("test2")
                 .password("test")
                 .isActive(true)
-                .email("test@test.com")
+                .email("test2@test.com")
                 .userDetails(UserDetails.builder()
                         .firstName("test2")
                         .lastName("test")
@@ -114,8 +115,7 @@ public class UserServiceDefaultTests {
                 .build();
 
         userService.save(saveTestUser);
-        assertThat(saveTestUser.getId()).isNotEqualTo(null);
-        assertThat(saveTestUser.getId()).isNotEqualTo(0);
+        assertThat(userRepository.findById(saveTestUser.getId())).isNotEqualTo(null);
     }
 
     @Test

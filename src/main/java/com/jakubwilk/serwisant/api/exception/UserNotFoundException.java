@@ -1,4 +1,4 @@
-package com.jakubwilk.serwisant.api.controller.user;
+package com.jakubwilk.serwisant.api.exception;
 
 public class UserNotFoundException extends RuntimeException{
     public UserNotFoundException(String message) {
