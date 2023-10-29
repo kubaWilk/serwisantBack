@@ -61,7 +61,8 @@ public class UserController {
 
     @GetMapping("/me")
     public String returnUserLoggedIn(Principal principal){
-            return "hello" + principal.getName();
+        return principal.toString();
+//            return "hello" + principal.getName();
     }
 }
 

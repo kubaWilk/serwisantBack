@@ -12,7 +12,7 @@ import java.util.List;
 @Getter
 @Setter
 @ToString
-@Builder()
+@Builder
 @EqualsAndHashCode
 public class User {
     @Id
@@ -35,4 +35,9 @@ public class User {
     @OneToOne(fetch = FetchType.EAGER ,cascade = CascadeType.ALL)
     @JoinColumn(name = "user_detail_id")
     private UserDetails userDetails;
+
+    @OneToMany(mappedBy = "user",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.EAGER)
+    private List<Authority> roles;
 }

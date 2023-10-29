@@ -35,6 +35,7 @@ public class UserServiceDefault implements UserService{
 
         return user;
     }
+
     @Override
     public List<User> findAll() {
         List<User> users = userRepository.findAll();
@@ -65,8 +66,6 @@ public class UserServiceDefault implements UserService{
         return persisted;
     }
 
-
-
     @Override
     @Transactional
     public User update(User user) {
@@ -88,6 +87,7 @@ public class UserServiceDefault implements UserService{
 
         userRepository.deleteById(id);
     }
+
     private boolean doesUserExists(User user){
         return userRepository.findById(user.getId()).isPresent();
     }

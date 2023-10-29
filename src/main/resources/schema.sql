@@ -27,11 +27,13 @@ create table if not exists  users (
                    );
 
 create table authorities (
+    authority_id serial not null primary key,
+    user_id serial not null,
     username varchar(50) not null,
     authority varchar(50) not null,
     constraint fk_authorities_users foreign key(username) references users(username) on delete cascade
-);
 
+);
 alter table if exists users
     add constraint FKfsi9283rk1akvfmlbfrhdn5vj foreign key (user_detail_id)
         references user_details;
@@ -43,5 +45,11 @@ insert into user_details (first_name, last_name, street, post_code, city)
 insert into users (username, password, active, email, user_detail_id)
     values ('root', '{noop}root', true, 'root@root.com', 1);
 
-insert into authorities (username, authority)
-    values ('root', 'ROLE_EMPLOYEE');
+insert into authorities (user_id, username, authority)
+    values (1, 'root', 'ROLE_CUSTOMER');
+
+insert into authorities (user_id, username, authority)
+    values (1, 'root', 'ROLE_EMPLOYEE');
+
+insert into authorities (user_id, username, authority)
+    values (1, 'root', 'ROLE_ADMIN');
