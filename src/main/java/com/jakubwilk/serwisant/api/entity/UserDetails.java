@@ -34,6 +34,7 @@ public class UserDetails {
     private String city;
 
     @JsonIgnore
+    @ToString.Exclude
     @OneToOne(mappedBy = "userDetails",
                 fetch = FetchType.EAGER)
     private User user;

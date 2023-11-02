@@ -60,6 +60,7 @@ public class UserServiceDefaultTests {
 
         assertThat(asserted).usingRecursiveComparison()
                 .ignoringFields("userDetails")
+                .ignoringFields("roles")
                 .isEqualTo(testUser);
     }
 

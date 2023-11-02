@@ -1,11 +1,11 @@
 package com.jakubwilk.serwisant.api.service;
 
-import com.jakubwilk.serwisant.api.exception.UserAlreadyExistsException;
 import com.jakubwilk.serwisant.api.exception.UserNotFoundException;
 import com.jakubwilk.serwisant.api.dao.UserRepository;
 import com.jakubwilk.serwisant.api.entity.User;
+import com.jakubwilk.serwisant.api.service.event.UserRegisteredEvent;
 import jakarta.transaction.Transactional;
-import jakarta.validation.constraints.NotNull;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
@@ -15,9 +15,11 @@ import java.util.Optional;
 @Service
 public class UserServiceDefault implements UserService{
     private UserRepository userRepository;
+    private ApplicationEventPublisher eventPublisher;
 
-    public UserServiceDefault(UserRepository userRepository) {
+    public UserServiceDefault(UserRepository userRepository, ApplicationEventPublisher eventPublisher) {
         this.userRepository = userRepository;
+        this.eventPublisher = eventPublisher;
     }
 
     @Override
