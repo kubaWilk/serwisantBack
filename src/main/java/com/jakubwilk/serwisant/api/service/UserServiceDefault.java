@@ -1,14 +1,16 @@
 package com.jakubwilk.serwisant.api.service;
 
+import com.jakubwilk.serwisant.api.entity.Authority;
 import com.jakubwilk.serwisant.api.exception.UserNotFoundException;
 import com.jakubwilk.serwisant.api.dao.UserRepository;
 import com.jakubwilk.serwisant.api.entity.User;
-import com.jakubwilk.serwisant.api.service.event.UserRegisteredEvent;
+import com.jakubwilk.serwisant.api.service.event.events.UserRegisteredEvent;
 import jakarta.transaction.Transactional;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,6 +41,16 @@ public class UserServiceDefault implements UserService{
     }
 
     @Override
+    public User findByEmail(String email) {
+        User user = userRepository.findByEmail(email);
+
+        if(user == null)
+            throw new UserNotFoundException("User with email " + email + "was not found.");
+
+        return user;
+    }
+
+    @Override
     public List<User> findAll() {
         List<User> users = userRepository.findAll();
 
@@ -53,17 +65,27 @@ public class UserServiceDefault implements UserService{
     @Override
     @Transactional
     public User save(User user) {
+        if(user == null) throw new IllegalArgumentException("User can't be null!");
         if(doesUserExists(user)) throw new IllegalArgumentException("User already exists!");
+
         User persisted;
 
         try{
+            List<Authority> roles = new ArrayList<>();
+            roles.add(new Authority(user, user.getUsername(), Authority.CUSTOMER));
+            user.setRoles(roles);
+            user.setActive(true);
+
             persisted = userRepository.saveAndFlush(user);
+
+            UserRegisteredEvent newUserEvent = new UserRegisteredEvent(user,
+                    "New user registered");
+            eventPublisher.publishEvent(newUserEvent);
         }catch(DataIntegrityViolationException exception){
             throw new IllegalArgumentException(
                     "User has to be provided with no ID, unique username and unique e-mail"
             );
         }
-
 
         return persisted;
     }

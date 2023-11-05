@@ -1,4 +1,4 @@
-package com.jakubwilk.serwisant.api.service.event;
+package com.jakubwilk.serwisant.api.service.event.events;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,7 +7,7 @@ import org.springframework.context.ApplicationEvent;
 
 @Getter
 public class UserRegisteredEvent extends ApplicationEvent {
-    private String message;
+    private final String message;
 
     public UserRegisteredEvent(Object source, String message) {
         super(source);

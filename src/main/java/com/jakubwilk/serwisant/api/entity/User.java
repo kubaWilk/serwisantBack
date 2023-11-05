@@ -1,5 +1,6 @@
 package com.jakubwilk.serwisant.api.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -33,11 +34,16 @@ public class User {
     private String email;
 
     @OneToOne(fetch = FetchType.EAGER ,cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_detail_id")
+    @JoinColumn(nullable = false, name = "user_detail_id")
     private UserDetails userDetails;
 
     @OneToMany(mappedBy = "user",
             cascade = CascadeType.ALL,
             fetch = FetchType.EAGER)
     private List<Authority> roles;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
+    @ToString.Exclude
+    private PasswordResetToken resetToken;
 }

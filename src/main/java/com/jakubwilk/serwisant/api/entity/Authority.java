@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.HashMap;
+
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
@@ -27,4 +29,14 @@ public class Authority {
 
     @Column(name="authority")
     private String authority;
+
+    public static String CUSTOMER = "ROLE_CUSTOMER";
+    public static String EMPLOYEE = "ROLE_EMPLOYEE";
+    public static String ADMIN = "ROLE_ADMIN";
+
+    public Authority(User user, String username, String authority) {
+        this.user = user;
+        this.username = username;
+        this.authority = authority;
+    }
 }
