@@ -4,7 +4,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name="users")
@@ -40,10 +43,18 @@ public class User {
     @OneToMany(mappedBy = "user",
             cascade = CascadeType.ALL,
             fetch = FetchType.EAGER)
-    private List<Authority> roles;
+    private Set<Authority> roles;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JsonIgnore
     @ToString.Exclude
     private PasswordResetToken resetToken;
+
+    public void setRoles(Role role){
+        if(this.roles == null){
+            roles = new HashSet<>();
+        }
+
+        roles.add(new Authority(this, username, role.toString()));
+    }
 }

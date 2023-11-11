@@ -5,7 +5,6 @@ import com.jakubwilk.serwisant.api.entity.PasswordResetToken;
 import com.jakubwilk.serwisant.api.entity.User;
 import com.jakubwilk.serwisant.api.service.event.events.ResetPasswordEvent;
 import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
@@ -15,6 +14,8 @@ import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.Map;
+import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -52,7 +53,7 @@ public class AuthService {
         return this.jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
     }
 
-    public void resetPassword(String email) {
+    public void handleResetPasswordRequest(String email) {
         User user = userService.findByEmail(email);
         PasswordResetToken token;
 
@@ -74,5 +75,21 @@ public class AuthService {
         }
 
         return tokenRepository.save(newToken);
+    }
+
+    public void handlePasswordReset(String token, Map<String, String> newPassword) {
+        String email = newPassword.get("email");
+        String password = newPassword.get("password");
+
+        if(email.isEmpty() || password.isEmpty()){
+            throw new IllegalArgumentException("E-Mail or password invalid!");
+        }
+
+        PasswordResetToken tokenInDb = tokenRepository.findByToken(token);
+        if(!Objects.equals(tokenInDb.getUser().getEmail(), email)){
+            throw new RuntimeException("Provided username doesn't match token's owner");
+        }
+
+        userService.changePassword(email, password);
     }
 }

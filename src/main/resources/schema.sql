@@ -67,7 +67,7 @@ insert into user_details (first_name, last_name, street, post_code, city)
     values ('root', 'root', 'root', 'root', 'root');
 
 insert into users (username, password, active, email, user_detail_id)
-    values ('root', '{noop}root', true, 'root@root.com', 1);
+     values ('root', '$2a$12$enZyMcOqcaSgS4oPxthFweOfCvY5zqkEHi1lwy7VZ2QWCfLF9P8/2', true, 'root@root.com', 1);
 
 insert into authorities (user_id, username, authority)
     values (1, 'root', 'ROLE_CUSTOMER');

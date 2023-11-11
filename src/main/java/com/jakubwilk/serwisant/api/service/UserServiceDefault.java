@@ -1,6 +1,5 @@
 package com.jakubwilk.serwisant.api.service;
 
-import com.jakubwilk.serwisant.api.entity.Authority;
 import com.jakubwilk.serwisant.api.exception.UserNotFoundException;
 import com.jakubwilk.serwisant.api.dao.UserRepository;
 import com.jakubwilk.serwisant.api.entity.User;
@@ -8,20 +7,24 @@ import com.jakubwilk.serwisant.api.service.event.events.UserRegisteredEvent;
 import jakarta.transaction.Transactional;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import static com.jakubwilk.serwisant.api.entity.Role.ROLE_CUSTOMER;
 
 @Service
 public class UserServiceDefault implements UserService{
     private UserRepository userRepository;
     private ApplicationEventPublisher eventPublisher;
+    private PasswordEncoder passwordEncoder;
 
-    public UserServiceDefault(UserRepository userRepository, ApplicationEventPublisher eventPublisher) {
+    public UserServiceDefault(UserRepository userRepository, ApplicationEventPublisher eventPublisher, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.eventPublisher = eventPublisher;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -71,9 +74,7 @@ public class UserServiceDefault implements UserService{
         User persisted;
 
         try{
-            List<Authority> roles = new ArrayList<>();
-            roles.add(new Authority(user, user.getUsername(), Authority.CUSTOMER));
-            user.setRoles(roles);
+            user.setRoles(ROLE_CUSTOMER);
             user.setActive(true);
 
             persisted = userRepository.saveAndFlush(user);
@@ -110,6 +111,14 @@ public class UserServiceDefault implements UserService{
         }
 
         userRepository.deleteById(id);
+    }
+
+    @Override
+    public void changePassword(String email, String password) {
+        User user = userRepository.findByEmail(email);
+        user.setPassword(passwordEncoder.encode(password));
+
+        userRepository.save(user);
     }
 
     private boolean doesUserExists(User user){
