@@ -1,7 +1,5 @@
-package com.jakubwilk.serwisant.api.controller.user;
+package com.jakubwilk.serwisant.api.exception;
 
-import com.jakubwilk.serwisant.api.exception.UserAlreadyExistsException;
-import com.jakubwilk.serwisant.api.exception.UserNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;

@@ -1,4 +1,4 @@
-package com.jakubwilk.serwisant.api.controller.user;
+package com.jakubwilk.serwisant.api.exception;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

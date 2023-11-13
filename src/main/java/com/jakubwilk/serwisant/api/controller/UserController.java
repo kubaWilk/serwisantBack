@@ -1,4 +1,4 @@
-package com.jakubwilk.serwisant.api.controller.user;
+package com.jakubwilk.serwisant.api.controller;
 
 import com.jakubwilk.serwisant.api.controller.AuthController;
 import com.jakubwilk.serwisant.api.entity.User;
@@ -17,7 +17,7 @@ import java.util.Optional;
 
 
 @RestController
-@RequestMapping("/v1/user")
+@RequestMapping("/user")
 @AllArgsConstructor
 @ControllerAdvice
 public class UserController {

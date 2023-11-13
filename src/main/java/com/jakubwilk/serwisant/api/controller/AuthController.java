@@ -22,12 +22,10 @@ public class AuthController {
     private final AuthService authService;
     private final AuthenticationManager authenticationManager;
 
-    private final PasswordEncoder passwordEncoder;
 
     public AuthController(AuthService authService, AuthenticationManager authenticationManager, PasswordEncoder passwordEncoder) {
         this.authService = authService;
         this.authenticationManager = authenticationManager;
-        this.passwordEncoder = passwordEncoder;
     }
 
     @PostMapping("/login")
