@@ -3,7 +3,6 @@ package com.jakubwilk.serwisant.api.controller;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.jakubwilk.serwisant.api.entity.Note;
 import com.jakubwilk.serwisant.api.service.NoteService;
-import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
