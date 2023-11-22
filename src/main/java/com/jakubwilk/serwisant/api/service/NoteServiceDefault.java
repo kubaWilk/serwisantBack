@@ -34,6 +34,8 @@ public class NoteServiceDefault implements NoteService {
     @Override
     public List<Note> findAllNotes() {
         List<Note> notes = repository.findAll();
+
+        if(notes.isEmpty()) throw new RuntimeException("No Notes found!");
         return notes;
     }
 
@@ -57,7 +59,8 @@ public class NoteServiceDefault implements NoteService {
     @Override
     public Note updateNote(JsonNode toUpdate) {
         checkNoteNode(toUpdate);
-        if(!toUpdate.has("id")) throw new IllegalArgumentException("Note to update has to be provided with id!");
+        if(!toUpdate.has("id"))
+            throw new IllegalArgumentException("Note to update has to be provided with id!");
 
         int repairId = toUpdate.get("repair").asInt();
         Repair theRepair = repairService.findById(repairId);

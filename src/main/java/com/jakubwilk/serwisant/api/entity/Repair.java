@@ -1,6 +1,7 @@
 package com.jakubwilk.serwisant.api.entity;
 
 import jakarta.persistence.*;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -8,6 +9,11 @@ import java.util.List;
 
 @Table(name="repair")
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Repair {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,21 +23,25 @@ public class Repair {
             CascadeType.MERGE,
             CascadeType.DETACH,
             CascadeType.PERSIST,
-            CascadeType.REFRESH})
+            CascadeType.REFRESH},
+            fetch = FetchType.EAGER)
     private User issuer;
 
     @ManyToOne(cascade = {
             CascadeType.MERGE,
             CascadeType.DETACH,
             CascadeType.PERSIST,
-            CascadeType.REFRESH})
+            CascadeType.REFRESH},
+            fetch = FetchType.EAGER)
     @JoinColumn(name="device_id", nullable = false)
     private Device device;
 
-    @OneToMany(mappedBy = "repair", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "repair", cascade = CascadeType.ALL,
+            fetch = FetchType.EAGER)
     private List<Note> notes;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL,
+            fetch = FetchType.EAGER)
     private List<Cost> costs;
 
     @Enumerated(EnumType.STRING)

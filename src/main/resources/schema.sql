@@ -65,7 +65,7 @@ create table password_reset_token (
 create table repair (
     device_id integer not null,
     id serial not null,
-    issuer_user_id integer unique,
+    issuer_user_id integer,
     primary key (id)
 );
 

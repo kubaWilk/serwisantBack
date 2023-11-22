@@ -1,5 +1,6 @@
 package com.jakubwilk.serwisant.api.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -29,6 +30,8 @@ public class Note {
             CascadeType.PERSIST,
             CascadeType.REFRESH})
     @JoinColumn(name="repair_id")
+    @ToString.Exclude
+    @JsonIgnore
     private Repair repair;
 
     public enum Visibility{
