@@ -19,15 +19,18 @@ public class Repair {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @OneToOne(cascade = {
+    @OneToOne(
+            cascade = {
             CascadeType.MERGE,
             CascadeType.DETACH,
             CascadeType.PERSIST,
             CascadeType.REFRESH},
-            fetch = FetchType.EAGER)
+            fetch = FetchType.EAGER
+    )
     private User issuer;
 
-    @ManyToOne(cascade = {
+    @ManyToOne(
+            cascade = {
             CascadeType.MERGE,
             CascadeType.DETACH,
             CascadeType.PERSIST,
@@ -36,11 +39,13 @@ public class Repair {
     @JoinColumn(name="device_id", nullable = false)
     private Device device;
 
-    @OneToMany(mappedBy = "repair", cascade = CascadeType.ALL,
+    @OneToMany(mappedBy = "repair",
+            cascade = CascadeType.ALL,
             fetch = FetchType.EAGER)
     private List<Note> notes;
 
-    @OneToMany(cascade = CascadeType.ALL,
+    @OneToMany(
+            cascade = CascadeType.ALL,
             fetch = FetchType.EAGER)
     private List<Cost> costs;
 

@@ -1,9 +1,9 @@
-package com.jakubwilk.serwisant.api;
+package com.jakubwilk.serwisant.api.service;
 
-import com.jakubwilk.serwisant.api.exception.UserNotFoundException;
 import com.jakubwilk.serwisant.api.dao.UserRepository;
 import com.jakubwilk.serwisant.api.entity.User;
 import com.jakubwilk.serwisant.api.entity.UserDetails;
+import com.jakubwilk.serwisant.api.exception.UserNotFoundException;
 import com.jakubwilk.serwisant.api.service.UserServiceDefault;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,7 +13,6 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
-import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;

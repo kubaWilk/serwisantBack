@@ -100,19 +100,23 @@ alter table if exists authorities
 alter table if exists cost
     add constraint FKskp0e42nvl99cjhjof3fltbcg foreign key (repair_id) references repair;
 alter table if exists note
-    add constraint FK94ucwcm02pj66wdvxmnvahpqp foreign key (repair_id) references repair;
+    add constraint FK94ucwcm02pj66wdvxmnvahpqp foreign key (repair_id) references repair
+        on delete cascade;
 alter table if exists password_reset_token
     add constraint FK83nsrttkwkb6ym0anu051mtxn foreign key (user_id) references users;
 alter table if exists repair
     add constraint FKe2lm4qyk4g36lkdab4sqfxnwf foreign key (device_id) references device;
 alter table if exists repair
-    add constraint FKixsc0illvsi63j93mh26w003c foreign key (issuer_user_id) references users;
+    add constraint FKixsc0illvsi63j93mh26w003c
+        foreign key (issuer_user_id) references users
+            on delete cascade;
 alter table if exists repair_costs
     add constraint FKtovovsvew76ohqhu2ytulwh0 foreign key (costs_id) references cost;
 alter table if exists repair_costs
     add constraint FKmb1u5kjqqqrlb1pnmkw05xapc foreign key (repair_id) references repair;
 alter table if exists users
-    add constraint FKlbumi6chkcxaxk2m91y429dv1 foreign key (reset_token_id) references password_reset_token;
+    add constraint FKlbumi6chkcxaxk2m91y429dv1 foreign key (reset_token_id)
+        references password_reset_token;
 alter table if exists users
     add constraint FKfsi9283rk1akvfmlbfrhdn5vj foreign key (user_detail_id) references user_details;
 

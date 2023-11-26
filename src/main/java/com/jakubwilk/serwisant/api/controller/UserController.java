@@ -1,6 +1,7 @@
 package com.jakubwilk.serwisant.api.controller;
 
 import com.jakubwilk.serwisant.api.controller.AuthController;
+import com.jakubwilk.serwisant.api.entity.Authority;
 import com.jakubwilk.serwisant.api.entity.User;
 import com.jakubwilk.serwisant.api.service.UserService;
 import lombok.AllArgsConstructor;
@@ -63,6 +64,18 @@ public class UserController {
     public String returnUserLoggedIn(Principal principal){
         return principal.toString();
 //            return "hello" + principal.getName();
+    }
+
+    @GetMapping("/{id}/roles")
+    public ResponseEntity<List<Authority>> getUserRoles(@PathVariable("id") int userID){
+        //TODO: implement
+        return null;
+    }
+
+    @PutMapping("/{id}/roles")
+    public ResponseEntity<HttpStatus> updateUserRoles(@PathVariable("id") int userID){
+        //TODO: implement
+        return null;
     }
 }
 

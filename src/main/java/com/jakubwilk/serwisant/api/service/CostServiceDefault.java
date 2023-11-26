@@ -23,7 +23,7 @@ public class CostServiceDefault implements CostService{
         if(result.isPresent()){
             return result.get();
         }else{
-            throw new RuntimeException("Cost with id: " + id +" not found");
+            throw new RuntimeException("Cost with id: " + id + " not found");
         }
     }
 

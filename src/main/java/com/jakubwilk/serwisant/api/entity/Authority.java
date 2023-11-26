@@ -28,9 +28,11 @@ public class Authority {
     private String username;
 
     @Column(name="authority")
-    private String authority;
+    @Enumerated(EnumType.STRING)
+    @JsonIgnore
+    private Role authority;
 
-    public Authority(User user, String username, String authority) {
+    public Authority(User user, String username, Role authority) {
         this.user = user;
         this.username = username;
         this.authority = authority;

@@ -10,6 +10,7 @@ import lombok.*;
 @AllArgsConstructor
 @Setter
 @Getter
+@Builder
 public class Cost {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,6 +1,7 @@
 package com.jakubwilk.serwisant.api.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -43,6 +44,7 @@ public class User {
     @OneToMany(mappedBy = "user",
             cascade = CascadeType.ALL,
             fetch = FetchType.EAGER)
+    @JsonIgnore
     private Set<Authority> roles;
 
     @OneToOne(fetch = FetchType.LAZY)
@@ -55,6 +57,6 @@ public class User {
             roles = new HashSet<>();
         }
 
-        roles.add(new Authority(this, username, role.toString()));
+        roles.add(new Authority(this, username, role));
     }
 }

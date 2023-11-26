@@ -25,13 +25,13 @@ public class RepairController {
         return new ResponseEntity<Repair>(repair, HttpStatus.OK);
     }
 
-    @GetMapping
+    @GetMapping("/")
     public List<Repair> getAllRepairs(){
         List<Repair> repairs = repairService.findAllRepairs();
         return repairs;
     }
 
-    @PostMapping
+    @PostMapping("/")
     public ResponseEntity<Repair> saveRepair(@RequestBody JsonNode repairJsonNode){
         Repair saved = repairService.saveRepair(repairJsonNode);
 
@@ -39,7 +39,7 @@ public class RepairController {
     }
 
 
-    @PutMapping
+    @PutMapping("/")
     public ResponseEntity<Repair> updateRepair(@RequestBody Repair repair){
         Repair updated = repairService.updateRepair(repair);
         return new ResponseEntity<>(updated, HttpStatus.OK);

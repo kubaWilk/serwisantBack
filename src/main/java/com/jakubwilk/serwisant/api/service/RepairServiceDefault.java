@@ -30,7 +30,7 @@ public class RepairServiceDefault implements RepairService {
         if(result.isPresent()){
             return result.get();
         }else{
-            throw new IllegalArgumentException("No repair with id: " + id);
+            throw new RuntimeException("No repair with id: " + id);
         }
     }
 
@@ -47,14 +47,15 @@ public class RepairServiceDefault implements RepairService {
     public Repair saveRepair(JsonNode repairJsonNode) {
         if(repairJsonNode == null) throw new NullPointerException(("Repair can't be null!"));
         if(!repairJsonNode.has("issuer"))
-            throw new IllegalArgumentException("Note must containt issuer's ID!");
+            throw new IllegalArgumentException("Repair must containt issuer's ID!");
+        if(!repairJsonNode.has("device"))
+            throw new IllegalArgumentException("Repair must contain device's ID!");
+
         //find issuer by id
         int issuerId = repairJsonNode.get("issuer").asInt();
         User issuer = userService.findById(issuerId);
 
         //find device by id
-        if(!repairJsonNode.has("device"))
-            throw new IllegalArgumentException("Repair must contain device's ID!");
         int deviceId = repairJsonNode.get("device").asInt();
         Device device = deviceService.findById(deviceId);
 
@@ -70,6 +71,7 @@ public class RepairServiceDefault implements RepairService {
     @Override
     @Transactional
     public Repair updateRepair(Repair repair) {
+        if(repair == null) throw new NullPointerException(("Repair can't be null!"));
         return repository.save(repair);
     }
 
