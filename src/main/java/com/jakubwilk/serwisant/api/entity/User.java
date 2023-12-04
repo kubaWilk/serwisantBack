@@ -1,11 +1,9 @@
 package com.jakubwilk.serwisant.api.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -52,11 +50,23 @@ public class User {
     @ToString.Exclude
     private PasswordResetToken resetToken;
 
+    @OneToMany(mappedBy = "issuer",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.EAGER)
+    @JsonIgnore
+    @ToString.Exclude
+    private List<Repair> repairs;
+
     public void setRoles(Role role){
         if(this.roles == null){
             roles = new HashSet<>();
         }
 
         roles.add(new Authority(this, username, role));
+    }
+
+    public void removeRepair(Repair repair){
+        if(repairs == null) return;
+        this.repairs.remove(repair);
     }
 }

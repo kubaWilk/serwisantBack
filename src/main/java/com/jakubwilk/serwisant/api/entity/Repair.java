@@ -2,6 +2,7 @@ package com.jakubwilk.serwisant.api.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.Cascade;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -19,7 +20,7 @@ public class Repair {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @OneToOne(
+    @ManyToOne(
             cascade = {
             CascadeType.MERGE,
             CascadeType.DETACH,
@@ -27,6 +28,8 @@ public class Repair {
             CascadeType.REFRESH},
             fetch = FetchType.EAGER
     )
+    @JoinColumn(name="issuer_user_id")
+//    @Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
     private User issuer;
 
     @ManyToOne(
@@ -36,7 +39,8 @@ public class Repair {
             CascadeType.PERSIST,
             CascadeType.REFRESH},
             fetch = FetchType.EAGER)
-    @JoinColumn(name="device_id", nullable = false)
+    @JoinColumn(name="device_id")
+//    @Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
     private Device device;
 
     @OneToMany(mappedBy = "repair",

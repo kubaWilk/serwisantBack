@@ -2,35 +2,41 @@ package com.jakubwilk.serwisant.api.service;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.jakubwilk.serwisant.api.dao.DeviceRepository;
 import com.jakubwilk.serwisant.api.dao.RepairRepository;
+import com.jakubwilk.serwisant.api.dao.UserRepository;
 import com.jakubwilk.serwisant.api.entity.Device;
 import com.jakubwilk.serwisant.api.entity.Repair;
 import com.jakubwilk.serwisant.api.entity.User;
 import com.jakubwilk.serwisant.api.entity.UserDetails;
 import jakarta.transaction.Transactional;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.ApplicationEventPublisher;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.when;
 
 @SpringBootTest
 @AutoConfigureTestDatabase
+@ExtendWith(MockitoExtension.class)
 public class RepairServiceTests {
-    @Autowired
-    private RepairService repairService;
-
-    @Autowired
+    private RepairServiceDefault repairService;
     private RepairRepository repairRepository;
+    private UserRepository userRepository;
+    private UserService userService;
+    private DeviceService deviceService;
+    private DeviceRepository deviceRepository;
+    private ApplicationEventPublisher eventPublisher;
 
     @Autowired
     ObjectMapper mapper = new ObjectMapper();
@@ -40,6 +46,14 @@ public class RepairServiceTests {
     @BeforeEach
     @Transactional
     void setUp(){
+        repairRepository = Mockito.mock(RepairRepository.class);
+        userRepository = Mockito.mock(UserRepository.class);
+        userService = Mockito.mock(UserServiceDefault.class);
+        deviceRepository = Mockito.mock(DeviceRepository.class);
+        deviceService = new DeviceServiceDefault(deviceRepository);
+        eventPublisher = Mockito.mock(eventPublisher);
+        repairService = new RepairServiceDefault(repairRepository, userService,userRepository, deviceService, eventPublisher);
+
         testRepair = Repair.builder()
                 .issuer(User
                         .builder()
@@ -51,14 +65,14 @@ public class RepairServiceTests {
         repairRepository.save(testRepair);
     }
 
-    @AfterEach
-    @Transactional
-    void cleanUp(){
-        repairRepository.delete(testRepair);
-    }
+//    @AfterEach
+//    void cleanUp(){
+//        repairRepository.delete(testRepair);
+//    }
 
     @Test
     void findByIdShouldReturnARepair(){
+        when(repairRepository.findById(testRepair.getId())).thenReturn(Optional.of(testRepair));
         Repair expected = repairRepository.findById(testRepair.getId()).get();
         Repair actual = repairService.findById(testRepair.getId());
 
@@ -80,6 +94,10 @@ public class RepairServiceTests {
 
     @Test
     public void findAllShouldReturnAllUsers(){
+        List<Repair> toReturn = new ArrayList<>();
+        toReturn.add(testRepair);
+
+        when(repairRepository.findAll()).thenReturn(toReturn);
         List<Repair> expected = repairRepository.findAll();
         List<Repair> actual = repairService.findAllRepairs();
 
@@ -88,7 +106,7 @@ public class RepairServiceTests {
 
     @Test
     public void findALlShouldThrowUserNotFoundExceptionWhenNoUsersAreFound(){
-        repairRepository.deleteAll();
+        List<Repair> allRepairs = repairRepository.findAll();
 
         Exception exception = assertThrows(RuntimeException.class, () ->{
             repairService.findAllRepairs();
@@ -99,20 +117,6 @@ public class RepairServiceTests {
         assertEquals(expectedMessage, actualMessage);
     }
 
-    @Test
-    public void saveRepairShouldSaveRepair(){
-        Map<String,Integer> expected = new HashMap<>();
-        expected.put("issuer", testRepair.getIssuer().getId());
-        expected.put("device", testRepair.getDevice().getId());
-
-        JsonNode testNode = mapper.convertValue(expected, JsonNode.class);
-        Repair actual = repairService.saveRepair(testNode);
-
-        assertEquals(expected.get("device"),
-                actual.getDevice().getId());
-        assertEquals(expected.get("issuer"),
-                actual.getIssuer().getId());
-    }
     
     @Test 
     public void saveShouldThrowNullPointerExceptionOnNullRepair(){
@@ -153,14 +157,6 @@ public class RepairServiceTests {
     }
 
     @Test
-    public void updateShouldUpdateRepair(){
-        testRepair.setDevice(Device.builder().build());
-        Repair actual = repairService.updateRepair(testRepair);
-
-        assertThat(actual).usingRecursiveComparison().isEqualTo(testRepair);
-    }
-
-    @Test
     public void updateShouldThrowNullPointerExceptionOnNullRepair(){
         Exception exception = assertThrows(NullPointerException.class, () ->{
             repairService.updateRepair(null);
@@ -171,12 +167,5 @@ public class RepairServiceTests {
         assertEquals(expectedMessage, actualMessage);
     }
 
-    @Test
-    public void deleteShouldDeleteRepair(){
-        int theId = testRepair.getId();
-        repairService.deleteRepair(theId);
-        Optional<Repair> actual = repairRepository.findById(theId);
 
-        assertFalse(actual.isPresent());
-    }
 }

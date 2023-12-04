@@ -2,10 +2,12 @@ package com.jakubwilk.serwisant.api.service;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.jakubwilk.serwisant.api.dao.RepairRepository;
+import com.jakubwilk.serwisant.api.dao.UserRepository;
 import com.jakubwilk.serwisant.api.entity.Device;
 import com.jakubwilk.serwisant.api.entity.Repair;
 import com.jakubwilk.serwisant.api.entity.User;
 import jakarta.transaction.Transactional;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,12 +17,17 @@ import java.util.Optional;
 public class RepairServiceDefault implements RepairService {
     private final RepairRepository repository;
     private final UserService userService;
+    private final UserRepository userRepository;
     private final DeviceService deviceService;
 
-    public RepairServiceDefault(RepairRepository repository, UserService userService, DeviceService deviceService) {
+    private ApplicationEventPublisher eventPublisher;
+
+    public RepairServiceDefault(RepairRepository repository, UserService userService, UserRepository userRepository, DeviceService deviceService, ApplicationEventPublisher eventPublisher) {
         this.repository = repository;
         this.userService = userService;
+        this.userRepository = userRepository;
         this.deviceService = deviceService;
+        this.eventPublisher = eventPublisher;
     }
 
     @Override
@@ -71,6 +78,10 @@ public class RepairServiceDefault implements RepairService {
     @Override
     @Transactional
     public Repair updateRepair(Repair repair) {
+        if(checkForStatusUpdate(repair)){
+
+        }
+
         if(repair == null) throw new NullPointerException(("Repair can't be null!"));
         return repository.save(repair);
     }
@@ -78,6 +89,32 @@ public class RepairServiceDefault implements RepairService {
     @Override
     @Transactional
     public void deleteRepair(int id) {
-        repository.deleteById(id);
+        Optional <Repair> result = repository.findById(id);
+        if(result.isPresent()){
+            Repair repair = result.get();
+            Device device = repair.getDevice();
+            User issuer = repair.getIssuer();
+            repair.setIssuer(null);
+            repair.setDevice(null);
+            device.removeRepair(repair);
+            issuer.removeRepair(repair);
+            repository.save(repair);
+            userRepository.save(issuer);
+            deviceService.saveDevice(device);
+            repository.delete(repair);
+        }else{
+            throw new RuntimeException("No Repair found with id: " + id);
+        }
+    }
+
+    public boolean checkForStatusUpdate(Repair repair){
+        int theId = repair.getId();
+        Optional<Repair> result = repository.findById(theId);
+
+        if(result.isPresent()){
+            return repair.getRepairStatus() != result.get().getRepairStatus();
+        }else{
+            throw new RuntimeException("No repair found with id: " + theId);
+        }
     }
 }

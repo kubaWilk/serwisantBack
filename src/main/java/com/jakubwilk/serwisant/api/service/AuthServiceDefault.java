@@ -3,7 +3,7 @@ package com.jakubwilk.serwisant.api.service;
 import com.jakubwilk.serwisant.api.dao.TokenRepository;
 import com.jakubwilk.serwisant.api.entity.PasswordResetToken;
 import com.jakubwilk.serwisant.api.entity.User;
-import com.jakubwilk.serwisant.api.service.event.events.ResetPasswordEvent;
+import com.jakubwilk.serwisant.api.event.events.ResetPasswordEvent;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -62,7 +62,7 @@ public class AuthServiceDefault implements AuthService {
         token = createResetPasswordToken(user);
 
         ResetPasswordEvent event =
-                new ResetPasswordEvent(token, "Generated a resetPasswordToken");
+                new ResetPasswordEvent(AuthServiceDefault.class, user, token);
         eventPublisher.publishEvent(event);
     }
 

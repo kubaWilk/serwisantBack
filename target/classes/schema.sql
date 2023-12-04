@@ -24,10 +24,15 @@ drop sequence if exists password_reset_token_seq;
 create sequence password_reset_token_seq start with 1 increment by 50;
 
 create table authorities (
-     authority_id serial not null primary key,
-     user_id serial not null,
-     username varchar(50) not null,
-     authority varchar(50) not null
+    authority_id serial not null,
+    user_id integer,
+    authority varchar(255)
+        check (authority in (
+            'ROLE_CUSTOMER',
+            'ROLE_EMPLOYEE',
+            'ROLE_ADMIN')),
+    username varchar(255),
+    primary key (authority_id)
 );
 
 create table cost (
@@ -63,11 +68,18 @@ create table password_reset_token (
 );
 
 create table repair (
-    device_id integer not null,
+    device_id integer,
     id serial not null,
     issuer_user_id integer,
-    primary key (id)
-);
+    repair_status varchar(255)
+        check (repair_status in(
+            'OPEN',
+           'WAITING_FOR_CUSTOMER',
+           'WAITING_FOR_SUPLIER',
+           'CANCELED',
+           'CLOSED')
+            ),
+    primary key (id));
 
 create table repair_costs (
     costs_id integer not null unique,
@@ -104,12 +116,12 @@ alter table if exists note
         on delete cascade;
 alter table if exists password_reset_token
     add constraint FK83nsrttkwkb6ym0anu051mtxn foreign key (user_id) references users;
+
 alter table if exists repair
     add constraint FKe2lm4qyk4g36lkdab4sqfxnwf foreign key (device_id) references device;
 alter table if exists repair
-    add constraint FKixsc0illvsi63j93mh26w003c
-        foreign key (issuer_user_id) references users
-            on delete cascade;
+    add constraint FKixsc0illvsi63j93mh26w003c foreign key (issuer_user_id) references users;
+
 alter table if exists repair_costs
     add constraint FKtovovsvew76ohqhu2ytulwh0 foreign key (costs_id) references cost;
 alter table if exists repair_costs
@@ -124,7 +136,7 @@ insert into user_details (first_name, last_name, street, post_code, city)
     values ('root', 'root', 'root', 'root', 'root');
 
 insert into users (username, password, active, email, user_detail_id)
-     values ('root', '$2a$12$enZyMcOqcaSgS4oPxthFweOfCvY5zqkEHi1lwy7VZ2QWCfLF9P8/2', true, 'root@root.com', 1);
+     values ('root', '$2a$12$enZyMcOqcaSgS4oPxthFweOfCvY5zqkEHi1lwy7VZ2QWCfLF9P8/2', true, 'jakub_wilk@outlook.com', 1);
 
 insert into authorities (user_id, username, authority)
     values (1, 'root', 'ROLE_CUSTOMER');

@@ -35,11 +35,13 @@ public class DeviceServiceDefault implements DeviceService{
 
     @Override
     public Device saveDevice(Device device) {
+        if(device == null) throw new NullPointerException("Device can't be null!");
         return repository.save(device);
     }
 
     @Override
     public Device updateDevice(Device device) {
+        if(device == null) throw new NullPointerException("Device can't be null!");
         return repository.save(device);
     }
 

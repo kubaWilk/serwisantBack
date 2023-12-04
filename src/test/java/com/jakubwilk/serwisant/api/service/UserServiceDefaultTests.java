@@ -8,17 +8,24 @@ import com.jakubwilk.serwisant.api.service.UserServiceDefault;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.when;
 
 @SpringBootTest
 @AutoConfigureTestDatabase
+@ExtendWith(MockitoExtension.class)
 public class UserServiceDefaultTests {
 
     @Autowired
@@ -27,6 +34,12 @@ public class UserServiceDefaultTests {
     @Autowired
     private UserRepository userRepository;
     private User testUser;
+
+    @Autowired
+    private ApplicationEventPublisher eventPublisher;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @BeforeEach
     public void setupTestData(){
@@ -55,12 +68,13 @@ public class UserServiceDefaultTests {
 
     @Test
     public void findByIdShouldReturnAUserById(){
-        User asserted = userService.findById(testUser.getId());
+        User expected = userRepository.findById(testUser.getId()).get();
+        User actual = userService.findById(testUser.getId());
 
-        assertThat(asserted).usingRecursiveComparison()
+        assertThat(actual).usingRecursiveComparison()
                 .ignoringFields("userDetails")
                 .ignoringFields("roles")
-                .isEqualTo(testUser);
+                .isEqualTo(expected);
     }
 
     @Test
@@ -79,9 +93,9 @@ public class UserServiceDefaultTests {
     @Test
     public void findAllShouldReturnAllUsers(){
         List<User> expected = userRepository.findAll();
-        List<User> asserted = userService.findAll();
+        List<User> actual = userService.findAll();
 
-        assertThat(asserted).usingRecursiveComparison().isEqualTo(expected);
+        assertThat(actual).usingRecursiveComparison().isEqualTo(expected);
     }
 
     @Test
@@ -93,8 +107,8 @@ public class UserServiceDefaultTests {
         });
 
         String expectedMessage = "Did not find any users, check database connection";
-        String assertedMessage = exception.getMessage();
-        assertEquals(expectedMessage, assertedMessage);
+        String actualMessage = exception.getMessage();
+        assertEquals(expectedMessage, actualMessage);
     }
 
     @Test

@@ -1,9 +1,10 @@
-package com.jakubwilk.serwisant.api.security;
+package com.jakubwilk.serwisant.api.configuration;
 
 import com.jakubwilk.serwisant.api.entity.Authority;
 import com.jakubwilk.serwisant.api.entity.Role;
 import com.jakubwilk.serwisant.api.entity.User;
 import com.jakubwilk.serwisant.api.entity.UserDetails;
+import com.jakubwilk.serwisant.api.security.JWKProvider;
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;

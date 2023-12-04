@@ -3,7 +3,7 @@ package com.jakubwilk.serwisant.api.service;
 import com.jakubwilk.serwisant.api.exception.UserNotFoundException;
 import com.jakubwilk.serwisant.api.dao.UserRepository;
 import com.jakubwilk.serwisant.api.entity.User;
-import com.jakubwilk.serwisant.api.service.event.events.UserRegisteredEvent;
+import com.jakubwilk.serwisant.api.event.events.UserRegisteredEvent;
 import jakarta.transaction.Transactional;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -79,8 +79,8 @@ public class UserServiceDefault implements UserService{
 
             persisted = userRepository.saveAndFlush(user);
 
-            UserRegisteredEvent newUserEvent = new UserRegisteredEvent(user,
-                    "New user registered");
+            UserRegisteredEvent newUserEvent = new UserRegisteredEvent(UserServiceDefault.class,
+                    persisted);
             eventPublisher.publishEvent(newUserEvent);
         }catch(DataIntegrityViolationException exception){
             throw new IllegalArgumentException(

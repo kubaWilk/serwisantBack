@@ -7,13 +7,18 @@ import com.jakubwilk.serwisant.api.entity.User;
 import com.jakubwilk.serwisant.api.entity.UserDetails;
 import org.junit.Before;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.MediaType;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.*;
@@ -29,6 +34,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 @SpringBootTest
 @AutoConfigureTestDatabase
 @AutoConfigureMockMvc
+@ExtendWith(MockitoExtension.class)
 public class UserControllerTests {
 
     @Autowired
@@ -100,7 +106,11 @@ public class UserControllerTests {
 
     @Test
     void findAllShouldThrowUserNotFoundExceptionWhenNoUsers() throws Exception {
-        userRepository.deleteAll();
+        List<User> users = userRepository.findAll();
+
+        for(User user : users){
+            userRepository.delete(user);
+        }
 
         this.mockMvc.perform(get("/user/")
                         .with(jwt()))
@@ -137,11 +147,6 @@ public class UserControllerTests {
         assertThat(userRepository.findById(newUser.getId())).isNotNull();
     }
 
-//    @Before
-//    void removeRolesfromUser(){
-//        userRepository.delete(testUser);
-//        testUser
-//    }
     @Test
     void putShouldUpdateUser() throws Exception{
         String userName = "newUserName";

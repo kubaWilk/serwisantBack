@@ -23,7 +23,7 @@ import java.util.Optional;
 @ControllerAdvice
 public class UserController {
     private UserService userService;
-    private static final Logger LOGGER = LoggerFactory.getLogger(AuthController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
 
     @GetMapping("/{id}")
     public ResponseEntity<User> findUserById(@PathVariable("id") int id){

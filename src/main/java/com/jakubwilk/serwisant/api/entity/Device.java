@@ -33,9 +33,13 @@ public class Device {
             mappedBy = "device",
             fetch = FetchType.EAGER,
             cascade = {
-                    CascadeType.MERGE,
-                    CascadeType.DETACH,
-                    CascadeType.REFRESH
+                    CascadeType.ALL
             })
     private List<Repair> repairs;
+
+    public void removeRepair(Repair repair){
+        if(repairs == null || repairs.isEmpty()) return;
+
+        repairs.remove(repair);
+    }
 }
