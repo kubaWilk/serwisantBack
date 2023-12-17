@@ -1,8 +1,7 @@
 package com.jakubwilk.serwisant.api.controller;
 
-import com.jakubwilk.serwisant.api.controller.AuthController;
-import com.jakubwilk.serwisant.api.entity.Authority;
-import com.jakubwilk.serwisant.api.entity.User;
+import com.jakubwilk.serwisant.api.entity.jpa.Authority;
+import com.jakubwilk.serwisant.api.entity.jpa.User;
 import com.jakubwilk.serwisant.api.service.UserService;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
 
 import java.util.List;
-import java.util.Optional;
 
 
 @RestController

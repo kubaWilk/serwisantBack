@@ -1,8 +1,9 @@
 package com.jakubwilk.serwisant.api.controller;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.jakubwilk.serwisant.api.entity.Repair;
+import com.jakubwilk.serwisant.api.entity.jpa.Repair;
 import com.jakubwilk.serwisant.api.service.RepairService;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,12 +12,9 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/repair")
+@AllArgsConstructor
 public class RepairController {
     private final RepairService repairService;
-
-    public RepairController(RepairService repairService) {
-        this.repairService = repairService;
-    }
 
     @GetMapping("/{id}")
     public ResponseEntity<Repair> getRepairById(@PathVariable("id") int id){
@@ -37,7 +35,6 @@ public class RepairController {
 
         return new ResponseEntity<Repair>(saved, HttpStatus.OK);
     }
-
 
     @PutMapping("/")
     public ResponseEntity<Repair> updateRepair(@RequestBody Repair repair){
