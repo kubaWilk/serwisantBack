@@ -2,12 +2,11 @@ package com.jakubwilk.serwisant.api.service;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jakubwilk.serwisant.api.dao.RepairRepository;
-import com.jakubwilk.serwisant.api.entity.Device;
-import com.jakubwilk.serwisant.api.entity.Repair;
-import com.jakubwilk.serwisant.api.entity.User;
-import com.jakubwilk.serwisant.api.entity.UserDetails;
-import jakarta.transaction.Transactional;
+import com.jakubwilk.serwisant.api.repository.RepairRepository;
+import com.jakubwilk.serwisant.api.entity.jpa.Device;
+import com.jakubwilk.serwisant.api.entity.jpa.Repair;
+import com.jakubwilk.serwisant.api.entity.jpa.User;
+import com.jakubwilk.serwisant.api.entity.jpa.UserDetails;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

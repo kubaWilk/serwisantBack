@@ -1,9 +1,5 @@
 package com.jakubwilk.serwisant.api.configuration;
 
-import com.jakubwilk.serwisant.api.entity.Authority;
-import com.jakubwilk.serwisant.api.entity.Role;
-import com.jakubwilk.serwisant.api.entity.User;
-import com.jakubwilk.serwisant.api.entity.UserDetails;
 import com.jakubwilk.serwisant.api.security.JWKProvider;
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.jwk.JWKSet;
@@ -15,31 +11,42 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
 import javax.sql.DataSource;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
 
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
 public class SecurityConfiguration {
     private RSAKey rsaKey;
+
+    @Bean
+    CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000"));
+        configuration.setAllowedMethods(Arrays.asList("GET","POST", "PUT", "DELETE"));
+        configuration.setAllowedHeaders(Arrays.asList("*"));
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
+    }
 
     @Bean
     public UserDetailsManager userDetailsManager(DataSource dataSource){
@@ -53,8 +60,6 @@ public class SecurityConfiguration {
         jdbcUserDetailsManager.setAuthoritiesByUsernameQuery(
                 "select username, authority from authorities where username=?"
         );
-
-        System.out.println(jdbcUserDetailsManager.getUsersByUsernameQuery());
 
         return jdbcUserDetailsManager;
     }
@@ -71,14 +76,29 @@ public class SecurityConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .csrf(csrf-> csrf.disable())
+//                .authorizeHttpRequests(auth -> auth
+//                        .requestMatchers("/auth/login").permitAll()
+//                        .anyRequest().authenticated())
+//                .oauth2ResourceServer((oauth2) -> oauth2.jwt(Customizer.withDefaults()))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/login").permitAll()
-                        .anyRequest().authenticated())
-                .oauth2ResourceServer((oauth2) -> oauth2.jwt(Customizer.withDefaults()))
+                        .anyRequest().permitAll())
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .build();
     }
+
+//    @Bean
+//    public FilterRegistrationBean<CorsFilter> corsConfigurationSource() {
+//        CorsConfiguration configuration = new CorsConfiguration();
+//        configuration.setAllowedOrigins(Arrays.asList("http://localhost"));
+//        configuration.setAllowedMethods(Arrays.asList("GET","POST", "PUT", "DELETE", "HEAD", "OPTIONS"));
+//        configuration.applyPermitDefaultValues();
+//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+//        source.registerCorsConfiguration("/**", configuration);
+//
+//        return new FilterRegistrationBean<>(new CorsFilter(source));
+//    }
 
     @Bean
     public PasswordEncoder encoder() {

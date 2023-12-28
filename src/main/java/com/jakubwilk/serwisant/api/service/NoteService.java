@@ -1,8 +1,7 @@
 package com.jakubwilk.serwisant.api.service;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.jakubwilk.serwisant.api.entity.Note;
-import jakarta.transaction.Transactional;
+import com.jakubwilk.serwisant.api.entity.jpa.Note;
 
 import java.util.List;
 

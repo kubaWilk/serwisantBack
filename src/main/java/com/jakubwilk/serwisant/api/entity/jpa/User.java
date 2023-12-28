@@ -1,9 +1,10 @@
-package com.jakubwilk.serwisant.api.entity;
+package com.jakubwilk.serwisant.api.entity.jpa;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -27,6 +28,8 @@ public class User {
     private String username;
 
     @Column(name="password")
+    @ToString.Exclude
+    @JsonIgnore
     private String password;
 
     @Column(name="active")
@@ -42,7 +45,6 @@ public class User {
     @OneToMany(mappedBy = "user",
             cascade = CascadeType.ALL,
             fetch = FetchType.EAGER)
-    @JsonIgnore
     private Set<Authority> roles;
 
     @OneToOne(fetch = FetchType.LAZY)
@@ -68,5 +70,13 @@ public class User {
     public void removeRepair(Repair repair){
         if(repairs == null) return;
         this.repairs.remove(repair);
+    }
+
+    public List<String> getRoles() {
+        List<String> authorities = new ArrayList<>();
+        for(Authority role : roles){
+            authorities.add(role.getAuthority().toString());
+        }
+        return authorities;
     }
 }

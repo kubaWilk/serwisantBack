@@ -1,4 +1,4 @@
-package com.jakubwilk.serwisant.api.controller;
+package com.jakubwilk.serwisant.api.controller.user;
 
 import com.jakubwilk.serwisant.api.entity.jpa.Authority;
 import com.jakubwilk.serwisant.api.entity.jpa.User;

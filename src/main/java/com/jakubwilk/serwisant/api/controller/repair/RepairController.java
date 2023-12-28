@@ -1,4 +1,4 @@
-package com.jakubwilk.serwisant.api.controller;
+package com.jakubwilk.serwisant.api.controller.repair;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.jakubwilk.serwisant.api.entity.jpa.Repair;

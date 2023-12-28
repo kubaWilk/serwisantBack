@@ -1,8 +1,7 @@
 package com.jakubwilk.serwisant.api.service;
 
-import com.jakubwilk.serwisant.api.dao.CostRepository;
-import com.jakubwilk.serwisant.api.entity.*;
-import com.jakubwilk.serwisant.api.service.CostService;
+import com.jakubwilk.serwisant.api.repository.CostRepository;
+import com.jakubwilk.serwisant.api.entity.jpa.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

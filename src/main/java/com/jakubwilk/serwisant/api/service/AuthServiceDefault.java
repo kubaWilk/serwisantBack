@@ -1,8 +1,9 @@
 package com.jakubwilk.serwisant.api.service;
 
-import com.jakubwilk.serwisant.api.dao.TokenRepository;
-import com.jakubwilk.serwisant.api.entity.PasswordResetToken;
-import com.jakubwilk.serwisant.api.entity.User;
+
+import com.jakubwilk.serwisant.api.repository.TokenRepository;
+import com.jakubwilk.serwisant.api.entity.jpa.PasswordResetToken;
+import com.jakubwilk.serwisant.api.entity.jpa.User;
 import com.jakubwilk.serwisant.api.event.events.ResetPasswordEvent;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.core.Authentication;
@@ -59,24 +60,27 @@ public class AuthServiceDefault implements AuthService {
         User user = userService.findByEmail(email);
         PasswordResetToken token;
 
-        token = createResetPasswordToken(user);
+        token = generateResetPasswordToken(user);
 
         ResetPasswordEvent event =
                 new ResetPasswordEvent(AuthServiceDefault.class, user, token);
         eventPublisher.publishEvent(event);
     }
 
-    private PasswordResetToken createResetPasswordToken(User user) {
+    private PasswordResetToken generateResetPasswordToken(User user) {
         String token = UUID.randomUUID().toString();
         PasswordResetToken newToken = new PasswordResetToken(token, user);
 
         PasswordResetToken existingToken = tokenRepository.findByUserId(user.getId());
-
         if(existingToken != null){
             tokenRepository.delete(existingToken);
         }
 
-        return tokenRepository.save(newToken);
+        PasswordResetToken persistedToken = tokenRepository.save(newToken);
+        eventPublisher.publishEvent(
+                new ResetPasswordEvent(AuthServiceDefault.class, user, persistedToken));
+
+        return persistedToken;
     }
 
     @Override

@@ -12,6 +12,7 @@ alter table if exists users drop constraint if exists FKfsi9283rk1akvfmlbfrhdn5v
 drop table if exists authorities cascade;
 drop table if exists cost cascade;
 drop table if exists device cascade;
+drop table if exists files cascade;
 drop table if exists note cascade;
 drop table if exists password_reset_token cascade;
 drop table if exists repair cascade;
@@ -22,6 +23,15 @@ drop sequence if exists password_reset_token_seq;
 
 -- ### CREATE DB ###
 create sequence password_reset_token_seq start with 1 increment by 50;
+
+create table files (
+    id uuid not null,
+    file_name varchar(255),
+    file_type varchar(255),
+    data oid,
+    repair_id integer,
+    primary key (id)
+                   );
 
 create table authorities (
     authority_id serial not null,
@@ -38,7 +48,7 @@ create table authorities (
 create table cost (
     cost_type smallint check (cost_type between 0 and 1),
     id serial not null,
-    price float4,
+    price float(53),
     repair_id integer not null,
     primary key (id)
 );
@@ -68,9 +78,9 @@ create table password_reset_token (
 );
 
 create table repair (
-    device_id integer,
     id serial not null,
-    issuer_user_id integer,
+    estimated_cost float(53),
+    description varchar(255),
     repair_status varchar(255)
         check (repair_status in(
             'OPEN',
@@ -79,6 +89,8 @@ create table repair (
            'CANCELED',
            'CLOSED')
             ),
+    device_id integer,
+    issuer_user_id integer,
     primary key (id));
 
 create table repair_costs (
@@ -150,8 +162,8 @@ insert into authorities (user_id, username, authority)
 insert into device(manufacturer, model, serial_number)
     values('test', 'test', 'test');
 
-insert into repair (device_id, issuer_user_id)
-    values (1, 1);
+insert into repair (device_id, issuer_user_id, estimated_cost, description, repair_status)
+    values (1, 1, 120.2, 'Nie działa', 'OPEN');
 
 insert into note (repair_id, visibility, message)
     values(1, 0, 'test Note');

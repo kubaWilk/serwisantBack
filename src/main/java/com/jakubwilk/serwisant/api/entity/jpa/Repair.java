@@ -1,10 +1,8 @@
-package com.jakubwilk.serwisant.api.entity;
+package com.jakubwilk.serwisant.api.entity.jpa;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.Cascade;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,6 +53,12 @@ public class Repair {
 
     @Enumerated(EnumType.STRING)
     private Status repairStatus;
+
+    @Column(name="description")
+    private String description;
+
+    @Column(name="estimated_cost")
+    private double estimatedCost;
 
     public enum Status{
         OPEN,

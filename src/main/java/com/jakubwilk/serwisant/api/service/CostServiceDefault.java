@@ -1,7 +1,7 @@
 package com.jakubwilk.serwisant.api.service;
 
-import com.jakubwilk.serwisant.api.dao.CostRepository;
-import com.jakubwilk.serwisant.api.entity.Cost;
+import com.jakubwilk.serwisant.api.repository.CostRepository;
+import com.jakubwilk.serwisant.api.entity.jpa.Cost;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 

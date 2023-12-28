@@ -1,4 +1,4 @@
-package com.jakubwilk.serwisant.api.entity;
+package com.jakubwilk.serwisant.api.entity.jpa;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;

@@ -1,8 +1,8 @@
 package com.jakubwilk.serwisant.api.service;
 
 import com.jakubwilk.serwisant.api.exception.UserNotFoundException;
-import com.jakubwilk.serwisant.api.dao.UserRepository;
-import com.jakubwilk.serwisant.api.entity.User;
+import com.jakubwilk.serwisant.api.repository.UserRepository;
+import com.jakubwilk.serwisant.api.entity.jpa.User;
 import com.jakubwilk.serwisant.api.event.events.UserRegisteredEvent;
 import jakarta.transaction.Transactional;
 import org.springframework.context.ApplicationEventPublisher;
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
-import static com.jakubwilk.serwisant.api.entity.Role.ROLE_CUSTOMER;
+import static com.jakubwilk.serwisant.api.entity.jpa.Role.ROLE_CUSTOMER;
 
 @Service
 public class UserServiceDefault implements UserService{
@@ -71,6 +71,7 @@ public class UserServiceDefault implements UserService{
         if(user == null) throw new IllegalArgumentException("User can't be null!");
         if(doesUserExists(user)) throw new IllegalArgumentException("User already exists!");
 
+        user.setPassword("Startowe@");
         User persisted;
 
         try{
@@ -80,7 +81,7 @@ public class UserServiceDefault implements UserService{
             persisted = userRepository.saveAndFlush(user);
 
             UserRegisteredEvent newUserEvent = new UserRegisteredEvent(UserServiceDefault.class,
-                    persisted);
+                    persisted, user.getPassword());
             eventPublisher.publishEvent(newUserEvent);
         }catch(DataIntegrityViolationException exception){
             throw new IllegalArgumentException(
@@ -119,6 +120,16 @@ public class UserServiceDefault implements UserService{
         user.setPassword(passwordEncoder.encode(password));
 
         userRepository.save(user);
+    }
+
+    @Override
+    public User findByUsername(String username) {
+        User toReturn = userRepository.findByUsername(username);
+        if(toReturn == null) {
+            throw new UserNotFoundException("User with username: " + username + " not found");
+        }
+
+        return toReturn;
     }
 
     private boolean doesUserExists(User user){

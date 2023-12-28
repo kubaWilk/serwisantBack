@@ -1,0 +1,37 @@
+{
+  "groups": [
+    {
+      "name": "api.paths",
+      "type": "com.jakubwilk.serwisant.api.utils.ApplicationProperties",
+      "sourceType": "com.jakubwilk.serwisant.api.utils.ApplicationProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "api.paths.file-storage-directory",
+      "type": "java.lang.String",
+      "sourceType": "com.jakubwilk.serwisant.api.utils.ApplicationProperties"
+    },
+    {
+      "name": "api.paths.font",
+      "type": "java.lang.String",
+      "sourceType": "com.jakubwilk.serwisant.api.utils.ApplicationProperties"
+    },
+    {
+      "name": "api.paths.front-url",
+      "type": "java.lang.String",
+      "sourceType": "com.jakubwilk.serwisant.api.utils.ApplicationProperties"
+    },
+    {
+      "name": "api.paths.protocols",
+      "type": "java.nio.file.Path",
+      "sourceType": "com.jakubwilk.serwisant.api.utils.ApplicationProperties"
+    },
+    {
+      "name": "api.paths.resources",
+      "type": "java.lang.String",
+      "sourceType": "com.jakubwilk.serwisant.api.utils.ApplicationProperties"
+    }
+  ],
+  "hints": []
+}

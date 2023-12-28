@@ -1,6 +1,6 @@
 package com.jakubwilk.serwisant.api.service;
 
-import com.jakubwilk.serwisant.api.entity.Device;
+import com.jakubwilk.serwisant.api.entity.jpa.Device;
 
 import java.util.List;
 

@@ -11,7 +11,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name="files")
-public class InDbFile {
+public class RepairDbFile {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -30,7 +30,7 @@ public class InDbFile {
     @Column(name="repair_id")
     private int repairId;
 
-    public InDbFile(String filename, String contentType, int repairId, byte[] bytes) {
+    public RepairDbFile(String filename, String contentType, int repairId, byte[] bytes) {
         this.fileName = filename;
         this.fileType = contentType;
         this.repairId = repairId;

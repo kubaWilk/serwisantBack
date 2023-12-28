@@ -1,7 +1,7 @@
 package com.jakubwilk.serwisant.api.service;
 
-import com.jakubwilk.serwisant.api.dao.DeviceRepository;
-import com.jakubwilk.serwisant.api.entity.Device;
+import com.jakubwilk.serwisant.api.repository.DeviceRepository;
+import com.jakubwilk.serwisant.api.entity.jpa.Device;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

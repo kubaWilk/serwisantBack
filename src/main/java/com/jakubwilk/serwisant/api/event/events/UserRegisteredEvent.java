@@ -1,16 +1,16 @@
 package com.jakubwilk.serwisant.api.event.events;
 
-import com.jakubwilk.serwisant.api.entity.User;
-import lombok.AllArgsConstructor;
+import com.jakubwilk.serwisant.api.entity.jpa.User;
 import lombok.Getter;
-import lombok.Setter;
 import org.springframework.context.ApplicationEvent;
 
 @Getter
 public class UserRegisteredEvent extends ApplicationEvent {
     User user;
-    public UserRegisteredEvent(Object source, User theUser) {
+    String passsword;
+    public UserRegisteredEvent(Object source, User theUser, String password) {
         super(source);
         this.user = theUser;
+        this.passsword = password;
     }
 }

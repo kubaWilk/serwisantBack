@@ -1,8 +1,9 @@
 package com.jakubwilk.serwisant.api.service;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.jakubwilk.serwisant.api.entity.Repair;
+import com.jakubwilk.serwisant.api.entity.jpa.Repair;
 
+import java.nio.file.Path;
 import java.util.List;
 
 public interface RepairService {

@@ -1,7 +1,9 @@
 package com.jakubwilk.serwisant.api.controller;
 
 import com.jakubwilk.serwisant.api.entity.LoginRequest;
+import com.jakubwilk.serwisant.api.entity.jpa.User;
 import com.jakubwilk.serwisant.api.service.AuthService;
+import com.jakubwilk.serwisant.api.service.UserService;
 import jakarta.websocket.server.PathParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,30 +14,38 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
-
     private static final Logger LOGGER = LoggerFactory.getLogger(AuthController.class);
     private final AuthService authService;
+    private final UserService userService;
     private final AuthenticationManager authenticationManager;
 
 
-    public AuthController(AuthService authService, AuthenticationManager authenticationManager, PasswordEncoder passwordEncoder) {
+    public AuthController(AuthService authService, AuthenticationManager authenticationManager, PasswordEncoder passwordEncoder, UserService userService) {
         this.authService = authService;
         this.authenticationManager = authenticationManager;
+        this.userService = userService;
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> token(@RequestBody LoginRequest loginRequest){
+    public ResponseEntity<Map<String,Object>> token(@RequestBody LoginRequest loginRequest){
         LOGGER.debug("Auth token request for: " + loginRequest.username());
         String username = loginRequest.username();
         String password = loginRequest.password();
 
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
-        return ResponseEntity.ok(authService.generateToken(authentication));
+        Map<String, Object> response = new HashMap<>();
+        User user = userService.findByUsername(username);
+
+        response.put("token", authService.generateToken(authentication));
+        response.put("user", user);
+
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping("/reset/request")
@@ -50,5 +60,7 @@ public class AuthController {
 
         return ResponseEntity.ok("Password changed.");
     }
+
+
 
 }

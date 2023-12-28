@@ -1,7 +1,7 @@
 package com.jakubwilk.serwisant.api.service;
 
-import com.jakubwilk.serwisant.api.dao.FileRepository;
-import com.jakubwilk.serwisant.api.entity.jpa.InDbFile;
+import com.jakubwilk.serwisant.api.repository.FileRepository;
+import com.jakubwilk.serwisant.api.entity.jpa.RepairDbFile;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ByteArrayResource;
@@ -15,18 +15,18 @@ import java.io.IOException;
 import java.util.*;
 
 @Service
-public class FileServiceDefault implements FileService{
+public class RepairDbFileServiceDefault implements RepairDbFileService {
     @Value("${spring.servlet.multipart.max-file-size}")
     private DataSize maxFileSize;
     private final FileRepository fileRepository;
 
-    public FileServiceDefault(FileRepository fileRepository) {
+    public RepairDbFileServiceDefault(FileRepository fileRepository) {
         this.fileRepository = fileRepository;
     }
 
     @Override
     @Transactional
-    public InDbFile saveSingleFile(MultipartFile file, int repairId) throws IOException {
+    public RepairDbFile saveSingleFile(MultipartFile file, int repairId) throws IOException {
             if (file == null) throw new RuntimeException("File can't be null!");
 
             String filename = StringUtils.cleanPath(file.getOriginalFilename());
@@ -35,16 +35,16 @@ public class FileServiceDefault implements FileService{
                 throw new RuntimeException("File size exceeds maximum limit!");
             }
 
-            InDbFile fileToSave = new InDbFile(filename, file.getContentType(), repairId, file.getBytes());
+            RepairDbFile fileToSave = new RepairDbFile(filename, file.getContentType(), repairId, file.getBytes());
             return fileRepository.save(fileToSave);
     }
 
     @Override
     @Transactional
-    public List<InDbFile> saveFiles(MultipartFile[] files, int repairId) throws IOException {
+    public List<RepairDbFile> saveFiles(MultipartFile[] files, int repairId) throws IOException {
         if(files == null) throw new RuntimeException("Files can't be null!");
 
-        List<InDbFile> savedFiles = new ArrayList<>();
+        List<RepairDbFile> savedFiles = new ArrayList<>();
         Arrays.asList(files).forEach(file -> {
             try{
                 savedFiles.add(saveSingleFile(file, repairId));
@@ -58,16 +58,16 @@ public class FileServiceDefault implements FileService{
 
     @Override
     @Transactional
-    public List<InDbFile> getAllFiles(int repairId) {
+    public List<RepairDbFile> getAllFiles(int repairId) {
         return fileRepository.findAllByRepairId(repairId);
     }
 
     @Override
     public Resource getFileAsResource(UUID fileId) {
-        Optional<InDbFile> result = fileRepository.findById(fileId);
+        Optional<RepairDbFile> result = fileRepository.findById(fileId);
 
         if(result.isPresent()){
-            InDbFile file = result.get();
+            RepairDbFile file = result.get();
 
             return new ByteArrayResource(file.getData());
         }else{

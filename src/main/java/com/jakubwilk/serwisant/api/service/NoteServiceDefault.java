@@ -1,9 +1,9 @@
 package com.jakubwilk.serwisant.api.service;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.jakubwilk.serwisant.api.dao.NoteRepository;
-import com.jakubwilk.serwisant.api.entity.Note;
-import com.jakubwilk.serwisant.api.entity.Repair;
+import com.jakubwilk.serwisant.api.repository.NoteRepository;
+import com.jakubwilk.serwisant.api.entity.jpa.Note;
+import com.jakubwilk.serwisant.api.entity.jpa.Repair;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -12,8 +12,8 @@ import java.util.Optional;
 
 @Service
 public class NoteServiceDefault implements NoteService {
-    private NoteRepository repository;
-    private RepairService repairService;
+    private final NoteRepository repository;
+    private final RepairService repairService;
 
     public NoteServiceDefault(NoteRepository repository, RepairService repairService) {
         this.repository = repository;

@@ -1,5 +1,6 @@
-package com.jakubwilk.serwisant.api.entity;
+package com.jakubwilk.serwisant.api.entity.jpa;
 
+import com.jakubwilk.serwisant.api.entity.jpa.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,7 +8,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Entity
 @Table(name="password_reset_token")

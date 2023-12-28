@@ -2,13 +2,13 @@ package com.jakubwilk.serwisant.api.service;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jakubwilk.serwisant.api.dao.DeviceRepository;
-import com.jakubwilk.serwisant.api.dao.RepairRepository;
-import com.jakubwilk.serwisant.api.dao.UserRepository;
-import com.jakubwilk.serwisant.api.entity.Device;
-import com.jakubwilk.serwisant.api.entity.Repair;
-import com.jakubwilk.serwisant.api.entity.User;
-import com.jakubwilk.serwisant.api.entity.UserDetails;
+import com.jakubwilk.serwisant.api.repository.DeviceRepository;
+import com.jakubwilk.serwisant.api.repository.RepairRepository;
+import com.jakubwilk.serwisant.api.repository.UserRepository;
+import com.jakubwilk.serwisant.api.entity.jpa.Device;
+import com.jakubwilk.serwisant.api.entity.jpa.Repair;
+import com.jakubwilk.serwisant.api.entity.jpa.User;
+import com.jakubwilk.serwisant.api.entity.jpa.UserDetails;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -52,7 +52,7 @@ public class RepairServiceTests {
         deviceRepository = Mockito.mock(DeviceRepository.class);
         deviceService = new DeviceServiceDefault(deviceRepository);
         eventPublisher = Mockito.mock(eventPublisher);
-        repairService = new RepairServiceDefault(repairRepository, userService,userRepository, deviceService, eventPublisher);
+//        repairService = new RepairServiceDefault(repairRepository, userService,userRepository, deviceService, fileStorage, eventPublisher);
 
         testRepair = Repair.builder()
                 .issuer(User

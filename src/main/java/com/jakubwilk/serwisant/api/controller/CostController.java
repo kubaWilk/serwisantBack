@@ -1,8 +1,7 @@
 package com.jakubwilk.serwisant.api.controller;
 
-import com.jakubwilk.serwisant.api.entity.Cost;
+import com.jakubwilk.serwisant.api.entity.jpa.Cost;
 import com.jakubwilk.serwisant.api.service.CostService;
-import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

@@ -1,12 +1,15 @@
 package com.jakubwilk.serwisant.api.service;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.jakubwilk.serwisant.api.dao.RepairRepository;
-import com.jakubwilk.serwisant.api.dao.UserRepository;
-import com.jakubwilk.serwisant.api.entity.Device;
-import com.jakubwilk.serwisant.api.entity.Repair;
-import com.jakubwilk.serwisant.api.entity.User;
+import com.jakubwilk.serwisant.api.repository.RepairRepository;
+import com.jakubwilk.serwisant.api.repository.UserRepository;
+import com.jakubwilk.serwisant.api.entity.jpa.Device;
+import com.jakubwilk.serwisant.api.entity.jpa.Repair;
+import com.jakubwilk.serwisant.api.entity.jpa.User;
+import com.jakubwilk.serwisant.api.event.events.RepairCreatedEvent;
+import com.jakubwilk.serwisant.api.event.events.RepairStatusChangedEvent;
 import jakarta.transaction.Transactional;
+import lombok.AllArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
@@ -14,21 +17,14 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@AllArgsConstructor
 public class RepairServiceDefault implements RepairService {
     private final RepairRepository repository;
     private final UserService userService;
     private final UserRepository userRepository;
     private final DeviceService deviceService;
-
+    private final RepairDbFileService fileService;
     private ApplicationEventPublisher eventPublisher;
-
-    public RepairServiceDefault(RepairRepository repository, UserService userService, UserRepository userRepository, DeviceService deviceService, ApplicationEventPublisher eventPublisher) {
-        this.repository = repository;
-        this.userService = userService;
-        this.userRepository = userRepository;
-        this.deviceService = deviceService;
-        this.eventPublisher = eventPublisher;
-    }
 
     @Override
     public Repair findById(int id){
@@ -66,36 +62,50 @@ public class RepairServiceDefault implements RepairService {
         int deviceId = repairJsonNode.get("device").asInt();
         Device device = deviceService.findById(deviceId);
 
+        String description = repairJsonNode.get("description").asText("");
+        double estimatedCost = repairJsonNode.get("estimatedCost").asDouble(0);
+
         Repair newRepair = Repair.builder()
                 .issuer(issuer)
                 .device(device)
                 .repairStatus(Repair.Status.OPEN)
+                .description(description)
+                .estimatedCost(estimatedCost)
                 .build();
 
+        eventPublisher.publishEvent(new RepairCreatedEvent(RepairServiceDefault.class, issuer, newRepair));
         return repository.save(newRepair);
     }
 
     @Override
     @Transactional
     public Repair updateRepair(Repair repair) {
-        if(checkForStatusUpdate(repair)){
+        if(repair == null) throw new NullPointerException(("Repair can't be null!"));
+        Repair updated;
 
+        if(checkForStatusUpdate(repair)){
+            updated = repository.save(repair);
+            eventPublisher.publishEvent(
+                    new RepairStatusChangedEvent(RepairServiceDefault.class, repair.getIssuer(), updated));
+        }else{
+            updated = repository.save(repair);
         }
 
-        if(repair == null) throw new NullPointerException(("Repair can't be null!"));
-        return repository.save(repair);
+        return updated;
     }
 
     @Override
     @Transactional
     public void deleteRepair(int id) {
         Optional <Repair> result = repository.findById(id);
+
         if(result.isPresent()){
             Repair repair = result.get();
             Device device = repair.getDevice();
             User issuer = repair.getIssuer();
             repair.setIssuer(null);
             repair.setDevice(null);
+            fileService.deleteAll(id);
             device.removeRepair(repair);
             issuer.removeRepair(repair);
             repository.save(repair);

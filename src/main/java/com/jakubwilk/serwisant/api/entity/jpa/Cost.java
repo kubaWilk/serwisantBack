@@ -1,4 +1,4 @@
-package com.jakubwilk.serwisant.api.entity;
+package com.jakubwilk.serwisant.api.entity.jpa;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -17,7 +17,7 @@ public class Cost {
     private int id;
 
     @Column(name="price")
-    private float price;
+    private double price;
 
     @Enumerated(EnumType.ORDINAL)
     private CostType costType;

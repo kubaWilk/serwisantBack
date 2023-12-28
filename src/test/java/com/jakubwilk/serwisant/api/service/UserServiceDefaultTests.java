@@ -1,15 +1,13 @@
 package com.jakubwilk.serwisant.api.service;
 
-import com.jakubwilk.serwisant.api.dao.UserRepository;
-import com.jakubwilk.serwisant.api.entity.User;
-import com.jakubwilk.serwisant.api.entity.UserDetails;
+import com.jakubwilk.serwisant.api.repository.UserRepository;
+import com.jakubwilk.serwisant.api.entity.jpa.User;
+import com.jakubwilk.serwisant.api.entity.jpa.UserDetails;
 import com.jakubwilk.serwisant.api.exception.UserNotFoundException;
-import com.jakubwilk.serwisant.api.service.UserServiceDefault;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -21,7 +19,6 @@ import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.when;
 
 @SpringBootTest
 @AutoConfigureTestDatabase

@@ -1,9 +1,11 @@
 package com.jakubwilk.serwisant.api.event.events;
 
-import com.jakubwilk.serwisant.api.entity.PasswordResetToken;
-import com.jakubwilk.serwisant.api.entity.User;
+import com.jakubwilk.serwisant.api.entity.jpa.PasswordResetToken;
+import com.jakubwilk.serwisant.api.entity.jpa.User;
+import lombok.Getter;
 import org.springframework.context.ApplicationEvent;
 
+@Getter
 public class ResetPasswordEvent extends ApplicationEvent {
     private final User user;
     private final PasswordResetToken token;

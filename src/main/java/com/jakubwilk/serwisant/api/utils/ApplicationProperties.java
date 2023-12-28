@@ -1,17 +1,30 @@
 package com.jakubwilk.serwisant.api.utils;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Component;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
+import org.springframework.context.annotation.Configuration;
 
+import java.nio.file.Path;
+
+@ConfigurationProperties(prefix = "api.paths")
+@ConfigurationPropertiesScan
 @Getter
 @Setter
-public class ApplicationPropertiesUtility {
-    @Value("${api.front.url}")
+@AllArgsConstructor
+@NoArgsConstructor
+public class ApplicationProperties {
     private String frontUrl;
 
-    @Value("${api.file-storage.directory}")
     private String fileStorageDirectory;
+
+    private String resources;
+
+    private Path protocols;
+
+    private String font;
 }

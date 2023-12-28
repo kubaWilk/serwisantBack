@@ -1,15 +1,8 @@
-package com.jakubwilk.serwisant.api.controller.file;
+package com.jakubwilk.serwisant.api.controller.repair;
 
-import com.jakubwilk.serwisant.api.entity.jpa.File;
-import com.jakubwilk.serwisant.api.entity.jpa.Repair;
-import com.jakubwilk.serwisant.api.service.FileService;
-import com.jakubwilk.serwisant.api.service.RepairProtocolService;
-import com.jakubwilk.serwisant.api.service.RepairService;
+import com.jakubwilk.serwisant.api.entity.jpa.RepairDbFile;
+import com.jakubwilk.serwisant.api.service.RepairDbFileService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.core.io.FileSystemResource;
-import org.springframework.core.io.InputStreamResource;
-import org.springframework.core.io.Resource;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,14 +18,12 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/repair/{id}/files")
 @RequiredArgsConstructor
-public class FileController {
-    private final FileService fileService;
-    private final RepairProtocolService repairProtocolService;
-    private final RepairService repairService;
+public class RepairPhotosController {
+    private final RepairDbFileService fileService;
 
     @PostMapping("/single")
     public FileResponse uploadSingleFile(@RequestParam("file")MultipartFile file, @PathVariable("id") int repairId){
-        File fileToSave;
+        RepairDbFile fileToSave;
         try {
             fileToSave = fileService.saveSingleFile(file, repairId);
         } catch (IOException e) {
@@ -58,7 +49,7 @@ public class FileController {
 
         try {
             for (MultipartFile file : files) {
-                File toSave = fileService.saveSingleFile(file, repairId);
+                RepairDbFile toSave = fileService.saveSingleFile(file, repairId);
 
                 String downloadUrl = ServletUriComponentsBuilder.fromCurrentContextPath()
                         .path("/download/")
@@ -79,7 +70,7 @@ public class FileController {
 
     @GetMapping("/all")
     public ResponseEntity<List<FileResponse>> getAllFiles(@PathVariable("id") int repairId) {
-        List<File> files = fileService.getAllFiles(repairId);
+        List<RepairDbFile> files = fileService.getAllFiles(repairId);
 
         List<FileResponse> responseClasses = files.stream().map(product -> {
             String downloadURL = ServletUriComponentsBuilder.fromCurrentContextPath()
@@ -100,23 +91,5 @@ public class FileController {
             produces = MediaType.IMAGE_JPEG_VALUE)
     public @ResponseBody byte[] getSingleFile(@PathVariable("fileId") UUID fileId) throws IOException {
         return fileService.getFileAsResource(fileId).getContentAsByteArray();
-    }
-
-    @GetMapping("/protocol/{repairId}")
-    public ResponseEntity<Resource> getRepairCreatedProtocol(@PathVariable("repairId") int repairId){
-        Repair repair = repairService.findById(repairId);
-        java.io.File pdf =  repairProtocolService.getRepairCreatedProtocol(repair);
-
-        Resource resource = new FileSystemResource(pdf);
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + pdf.getName());
-        headers.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_OCTET_STREAM_VALUE);
-
-        return ResponseEntity.ok()
-                .headers(headers)
-                .contentLength(pdf.length())
-                .contentType(MediaType.APPLICATION_OCTET_STREAM)
-                .body(resource);
     }
 }

@@ -1,4 +1,4 @@
-package com.jakubwilk.serwisant.api.controller.file;
+package com.jakubwilk.serwisant.api.controller.repair;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

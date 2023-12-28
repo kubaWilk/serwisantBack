@@ -1,10 +1,8 @@
-package com.jakubwilk.serwisant.api.entity;
+package com.jakubwilk.serwisant.api.entity.jpa;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.util.HashMap;
 
 @Entity
 @NoArgsConstructor
@@ -29,7 +27,6 @@ public class Authority {
 
     @Column(name="authority")
     @Enumerated(EnumType.STRING)
-    @JsonIgnore
     private Role authority;
 
     public Authority(User user, String username, Role authority) {
