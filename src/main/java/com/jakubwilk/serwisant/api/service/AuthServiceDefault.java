@@ -84,19 +84,21 @@ public class AuthServiceDefault implements AuthService {
     }
 
     @Override
-    public void handlePasswordReset(String token, Map<String, String> newPassword) {
-        String email = newPassword.get("email");
-        String password = newPassword.get("password");
+    public void handlePasswordReset(String token, Map<String, String> request) {
+        String firstPassword = request.get("firstPassword");
+        String secondPassword = request.get("secondPassword");
 
-        if(email.isEmpty() || password.isEmpty()){
+        if(firstPassword.isEmpty() || secondPassword.isEmpty()){
             throw new IllegalArgumentException("E-Mail or password invalid!");
         }
 
-        PasswordResetToken tokenInDb = tokenRepository.findByToken(token);
-        if(!Objects.equals(tokenInDb.getUser().getEmail(), email)){
-            throw new RuntimeException("Provided username doesn't match token's owner");
+        if(!firstPassword.equals(secondPassword)){
+            throw new IllegalArgumentException("Passwords doesn't match!");
         }
 
-        userService.changePassword(email, password);
+        PasswordResetToken tokenInDb = tokenRepository.findByToken(token);
+        String email = tokenInDb.getUser().getEmail();
+
+        userService.changePassword(email, firstPassword);
     }
 }

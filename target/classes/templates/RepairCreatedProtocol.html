@@ -1,70 +1,69 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Protokół przyjęcia sprzętu do naprawy</title>
     <style>
-        body {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            width: 80vw;
-            font-family: 'Roboto', Arial ,sans-serif;
-        }
+      body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        width: 80vw;
+      }
 
-        h1 {
-            text-align: center;
-        }
+      h1 {
+        text-align: center;
+      }
 
-        .side-by-side {
-            display: flex;
-            flex-direction: row;
-            flex-wrap: nowrap;
-            flex-basis: content;
-            justify-content: space-between;
-            padding: 20px;
-        }
+      .side-by-side {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        flex-basis: content;
+        justify-content: space-between;
+        padding: 20px;
+      }
 
-        ul {
-            list-style: none;
-        }
+      ul {
+        list-style: none;
+      }
 
-        li {
-            padding: 5px;
-        }
+      li {
+        padding: 5px;
+      }
 
-        .bold {
-            font-weight: bold;
-        }
+      .bold {
+        font-weight: bold;
+      }
     </style>
-</head>
-<body>
-<h1>Protokół przyjęcia sprzętu do naprawy</h1>
-<div class="side-by-side">
-    <div>
+  </head>
+  <body>
+    <h1>Protokół przyjęcia sprzętu do naprawy</h1>
+    <div class="side-by-side">
+      <div>
         <p class="bold">Dane sprzętu:</p>
         <ul>
-            <li>Producent: <span th:text="${manufacturer}"></span></li>
-            <li>Model: <span th:text="${model}"></span></li>
-            <li>Nr seryjny: <span th:text="${serialNumber}"></span></li>
+          <li>Producent: <span th:text="${manufacturer}"></span></li>
+          <li>Model: <span th:text="${model}"></span></li>
+          <li>Nr seryjny: <span th:text="${serialNumber}"></span></li>
         </ul>
-    </div>
-    <div></div>
-    <div>
+      </div>
+      <div></div>
+      <div>
         <p class="bold">Dane klienta:</p>
         <ul>
-            <li>Imię: <span th:text="${firstName}"></span></li>
-            <li>Nazwisko: <span th:text="${lastName}"></span></li>
-            <li>Ulica: <span th:text="${street}"></span></li>
-            <li>Kod pocztowy: <span th:text="${postCode}"></span></li>
-            <li>Miasto: <span th:text="${city}"></span></li>
+          <li>Imię: <span th:text="${firstName}"></span></li>
+          <li>Nazwisko: <span th:text="${lastName}"></span></li>
+          <li>Ulica: <span th:text="${street}"></span></li>
+          <li>Kod pocztowy: <span th:text="${postCode}"></span></li>
+          <li>Miasto: <span th:text="${city}"></span></li>
         </ul>
+      </div>
     </div>
-</div>
-<div>
-    <p>Opis usterki: <span th:text="${description}"></span></p>
-    <p>Przewidywany koszt: <span th:text="${estimatedCost}"></span>zł</p>
-</div>
-</body>
+    <div>
+      <p>Opis usterki: <span th:text="${description}"></span></p>
+      <p>Przewidywany koszt: <span th:text="${estimatedCost}"></span>zł</p>
+    </div>
+  </body>
 </html>

@@ -25,12 +25,27 @@ public class NoteController {
         return ResponseEntity.ok(found);
     }
 
+    @GetMapping("/all")
+    public ResponseEntity<List<Note>> getAllNotes(@RequestParam(name = "repairid") int repairId){
+        List<Note> result = noteService.findAllNotes(repairId);
+
+        return ResponseEntity.ok(result);
+    }
+
     @GetMapping("/")
     public ResponseEntity<List<Note>> getAllNotes(){
         List<Note> result = noteService.findAllNotes();
 
         return ResponseEntity.ok(result);
     }
+
+    //    It consumes JSON in such format:
+    //    {
+    //        "visibility": PUBLIC or PRIVTE,
+    //        "message": string,
+    //        "repairId": int,
+    //        "authorId": int
+    //    }
 
     @PostMapping("/")
     public ResponseEntity<Note> saveNote(@RequestBody JsonNode toSave){

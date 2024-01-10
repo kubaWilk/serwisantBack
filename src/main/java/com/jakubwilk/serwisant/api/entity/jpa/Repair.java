@@ -1,5 +1,6 @@
 package com.jakubwilk.serwisant.api.entity.jpa;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -41,9 +42,11 @@ public class Repair {
 //    @Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
     private Device device;
 
+    @ToString.Exclude
+    @JsonIgnore
     @OneToMany(mappedBy = "repair",
             cascade = CascadeType.ALL,
-            fetch = FetchType.EAGER)
+            fetch = FetchType.LAZY)
     private List<Note> notes;
 
     @OneToMany(

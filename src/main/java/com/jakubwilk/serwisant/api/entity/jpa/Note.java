@@ -24,11 +24,16 @@ public class Note {
     @Column(name="message")
     private String message;
 
+    @OneToOne
+    @JoinColumn(name="author_id")
+    private User author;
+
     @ManyToOne(cascade = {
             CascadeType.MERGE,
             CascadeType.DETACH,
             CascadeType.PERSIST,
-            CascadeType.REFRESH})
+            CascadeType.REFRESH},
+    fetch = FetchType.LAZY)
     @JoinColumn(name="repair_id")
     @ToString.Exclude
     @JsonIgnore

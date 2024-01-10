@@ -1,16 +1,14 @@
 package com.jakubwilk.serwisant.api.controller.user;
 
+import com.jakubwilk.serwisant.api.controller.ErrorResponse;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Getter
-@Setter
-public class UserErrorResponse {
-    private int status;
-    private String message;
-    private long timeStamp;
+
+public class UserErrorResponse extends ErrorResponse {
+    public UserErrorResponse(int status, String message, long timeStamp) {
+        super(status, message, timeStamp);
+    }
 }

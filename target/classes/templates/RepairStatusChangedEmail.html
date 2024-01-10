@@ -1,10 +1,17 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>Witaj w serwisie</title>
-</head>
-<body>
-<h1>Witaj w serwisie</h1>
-<p th:text="${bodyText}">Testowy e-mail</p>
-</body>
+  <head>
+    <title>Zmiana statusu naprawy</title>
+  </head>
+  <body>
+    <p>
+      Zmieniono status naprawy #<span th:text="${repairId}">repaidId</span> na
+      <span th:text="${repairStatus}">status</span>
+    </p>
+    <p>Aby być na bieżaco zajrzyj na: <a th:href="${repairLink}">Link</a></p>
+    <p>
+      Pozdrawiamy <br />
+      Serwis komputerowy
+    </p>
+  </body>
 </html>

@@ -1,6 +1,7 @@
 package com.jakubwilk.serwisant.api.service;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.jakubwilk.serwisant.api.exception.RepairNotFoundException;
 import com.jakubwilk.serwisant.api.repository.RepairRepository;
 import com.jakubwilk.serwisant.api.repository.UserRepository;
 import com.jakubwilk.serwisant.api.entity.jpa.Device;
@@ -41,7 +42,7 @@ public class RepairServiceDefault implements RepairService {
     public List<Repair> findAllRepairs() {
         List<Repair> repairs = repository.findAll();
 
-        if(repairs.isEmpty()) throw new RuntimeException("No repairs found!");
+        if(repairs.isEmpty()) throw new RepairNotFoundException("No repairs found!");
         return repairs;
     }
 

@@ -1,6 +1,6 @@
 package com.jakubwilk.serwisant.api.service;
 
-import com.jakubwilk.serwisant.api.repository.FileRepository;
+import com.jakubwilk.serwisant.api.repository.RepairDbFileRepository;
 import com.jakubwilk.serwisant.api.entity.jpa.RepairDbFile;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,10 +18,10 @@ import java.util.*;
 public class RepairDbFileServiceDefault implements RepairDbFileService {
     @Value("${spring.servlet.multipart.max-file-size}")
     private DataSize maxFileSize;
-    private final FileRepository fileRepository;
+    private final RepairDbFileRepository repairDbFileRepository;
 
-    public RepairDbFileServiceDefault(FileRepository fileRepository) {
-        this.fileRepository = fileRepository;
+    public RepairDbFileServiceDefault(RepairDbFileRepository repairDbFileRepository) {
+        this.repairDbFileRepository = repairDbFileRepository;
     }
 
     @Override
@@ -36,7 +36,7 @@ public class RepairDbFileServiceDefault implements RepairDbFileService {
             }
 
             RepairDbFile fileToSave = new RepairDbFile(filename, file.getContentType(), repairId, file.getBytes());
-            return fileRepository.save(fileToSave);
+            return repairDbFileRepository.save(fileToSave);
     }
 
     @Override
@@ -59,12 +59,12 @@ public class RepairDbFileServiceDefault implements RepairDbFileService {
     @Override
     @Transactional
     public List<RepairDbFile> getAllFiles(int repairId) {
-        return fileRepository.findAllByRepairId(repairId);
+        return repairDbFileRepository.findAllByRepairId(repairId);
     }
 
     @Override
     public Resource getFileAsResource(UUID fileId) {
-        Optional<RepairDbFile> result = fileRepository.findById(fileId);
+        Optional<RepairDbFile> result = repairDbFileRepository.findById(fileId);
 
         if(result.isPresent()){
             RepairDbFile file = result.get();
@@ -78,6 +78,6 @@ public class RepairDbFileServiceDefault implements RepairDbFileService {
     @Override
     @Transactional
     public void deleteAll(int repairId){
-        fileRepository.deleteAllByRepairId(repairId);
+        repairDbFileRepository.deleteAllByRepairId(repairId);
     }
 }

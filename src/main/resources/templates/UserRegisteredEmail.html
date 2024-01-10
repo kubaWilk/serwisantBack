@@ -1,10 +1,43 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>Witaj w serwisie</title>
-</head>
-<body>
-<h1>Witaj w serwisie</h1>
-<p th:text="${bodyText}">Testowy e-mail</p>
-</body>
+  <style>
+    .basic-border {
+      display: inline-block;
+      padding: 10px;
+      border: 1px solid gray;
+      border-radius: 5px;
+    }
+  </style>
+  <head>
+    <title>Witaj wśród klientów naszego serwisu!</title>
+  </head>
+  <body>
+    <h1>Witaj wśród klientów naszego serwisu!</h1>
+    <p>
+      Cieszymy się, że dołączyliście Państwo do grona naszych klientów. Nie
+      możemy się doczekać, aby naprawić wasz sprzęt. Stworzyliśmy dla was konto,
+      abyście mogli pozostać z nami w kontakcie lub sprawdzić status naprawy.
+      Poniżej znajdują się dane do logowania.
+    </p>
+    <div class="basic-border">
+      <p class="fit-content">
+        Login:
+        <span th:text="${username}"
+          >Jesli widzisz ten tekst, zgłoś problem do naszej obsługi</span
+        >
+      </p>
+      <p>
+        Startowe hasło:
+        <span th:text="${password}"
+          >Jesli widzisz ten tekst, zgłoś problem do naszej obsługi</span
+        >
+      </p>
+    </div>
+
+    <p>
+      Aby się zalogować należy wejść na link: <a th:text="${loginPageLink}"></a>
+    </p>
+
+    <p>Pozdrawiamy!<br />Serwis komputerowy</p>
+  </body>
 </html>

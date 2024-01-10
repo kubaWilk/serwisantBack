@@ -1,7 +1,0 @@
-com/jakubwilk/serwisant/api/repository/UserRepository.class
-com/jakubwilk/serwisant/api/repository/TokenRepository.class
-com/jakubwilk/serwisant/api/repository/RepairRepository.class
-com/jakubwilk/serwisant/api/repository/FileRepository.class
-com/jakubwilk/serwisant/api/repository/NoteRepository.class
-com/jakubwilk/serwisant/api/repository/DeviceRepository.class
-com/jakubwilk/serwisant/api/repository/CostRepository.class

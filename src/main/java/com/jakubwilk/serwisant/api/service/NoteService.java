@@ -10,6 +10,8 @@ public interface NoteService {
 
     List<Note> findAllNotes();
 
+    List<Note> findAllNotes(int repairId);
+
     Note saveNote(JsonNode noteJsonNode);
 
     Note updateNote(JsonNode toUpdate);

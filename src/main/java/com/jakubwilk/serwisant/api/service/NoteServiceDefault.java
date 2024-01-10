@@ -1,6 +1,7 @@
 package com.jakubwilk.serwisant.api.service;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.jakubwilk.serwisant.api.entity.jpa.User;
 import com.jakubwilk.serwisant.api.repository.NoteRepository;
 import com.jakubwilk.serwisant.api.entity.jpa.Note;
 import com.jakubwilk.serwisant.api.entity.jpa.Repair;
@@ -14,10 +15,12 @@ import java.util.Optional;
 public class NoteServiceDefault implements NoteService {
     private final NoteRepository repository;
     private final RepairService repairService;
+    private final UserService userService;
 
-    public NoteServiceDefault(NoteRepository repository, RepairService repairService) {
+    public NoteServiceDefault(NoteRepository repository, RepairService repairService, UserService userService) {
         this.repository = repository;
         this.repairService = repairService;
+        this.userService = userService;
     }
 
     @Override
@@ -33,24 +36,32 @@ public class NoteServiceDefault implements NoteService {
 
     @Override
     public List<Note> findAllNotes() {
-        List<Note> notes = repository.findAll();
-
-        if(notes.isEmpty()) throw new RuntimeException("No Notes found!");
-        return notes;
+        return repository.findAll();
     }
+
+    @Override
+    public List<Note> findAllNotes(int repairId) {
+        return repository.findAllNotesByRepairId(repairId);
+    }
+
+//
 
     @Override
     @Transactional
     public Note saveNote(JsonNode noteJsonNode) {
         checkNoteNode(noteJsonNode);
 
-        int repairId = noteJsonNode.get("repair").asInt();
+        int repairId = noteJsonNode.get("repairId").asInt();
         Repair theRepair = repairService.findById(repairId);
 
+        int authorId = noteJsonNode.get("authorId").asInt();
+        User author = userService.findById(authorId);
+
         Note newNote = Note.builder()
-                .visibility(Note.Visibility.valueOf(noteJsonNode.get("visibility").asText()))
+                .visibility(Note.Visibility.valueOf(noteJsonNode.get("visibility").asText().toUpperCase()))
                 .message(noteJsonNode.get("message").asText())
                 .repair(theRepair)
+                .author(author)
                 .build();
 
         return repository.save(newNote);
@@ -81,8 +92,10 @@ public class NoteServiceDefault implements NoteService {
             throw new IllegalArgumentException("Note must contain visibility level!");
         if(!node.has("message"))
             throw new IllegalArgumentException("Note must contain message!");
-        if(!node.has("repair"))
+        if(!node.has("repairId"))
             throw new IllegalArgumentException("Note must contain repair id!");
+        if(!node.has("authorId"))
+            throw new IllegalArgumentException("Note must have an author");
     }
 
     @Override

@@ -1,6 +1,7 @@
 -- ### DROP DB ###
 alter table if exists authorities drop constraint if exists FKk91upmbueyim93v469wj7b2qh;
 alter table if exists cost drop constraint if exists FKskp0e42nvl99cjhjof3fltbcg;
+alter table if exists note drop constraint if exists FKslvrt3e5dpkx0tm8wbtcxy093;
 alter table if exists note drop constraint if exists FK94ucwcm02pj66wdvxmnvahpqp;
 alter table if exists password_reset_token drop constraint if exists FK83nsrttkwkb6ym0anu051mtxn;
 alter table if exists repair drop constraint if exists FKe2lm4qyk4g36lkdab4sqfxnwf;
@@ -62,6 +63,7 @@ create table device (
 );
 
 create table note (
+    author_id integer,
     note_id serial not null,
     repair_id integer,
     visibility smallint check (visibility between 0 and 1),
@@ -121,26 +123,36 @@ create table users (
 
 alter table if exists authorities
     add constraint FKk91upmbueyim93v469wj7b2qh foreign key (user_id) references users;
+
 alter table if exists cost
     add constraint FKskp0e42nvl99cjhjof3fltbcg foreign key (repair_id) references repair;
+
+alter table if exists note
+    add constraint FKslvrt3e5dpkx0tm8wbtcxy093 foreign key (author_id) references users;
+
 alter table if exists note
     add constraint FK94ucwcm02pj66wdvxmnvahpqp foreign key (repair_id) references repair
         on delete cascade;
+
 alter table if exists password_reset_token
     add constraint FK83nsrttkwkb6ym0anu051mtxn foreign key (user_id) references users;
 
 alter table if exists repair
     add constraint FKe2lm4qyk4g36lkdab4sqfxnwf foreign key (device_id) references device;
+
 alter table if exists repair
     add constraint FKixsc0illvsi63j93mh26w003c foreign key (issuer_user_id) references users;
 
 alter table if exists repair_costs
     add constraint FKtovovsvew76ohqhu2ytulwh0 foreign key (costs_id) references cost;
+
 alter table if exists repair_costs
     add constraint FKmb1u5kjqqqrlb1pnmkw05xapc foreign key (repair_id) references repair;
+
 alter table if exists users
     add constraint FKlbumi6chkcxaxk2m91y429dv1 foreign key (reset_token_id)
         references password_reset_token;
+
 alter table if exists users
     add constraint FKfsi9283rk1akvfmlbfrhdn5vj foreign key (user_detail_id) references user_details;
 
@@ -165,8 +177,14 @@ insert into device(manufacturer, model, serial_number)
 insert into repair (device_id, issuer_user_id, estimated_cost, description, repair_status)
     values (1, 1, 120.2, 'Nie działa', 'OPEN');
 
-insert into note (repair_id, visibility, message)
-    values(1, 0, 'test Note');
+    insert into repair (device_id, issuer_user_id, estimated_cost, description, repair_status)
+        values (1, 1, 230.2, 'Nie działa', 'OPEN');
 
-insert into note (repair_id, visibility, message)
-values(1, 1, 'test Note');
+insert into note (author_id, repair_id, visibility, message)
+values(1, 1, 1, 'test Note');
+
+insert into note (author_id, repair_id, visibility, message)
+values(1, 1, 0, 'test Note');
+
+insert into note (author_id, repair_id, visibility, message)
+values(1, 2, 1, 'test Note');
