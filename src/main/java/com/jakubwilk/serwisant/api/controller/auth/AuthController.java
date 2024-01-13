@@ -1,4 +1,4 @@
-package com.jakubwilk.serwisant.api.controller;
+package com.jakubwilk.serwisant.api.controller.auth;
 
 import com.jakubwilk.serwisant.api.entity.LoginRequest;
 import com.jakubwilk.serwisant.api.entity.jpa.User;
@@ -19,6 +19,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/auth")
+@ControllerAdvice
 public class AuthController {
     private static final Logger LOGGER = LoggerFactory.getLogger(AuthController.class);
     private final AuthService authService;
@@ -33,6 +34,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
+
     public ResponseEntity<Map<String,Object>> token(@RequestBody LoginRequest loginRequest){
         LOGGER.debug("Auth token request for: " + loginRequest.username());
         String username = loginRequest.username();

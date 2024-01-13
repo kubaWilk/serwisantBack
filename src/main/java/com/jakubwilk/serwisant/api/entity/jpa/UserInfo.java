@@ -1,7 +1,6 @@
 package com.jakubwilk.serwisant.api.entity.jpa;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.jakubwilk.serwisant.api.entity.jpa.User;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -13,7 +12,7 @@ import lombok.*;
 @Setter
 @ToString
 @Builder
-public class UserDetails {
+public class UserInfo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="user_details_id")
@@ -36,7 +35,7 @@ public class UserDetails {
 
     @JsonIgnore
     @ToString.Exclude
-    @OneToOne(mappedBy = "userDetails",
+    @OneToOne(mappedBy = "userInfo",
                 fetch = FetchType.EAGER)
     private User user;
 }

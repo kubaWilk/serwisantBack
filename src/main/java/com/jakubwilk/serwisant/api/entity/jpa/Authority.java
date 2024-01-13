@@ -1,6 +1,7 @@
 package com.jakubwilk.serwisant.api.entity.jpa;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.jakubwilk.serwisant.api.entity.Role;
 import jakarta.persistence.*;
 import lombok.*;
 

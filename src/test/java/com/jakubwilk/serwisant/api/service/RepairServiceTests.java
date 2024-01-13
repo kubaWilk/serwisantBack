@@ -8,7 +8,7 @@ import com.jakubwilk.serwisant.api.repository.UserRepository;
 import com.jakubwilk.serwisant.api.entity.jpa.Device;
 import com.jakubwilk.serwisant.api.entity.jpa.Repair;
 import com.jakubwilk.serwisant.api.entity.jpa.User;
-import com.jakubwilk.serwisant.api.entity.jpa.UserDetails;
+import com.jakubwilk.serwisant.api.entity.jpa.UserInfo;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -57,7 +57,7 @@ public class RepairServiceTests {
         testRepair = Repair.builder()
                 .issuer(User
                         .builder()
-                        .userDetails(new UserDetails())
+                        .userInfo(new UserInfo())
                         .build())
                 .device(new Device())
                 .build();

@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jakubwilk.serwisant.api.controller.user.UserController;
 import com.jakubwilk.serwisant.api.repository.UserRepository;
 import com.jakubwilk.serwisant.api.entity.jpa.User;
-import com.jakubwilk.serwisant.api.entity.jpa.UserDetails;
+import com.jakubwilk.serwisant.api.entity.jpa.UserInfo;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -57,7 +57,7 @@ public class UserControllerTests {
                 .password("test")
                 .isActive(true)
                 .email("test@test.com")
-                .userDetails(UserDetails.builder()
+                .userInfo(UserInfo.builder()
                         .firstName("test")
                         .lastName("test")
                         .street("test")
@@ -121,7 +121,7 @@ public class UserControllerTests {
                 .password("test")
                 .isActive(true)
                 .email("UniqueE-Mail@test.com")
-                .userDetails(UserDetails.builder()
+                .userInfo(UserInfo.builder()
                         .firstName("test")
                         .lastName("test")
                         .street("test")

@@ -1,5 +1,6 @@
 package com.jakubwilk.serwisant.api.service;
 
+import com.jakubwilk.serwisant.api.exception.DeviceNotFoundException;
 import com.jakubwilk.serwisant.api.repository.DeviceRepository;
 import com.jakubwilk.serwisant.api.entity.jpa.Device;
 import org.springframework.stereotype.Service;
@@ -21,7 +22,7 @@ public class DeviceServiceDefault implements DeviceService{
         if(result.isPresent()){
             return result.get();
         }else{
-            throw new RuntimeException("Couldn't find device with id: " + id);
+            throw new DeviceNotFoundException("Couldn't find device with id: " + id);
         }
     }
 
@@ -29,7 +30,7 @@ public class DeviceServiceDefault implements DeviceService{
     public List<Device> findAllDevices() {
         List<Device> found = repository.findAll();
 
-        if(found.isEmpty()) throw new RuntimeException("No Devices found!");
+        if(found.isEmpty()) throw new DeviceNotFoundException("No Devices found!");
         return found;
     }
 

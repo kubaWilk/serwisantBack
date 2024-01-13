@@ -10,11 +10,11 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class RepairExceptionHandler {
     @ExceptionHandler
     public ResponseEntity<RepairErrorResponse> repairNotFoundHandler(RepairNotFoundException exception){
-        RepairErrorResponse error = new RepairErrorResponse(HttpStatus.NOT_FOUND.value(),
+        RepairErrorResponse error = new RepairErrorResponse(HttpStatus.NO_CONTENT.value(),
                 exception.getMessage(),
                 System.currentTimeMillis());
 
-        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(error, HttpStatus.NO_CONTENT);
     }
 
 }

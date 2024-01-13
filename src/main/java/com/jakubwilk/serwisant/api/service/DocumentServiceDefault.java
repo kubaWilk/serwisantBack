@@ -4,7 +4,6 @@ import com.jakubwilk.serwisant.api.utils.ApplicationProperties;
 import com.lowagie.text.DocumentException;
 import com.lowagie.text.pdf.BaseFont;
 import org.springframework.stereotype.Service;
-import org.xhtmlrenderer.pdf.ITextFontResolver;
 import org.xhtmlrenderer.pdf.ITextRenderer;
 
 import java.io.File;
@@ -13,13 +12,13 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 @Service
-public class FileService {
+public class DocumentServiceDefault implements DocumentService {
     private final ApplicationProperties applicationProperties;
 
-    public FileService(ApplicationProperties applicationProperties) {
+    public DocumentServiceDefault(ApplicationProperties applicationProperties) {
         this.applicationProperties = applicationProperties;
     }
-
+    @Override
     public File getTempPdfFromAString(String source, String prefix, String suffix){
         try {
             File myPdf = File.createTempFile(prefix, suffix);

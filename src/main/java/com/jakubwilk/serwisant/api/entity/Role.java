@@ -1,4 +1,4 @@
-package com.jakubwilk.serwisant.api.entity.jpa;
+package com.jakubwilk.serwisant.api.entity;
 
 public enum Role {
     ROLE_CUSTOMER,

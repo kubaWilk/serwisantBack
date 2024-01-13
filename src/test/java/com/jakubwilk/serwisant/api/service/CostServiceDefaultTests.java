@@ -35,7 +35,7 @@ public class CostServiceDefaultTests {
                 .repair(Repair.builder()
                         .device(new Device())
                         .issuer(User.builder()
-                                .userDetails(new UserDetails())
+                                .userInfo(new UserInfo())
                                 .build())
                         .build())
                 .build();
@@ -98,7 +98,7 @@ public class CostServiceDefaultTests {
                 .repair(Repair.builder()
                         .device(new Device())
                         .issuer(User.builder()
-                                .userDetails(new UserDetails())
+                                .userInfo(new UserInfo())
                                 .build())
                         .build())
                 .build();

@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
-import static com.jakubwilk.serwisant.api.entity.jpa.Role.ROLE_CUSTOMER;
+import static com.jakubwilk.serwisant.api.entity.Role.ROLE_CUSTOMER;
 
 @Service
 public class UserServiceDefault implements UserService{

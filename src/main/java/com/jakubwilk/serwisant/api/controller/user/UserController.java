@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -24,6 +25,7 @@ public class UserController {
     private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
 
     @GetMapping("/{id}")
+    @Secured("ROLE_CUSTOMER")
     public ResponseEntity<User> findUserById(@PathVariable("id") int id){
         User result = userService.findById(id);
 
@@ -31,6 +33,7 @@ public class UserController {
     }
 
     @GetMapping("/")
+    @Secured("ROLE_EMPLOYEE")
     public ResponseEntity<List<User>> findAllUsers(){
         List<User> result = userService.findAll();
 
@@ -38,6 +41,7 @@ public class UserController {
     }
 
     @PostMapping("/")
+    @Secured("ROLE_EMPLOYEE")
     public ResponseEntity<User> saveUser(@RequestBody User toSave){
         User user = userService.save(toSave);
 
@@ -45,6 +49,7 @@ public class UserController {
     }
 
     @PutMapping("/")
+    @Secured("ROLE_EMPLOYEE")
     public ResponseEntity<User> updateUser(@RequestBody User toSave){
         User user = userService.update(toSave);
 
@@ -52,28 +57,11 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
+    @Secured("ROLE_ADMIN")
     public ResponseEntity<String> deleteUser(@PathVariable("id") int id){
         userService.delete(id);
 
         return ResponseEntity.ok("User with id :" + id + " deleted");
-    }
-
-    @GetMapping("/me")
-    public String returnUserLoggedIn(Principal principal){
-        return principal.toString();
-//            return "hello" + principal.getName();
-    }
-
-    @GetMapping("/{id}/roles")
-    public ResponseEntity<List<Authority>> getUserRoles(@PathVariable("id") int userID){
-        //TODO: implement
-        return null;
-    }
-
-    @PutMapping("/{id}/roles")
-    public ResponseEntity<HttpStatus> updateUserRoles(@PathVariable("id") int userID){
-        //TODO: implement
-        return null;
     }
 }
 

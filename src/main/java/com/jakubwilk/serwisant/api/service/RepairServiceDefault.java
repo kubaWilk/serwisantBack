@@ -12,6 +12,7 @@ import com.jakubwilk.serwisant.api.event.events.RepairStatusChangedEvent;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -118,7 +119,7 @@ public class RepairServiceDefault implements RepairService {
         }
     }
 
-    public boolean checkForStatusUpdate(Repair repair){
+    private boolean checkForStatusUpdate(Repair repair){
         int theId = repair.getId();
         Optional<Repair> result = repository.findById(theId);
 

@@ -1,8 +1,10 @@
 package com.jakubwilk.serwisant.api.entity.jpa;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.jakubwilk.serwisant.api.entity.Role;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -40,7 +42,7 @@ public class User {
 
     @OneToOne(fetch = FetchType.EAGER ,cascade = CascadeType.ALL)
     @JoinColumn(nullable = false, name = "user_detail_id")
-    private UserDetails userDetails;
+    private UserInfo userInfo;
 
     @OneToMany(mappedBy = "user",
             cascade = CascadeType.ALL,

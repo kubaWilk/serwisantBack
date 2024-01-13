@@ -115,9 +115,9 @@ create table users (
    user_detail_id integer not null unique,
    user_id serial not null,
    reset_token_id bigint unique,
-   email varchar(255),
+   email varchar(255) unique,
    password varchar(255),
-   username varchar(255),
+   username varchar(255) unique,
    primary key (user_id)
 );
 

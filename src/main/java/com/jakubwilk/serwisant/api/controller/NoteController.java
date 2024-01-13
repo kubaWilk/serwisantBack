@@ -5,12 +5,14 @@ import com.jakubwilk.serwisant.api.entity.jpa.Note;
 import com.jakubwilk.serwisant.api.service.NoteService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/note")
+@ControllerAdvice
 public class NoteController {
     private NoteService noteService;
 
@@ -19,6 +21,7 @@ public class NoteController {
     }
 
     @GetMapping("/{id}")
+    @Secured("ROLE_CUSTOMER")
     public ResponseEntity<Note> getNoteById(@PathVariable("id") int id){
         Note found = noteService.findNoteById(id);
 
@@ -26,6 +29,7 @@ public class NoteController {
     }
 
     @GetMapping("/all")
+    @Secured("ROLE_CUSTOMER")
     public ResponseEntity<List<Note>> getAllNotes(@RequestParam(name = "repairid") int repairId){
         List<Note> result = noteService.findAllNotes(repairId);
 
@@ -33,6 +37,7 @@ public class NoteController {
     }
 
     @GetMapping("/")
+    @Secured("ROLE_CUSTOMER")
     public ResponseEntity<List<Note>> getAllNotes(){
         List<Note> result = noteService.findAllNotes();
 
@@ -48,6 +53,7 @@ public class NoteController {
     //    }
 
     @PostMapping("/")
+    @Secured("ROLE_CUSTOMER")
     public ResponseEntity<Note> saveNote(@RequestBody JsonNode toSave){
         Note saved = noteService.saveNote(toSave);
 
@@ -55,16 +61,17 @@ public class NoteController {
     }
 
     @PutMapping("/")
+    @Secured("ROLE_CUSTOMER")
     public ResponseEntity<Note> updateNote(@RequestBody JsonNode toUpdate){
         Note updated = noteService.updateNote(toUpdate);
         return new ResponseEntity<Note>(updated, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
+    @Secured("ROLE_CUSTOMER")
     public ResponseEntity<Note> deleteNote(@PathVariable("id") int id){
         noteService.deleteNoteById(id);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
 }

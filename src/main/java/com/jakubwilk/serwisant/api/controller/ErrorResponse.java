@@ -10,7 +10,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Setter
 @Getter
-public abstract class ErrorResponse {
+public class ErrorResponse {
     protected int status;
     protected String message;
     protected long timeStamp;

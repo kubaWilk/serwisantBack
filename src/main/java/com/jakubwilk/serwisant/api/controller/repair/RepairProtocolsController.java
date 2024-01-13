@@ -1,7 +1,7 @@
 package com.jakubwilk.serwisant.api.controller.repair;
 
 import com.jakubwilk.serwisant.api.entity.jpa.Repair;
-import com.jakubwilk.serwisant.api.service.RepairProtocolService;
+import com.jakubwilk.serwisant.api.service.RepairProtocolServiceDefault;
 import com.jakubwilk.serwisant.api.service.RepairService;
 import lombok.AllArgsConstructor;
 import org.springframework.core.io.FileSystemResource;
@@ -22,7 +22,7 @@ import java.io.File;
 public class RepairProtocolsController {
 
     private final RepairService repairService;
-    private final RepairProtocolService repairProtocolService;
+    private final RepairProtocolServiceDefault repairProtocolService;
     @GetMapping("/create")
     public ResponseEntity<Resource> getRepairCreatedProtocol(@PathVariable("repairId") int repairId){
         Repair repair = repairService.findById(repairId);

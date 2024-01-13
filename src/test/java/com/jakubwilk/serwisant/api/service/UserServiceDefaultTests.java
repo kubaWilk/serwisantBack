@@ -2,7 +2,7 @@ package com.jakubwilk.serwisant.api.service;
 
 import com.jakubwilk.serwisant.api.repository.UserRepository;
 import com.jakubwilk.serwisant.api.entity.jpa.User;
-import com.jakubwilk.serwisant.api.entity.jpa.UserDetails;
+import com.jakubwilk.serwisant.api.entity.jpa.UserInfo;
 import com.jakubwilk.serwisant.api.exception.UserNotFoundException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -45,7 +45,7 @@ public class UserServiceDefaultTests {
                 .password("test")
                 .isActive(true)
                 .email("test@test.com")
-                .userDetails(UserDetails.builder()
+                .userInfo(UserInfo.builder()
                         .firstName("test")
                         .lastName("test")
                         .street("test")
@@ -115,7 +115,7 @@ public class UserServiceDefaultTests {
                 .password("test")
                 .isActive(true)
                 .email("test2@test.com")
-                .userDetails(UserDetails.builder()
+                .userInfo(UserInfo.builder()
                         .firstName("test2")
                         .lastName("test")
                         .street("test")
