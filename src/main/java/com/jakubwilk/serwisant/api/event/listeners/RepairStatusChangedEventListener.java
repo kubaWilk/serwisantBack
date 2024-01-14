@@ -17,7 +17,7 @@ public class RepairStatusChangedEventListener implements ApplicationListener<Rep
     @Override
     public void onApplicationEvent(RepairStatusChangedEvent event) {
         int repairId = event.getRepair().getId();
-        Repair.Status repairStatus = event.getRepair().getRepairStatus();
+        Repair.RepairStatus repairStatus = event.getRepair().getRepairStatus();
         String frontUrl = new ApplicationProperties().getFrontUrl();
         String to = event.getUser().getEmail();
         String subject = "Zmienił się status naprawy #" + repairId;

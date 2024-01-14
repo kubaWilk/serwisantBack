@@ -14,7 +14,7 @@ public class RepairExceptionHandler {
                 exception.getMessage(),
                 System.currentTimeMillis());
 
-        return new ResponseEntity<>(error, HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
 
 }

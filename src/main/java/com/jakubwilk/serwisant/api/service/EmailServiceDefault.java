@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
@@ -15,6 +16,7 @@ import org.thymeleaf.context.Context;
 
 @Service
 @AllArgsConstructor
+@Secured("ROLE_CUSTOMER")
 public class EmailServiceDefault implements EmailService {
     private JavaMailSender mailSender;
     private TemplateEngine templateEngine;

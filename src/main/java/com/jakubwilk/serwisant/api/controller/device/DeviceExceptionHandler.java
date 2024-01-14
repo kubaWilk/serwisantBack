@@ -10,11 +10,11 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class DeviceExceptionHandler {
     @ExceptionHandler
     public ResponseEntity<DeviceErrorResponse> deviceNotFound(DeviceNotFoundException exception){
-        DeviceErrorResponse error = new DeviceErrorResponse(HttpStatus.NO_CONTENT.value(),
+        DeviceErrorResponse error = new DeviceErrorResponse(HttpStatus.BAD_REQUEST.value(),
                 exception.getMessage(),
                 System.currentTimeMillis());
 
-        return new ResponseEntity<>(error, HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
 
 

@@ -10,4 +10,7 @@ public interface CostService {
     Cost saveCost(Cost cost);
     Cost updateCost(Cost cost);
     void deleteCost(int id);
+    List<Cost> findAllCostsByRepairId(int repairId);
+
+    Cost saveCost(Cost cost, int repairId);
 }

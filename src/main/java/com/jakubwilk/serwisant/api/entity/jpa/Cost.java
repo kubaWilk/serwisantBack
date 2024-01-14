@@ -19,6 +19,9 @@ public class Cost {
     @Column(name="price")
     private double price;
 
+    @Column(name="name")
+    private String name;
+
     @Enumerated(EnumType.ORDINAL)
     private CostType costType;
 
@@ -26,8 +29,9 @@ public class Cost {
             CascadeType.MERGE,
             CascadeType.DETACH,
             CascadeType.PERSIST,
-            CascadeType.REFRESH})
-    @JoinColumn(name="repair_id", nullable = false)
+            CascadeType.REFRESH},
+            fetch = FetchType.LAZY)
+    @JoinColumn(name="repair_id")
     @ToString.Exclude
     @JsonIgnore
     private Repair repair;

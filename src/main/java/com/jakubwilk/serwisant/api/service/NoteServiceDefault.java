@@ -6,12 +6,14 @@ import com.jakubwilk.serwisant.api.repository.NoteRepository;
 import com.jakubwilk.serwisant.api.entity.jpa.Note;
 import com.jakubwilk.serwisant.api.entity.jpa.Repair;
 import jakarta.transaction.Transactional;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@Secured("ROLE_CUSTOMER")
 public class NoteServiceDefault implements NoteService {
     private final NoteRepository repository;
     private final RepairService repairService;

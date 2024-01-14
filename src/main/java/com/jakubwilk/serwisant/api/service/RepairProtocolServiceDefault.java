@@ -3,12 +3,14 @@ package com.jakubwilk.serwisant.api.service;
 import com.jakubwilk.serwisant.api.entity.jpa.Device;
 import com.jakubwilk.serwisant.api.entity.jpa.Repair;
 import com.jakubwilk.serwisant.api.entity.jpa.UserInfo;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 import java.io.File;
 
 @Service
+@Secured("ROLE_CUSTOMER")
 public class RepairProtocolServiceDefault implements RepairProtocolService{
     private final TemplateEngine templateEngine;
     private final DocumentServiceDefault fileService;

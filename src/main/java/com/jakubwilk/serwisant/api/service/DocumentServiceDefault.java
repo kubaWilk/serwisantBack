@@ -3,6 +3,7 @@ package com.jakubwilk.serwisant.api.service;
 import com.jakubwilk.serwisant.api.utils.ApplicationProperties;
 import com.lowagie.text.DocumentException;
 import com.lowagie.text.pdf.BaseFont;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 import org.xhtmlrenderer.pdf.ITextRenderer;
 
@@ -12,6 +13,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 @Service
+@Secured("ROLE_CUSTOMER")
 public class DocumentServiceDefault implements DocumentService {
     private final ApplicationProperties applicationProperties;
 

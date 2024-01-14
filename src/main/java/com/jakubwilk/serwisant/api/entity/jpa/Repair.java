@@ -55,7 +55,7 @@ public class Repair {
     private List<Cost> costs;
 
     @Enumerated(EnumType.STRING)
-    private Status repairStatus;
+    private RepairStatus repairStatus;
 
     @Column(name="description")
     private String description;
@@ -63,7 +63,7 @@ public class Repair {
     @Column(name="estimated_cost")
     private double estimatedCost;
 
-    public enum Status{
+    public enum RepairStatus {
         OPEN,
         WAITING_FOR_CUSTOMER,
         WAITING_FOR_SUPLIER,
@@ -77,5 +77,21 @@ public class Repair {
         }
 
         this.notes.add(theNote);
+    }
+
+    public void addCost(Cost theCost){
+        if(this.costs == null) {
+            this.costs = new ArrayList<>();
+        }
+
+        this.costs.add(theCost);
+    }
+
+    public void deleteCost(Cost theCost){
+        if(this.costs == null) {
+            throw new RuntimeException("Repair already has no costs!");
+        }else{
+            this.costs.remove(theCost);
+        }
     }
 }

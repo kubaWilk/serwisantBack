@@ -1,8 +1,11 @@
 package com.jakubwilk.serwisant.api.service;
 
+import com.jakubwilk.serwisant.api.entity.jpa.Repair;
 import com.jakubwilk.serwisant.api.repository.CostRepository;
 import com.jakubwilk.serwisant.api.entity.jpa.Cost;
+import com.jakubwilk.serwisant.api.repository.RepairRepository;
 import jakarta.transaction.Transactional;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,9 +14,11 @@ import java.util.Optional;
 @Service
 public class CostServiceDefault implements CostService{
     private final CostRepository costRepository;
+    private final RepairService repairService;
 
-    public CostServiceDefault(CostRepository costRepository) {
+    public CostServiceDefault(CostRepository costRepository, RepairService repairService) {
         this.costRepository = costRepository;
+        this.repairService = repairService;
     }
 
     @Override
@@ -52,5 +57,21 @@ public class CostServiceDefault implements CostService{
     @Transactional
     public void deleteCost(int id) {
         costRepository.deleteById(id);
+    }
+
+    @Override
+    public List<Cost> findAllCostsByRepairId(int repairId) {
+        List<Cost> found = costRepository.findAllByRepairId(repairId);
+        if(found.isEmpty()) throw new RuntimeException("No costs found for repair with id" + repairId);
+        return found;
+    }
+
+    @Override
+    @Transactional
+    public Cost saveCost(Cost cost, int repairId) {
+        Repair repair = repairService.findById(repairId);
+        cost.setRepair(repair);
+        repair.addCost(cost);
+        return costRepository.save(cost);
     }
 }

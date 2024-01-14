@@ -51,6 +51,7 @@ create table cost (
     id serial not null,
     price float(53),
     repair_id integer not null,
+    name varchar(255),
     primary key (id)
 );
 
@@ -65,7 +66,7 @@ create table device (
 create table note (
     author_id integer,
     note_id serial not null,
-    repair_id integer,
+    repair_id integer not null,
     visibility smallint check (visibility between 0 and 1),
     message varchar(255),
     primary key (note_id)
@@ -104,6 +105,7 @@ create table if not exists user_details (
     user_details_id serial not null,
     first_name varchar(255),
     last_name varchar(255),
+    phone_number varchar(255),
     street varchar(255),
     post_code varchar(255),
     city varchar(255),
@@ -125,7 +127,8 @@ alter table if exists authorities
     add constraint FKk91upmbueyim93v469wj7b2qh foreign key (user_id) references users;
 
 alter table if exists cost
-    add constraint FKskp0e42nvl99cjhjof3fltbcg foreign key (repair_id) references repair;
+    add constraint FKskp0e42nvl99cjhjof3fltbcg foreign key (repair_id) references repair
+    on delete cascade;
 
 alter table if exists note
     add constraint FKslvrt3e5dpkx0tm8wbtcxy093 foreign key (author_id) references users;
@@ -144,7 +147,8 @@ alter table if exists repair
     add constraint FKixsc0illvsi63j93mh26w003c foreign key (issuer_user_id) references users;
 
 alter table if exists repair_costs
-    add constraint FKtovovsvew76ohqhu2ytulwh0 foreign key (costs_id) references cost;
+    add constraint FKtovovsvew76ohqhu2ytulwh0 foreign key (costs_id) references cost
+    on delete cascade;
 
 alter table if exists repair_costs
     add constraint FKmb1u5kjqqqrlb1pnmkw05xapc foreign key (repair_id) references repair;

@@ -21,19 +21,19 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler
     public ResponseEntity<ErrorResponse> runtimeException(RuntimeException exception){
-        ErrorResponse error = new ErrorResponse(HttpStatus.NO_CONTENT.value(),
+        ErrorResponse error = new ErrorResponse(HttpStatus.BAD_REQUEST.value(),
                 exception.getMessage(),
                 System.currentTimeMillis());
 
-        return new ResponseEntity<>(error, HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler
     public ResponseEntity<AuthErrorResponse> illegalArgument(IllegalArgumentException exception){
-        AuthErrorResponse error = new AuthErrorResponse(HttpStatus.NO_CONTENT.value(),
+        AuthErrorResponse error = new AuthErrorResponse(HttpStatus.BAD_REQUEST.value(),
                 exception.getMessage(),
                 System.currentTimeMillis());
 
-        return new ResponseEntity<>(error, HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
 }

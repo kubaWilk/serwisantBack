@@ -4,6 +4,7 @@ import com.jakubwilk.serwisant.api.entity.jpa.Authority;
 import com.jakubwilk.serwisant.api.entity.jpa.User;
 import com.jakubwilk.serwisant.api.service.UserService;
 import lombok.AllArgsConstructor;
+import org.apache.coyote.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 
 @RestController
@@ -54,6 +57,13 @@ public class UserController {
         User user = userService.update(toSave);
 
         return new ResponseEntity<User>(user, HttpStatus.CREATED);
+    }
+
+    @PostMapping("/search")
+    @Secured("ROLE_EMPLOYEE")
+    public ResponseEntity<Set<User>> searchUser(@RequestBody Map<String,String> userToSearch){
+        Set <User> result = userService.searchUser(userToSearch);
+        return ResponseEntity.ok(result);
     }
 
     @DeleteMapping("/{id}")

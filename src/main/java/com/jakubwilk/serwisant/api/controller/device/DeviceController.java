@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/device")
@@ -36,14 +37,21 @@ public class DeviceController {
     }
 
     @PostMapping("/")
-    @Secured("ROLE_USER")
+    @Secured("ROLE_EMPLOYEE")
     public ResponseEntity<Device> saveDevice(@RequestBody Device device){
         Device saved = deviceService.saveDevice(device);
         return ResponseEntity.ok(saved);
     }
 
+    @PostMapping("/search")
+    @Secured("ROLE_EMPLOYEE")
+    public ResponseEntity<Device> searchDevice(@RequestBody Map<String,String> toSearch){
+        Device device = deviceService.searchDevice(toSearch);
+        return ResponseEntity.ok(device);
+    }
+
     @PutMapping("/")
-    @Secured("ROLE_USER")
+    @Secured("ROLE_EMPLOYEE")
     public ResponseEntity<Device> updateDevice(@RequestBody Device device){
         Device updated = deviceService.updateDevice(device);
         return ResponseEntity.ok(updated);

@@ -14,6 +14,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/repair")
@@ -23,7 +24,7 @@ public class RepairController {
     private final RepairService repairService;
 
     @GetMapping("/{id}")
-    @PreAuthorize("ROLE_CUSTOMER")
+    @Secured("ROLE_CUSTOMER")
     public ResponseEntity<Repair> getRepairById(@PathVariable("id") int id){
         Repair repair = repairService.findById(id);
 
@@ -32,8 +33,7 @@ public class RepairController {
 
     @GetMapping("/")
     @Secured("ROLE_CUSTOMER")
-    public List<Repair> getAllRepairs(Authentication authentication){
-        System.out.println(authentication);
+    public List<Repair> getAllRepairs(){
         List<Repair> repairs = repairService.findAllRepairs();
         return repairs;
     }
@@ -57,6 +57,12 @@ public class RepairController {
     public ResponseEntity<Repair> updateRepair(@RequestBody Repair repair){
         Repair updated = repairService.updateRepair(repair);
         return new ResponseEntity<>(updated, HttpStatus.OK);
+    }
+
+    @PutMapping("/status")
+    @Secured("ROLE_EMPLOYEE")
+    public ResponseEntity<Repair> updateRepairStatus(@RequestBody Map<String, String> toUpdate){
+        return ResponseEntity.ok(repairService.updateRepairStatus(toUpdate));
     }
 
     @DeleteMapping("/{id}")

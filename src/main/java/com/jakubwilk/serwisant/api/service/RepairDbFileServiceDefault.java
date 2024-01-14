@@ -6,6 +6,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.util.unit.DataSize;
@@ -15,6 +16,7 @@ import java.io.IOException;
 import java.util.*;
 
 @Service
+@Secured("ROLE_CUSTOMER")
 public class RepairDbFileServiceDefault implements RepairDbFileService {
     @Value("${spring.servlet.multipart.max-file-size}")
     private DataSize maxFileSize;

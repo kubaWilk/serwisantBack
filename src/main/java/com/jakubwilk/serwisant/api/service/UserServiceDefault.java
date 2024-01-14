@@ -1,25 +1,26 @@
 package com.jakubwilk.serwisant.api.service;
 
-import com.jakubwilk.serwisant.api.exception.UserNotFoundException;
-import com.jakubwilk.serwisant.api.repository.UserRepository;
 import com.jakubwilk.serwisant.api.entity.jpa.User;
 import com.jakubwilk.serwisant.api.event.events.UserRegisteredEvent;
+import com.jakubwilk.serwisant.api.exception.UserNotFoundException;
+import com.jakubwilk.serwisant.api.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static com.jakubwilk.serwisant.api.entity.Role.ROLE_CUSTOMER;
 
 @Service
+@Secured("ROLE_CUSTOMER")
 public class UserServiceDefault implements UserService{
-    private UserRepository userRepository;
-    private ApplicationEventPublisher eventPublisher;
-    private PasswordEncoder passwordEncoder;
+    private final UserRepository userRepository;
+    private final ApplicationEventPublisher eventPublisher;
+    private final PasswordEncoder passwordEncoder;
 
     public UserServiceDefault(UserRepository userRepository, ApplicationEventPublisher eventPublisher, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
@@ -69,7 +70,9 @@ public class UserServiceDefault implements UserService{
     @Transactional
     public User save(User user) {
         if(user == null) throw new IllegalArgumentException("User can't be null!");
-        if(doesUserExists(user)) throw new IllegalArgumentException("User already exists!");
+        if(doesUserExistWithGivenId(user)) throw new IllegalArgumentException("User has to be provided with no ID");
+        if(doesUserExistWithGivenUsername(user)) throw new IllegalArgumentException("User with given username already exists!");
+        if(doesUserExistWithGivenEMail(user)) throw new IllegalArgumentException("User has to have a unique e-mail address!");
 
         user.setPassword("Startowe@");
         User persisted;
@@ -82,6 +85,7 @@ public class UserServiceDefault implements UserService{
 
             UserRegisteredEvent newUserEvent = new UserRegisteredEvent(UserServiceDefault.class,
                     persisted, user.getPassword());
+
             eventPublisher.publishEvent(newUserEvent);
         }catch(DataIntegrityViolationException exception){
             throw new IllegalArgumentException(
@@ -92,12 +96,22 @@ public class UserServiceDefault implements UserService{
         return persisted;
     }
 
+    private boolean doesUserExistWithGivenUsername(User user) {
+        User userNameCheck = userRepository.findByUsername(user.getUsername());
+        return userNameCheck != null;
+    }
+
+    private boolean doesUserExistWithGivenEMail(User user) {
+        User emailCheck = userRepository.findByEmail(user.getEmail());
+        return emailCheck != null;
+    }
+
     @Override
     @Transactional
     public User update(User user) {
         if(user.getId() == 0) throw new IllegalArgumentException("Provide user id!");
 
-        if(!doesUserExists(user)) {
+        if(!doesUserExistWithGivenId(user)) {
             throw new IllegalArgumentException("Can't find user with id: " + user.getId());
         }
 
@@ -107,7 +121,7 @@ public class UserServiceDefault implements UserService{
     @Override
     @Transactional
     public void delete(int id) {
-        if(!doesUserExists(id)){
+        if(!doesUserExistWithGivenId(id)){
             throw new UserNotFoundException("Can't find user with id: " + id);
         }
 
@@ -132,11 +146,33 @@ public class UserServiceDefault implements UserService{
         return toReturn;
     }
 
-    private boolean doesUserExists(User user){
+    @Override
+    public Set<User> searchUser(Map<String, String> userToSearch) {
+        Set<User> result = new HashSet<>();
+
+        if(userToSearch.containsKey("username")){
+            String property = userToSearch.get("username");
+            User byUsername = userRepository.findByUsername(property);
+            if(byUsername != null) {
+                result.add(byUsername);
+            }
+        }
+
+        if(userToSearch.containsKey("eMail")){
+            String property = userToSearch.get("eMail");
+            User byEmail = userRepository.findByEmail(property);
+            if(byEmail != null) {
+                result.add(byEmail);
+            }
+        }
+        return result;
+    }
+
+    private boolean doesUserExistWithGivenId(User user){
         return userRepository.findById(user.getId()).isPresent();
     }
 
-    private boolean doesUserExists(int id){
+    private boolean doesUserExistWithGivenId(int id){
         Optional<User> result = userRepository.findById(id);
         return result.isPresent();
     }
