@@ -5,55 +5,25 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0edb056b-a24f-42fa-bc79-34e5c9ba43e3" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/jakubwilk/serwisant/api/entity/jpa/RepairStatus.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/jakubwilk/serwisant/api/configuration/TemplateEngineConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jakubwilk/serwisant/api/configuration/TemplateEngineConfiguration.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/jakubwilk/serwisant/api/controller/auth/AuthControllerExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jakubwilk/serwisant/api/controller/auth/AuthControllerExceptionHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/jakubwilk/serwisant/api/controller/device/DeviceController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jakubwilk/serwisant/api/controller/device/DeviceController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/jakubwilk/serwisant/api/entity/jpa/Authority.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jakubwilk/serwisant/api/entity/jpa/Authority.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/jakubwilk/serwisant/api/entity/jpa/Cost.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jakubwilk/serwisant/api/entity/jpa/Cost.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/jakubwilk/serwisant/api/entity/jpa/Device.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jakubwilk/serwisant/api/entity/jpa/Device.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/jakubwilk/serwisant/api/entity/jpa/Note.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jakubwilk/serwisant/api/entity/jpa/Note.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/jakubwilk/serwisant/api/configuration/SecurityConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jakubwilk/serwisant/api/configuration/SecurityConfiguration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/jakubwilk/serwisant/api/controller/GlobalExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jakubwilk/serwisant/api/controller/GlobalExceptionHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/jakubwilk/serwisant/api/controller/repair/RepairController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jakubwilk/serwisant/api/controller/repair/RepairController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/jakubwilk/serwisant/api/controller/repair/RepairPhotosController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jakubwilk/serwisant/api/controller/repair/RepairPhotosController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/jakubwilk/serwisant/api/entity/jpa/Repair.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jakubwilk/serwisant/api/entity/jpa/Repair.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/jakubwilk/serwisant/api/entity/jpa/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jakubwilk/serwisant/api/entity/jpa/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/jakubwilk/serwisant/api/service/DeviceService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jakubwilk/serwisant/api/service/DeviceService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/jakubwilk/serwisant/api/service/DeviceServiceDefault.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jakubwilk/serwisant/api/service/DeviceServiceDefault.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/jakubwilk/serwisant/api/event/listeners/RepairStatusChangedEventListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jakubwilk/serwisant/api/event/listeners/RepairStatusChangedEventListener.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/jakubwilk/serwisant/api/service/RepairServiceDefault.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jakubwilk/serwisant/api/service/RepairServiceDefault.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/data.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/data.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/jakubwilk/serwisant/api/service/RepairServiceTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/jakubwilk/serwisant/api/service/RepairServiceTests.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/configuration/TemplateEngineConfiguration.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/configuration/TemplateEngineConfiguration.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/controller/auth/AuthControllerExceptionHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/controller/auth/AuthControllerExceptionHandler.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/controller/device/DeviceController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/controller/device/DeviceController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/controller/repair/FileResponse.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/controller/repair/FileResponse.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application-development.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application-development.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/application-development.yml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application-development.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/configuration/SecurityConfiguration.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/configuration/SecurityConfiguration.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/controller/repair/RepairController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/controller/repair/RepairController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/controller/repair/RepairPhotosController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/controller/repair/RepairPhotosController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/controller/repair/RepairProtocolsController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/controller/repair/RepairProtocolsController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/entity/LoginRequest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/entity/LoginRequest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/entity/jpa/Authority.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/entity/jpa/Authority.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/entity/jpa/Cost$CostBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/entity/jpa/Cost$CostBuilder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/entity/jpa/Cost$CostType.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/entity/jpa/Cost$CostType.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/entity/jpa/Cost.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/entity/jpa/Cost.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/entity/jpa/Device$DeviceBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/entity/jpa/Device$DeviceBuilder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/entity/jpa/Device.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/entity/jpa/Device.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/entity/jpa/Note$NoteBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/entity/jpa/Note$NoteBuilder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/entity/jpa/Note$Visibility.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/entity/jpa/Note$Visibility.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/entity/jpa/Note.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/entity/jpa/Note.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/entity/jpa/Repair$RepairBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/entity/jpa/Repair$RepairBuilder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/entity/jpa/Repair$RepairStatus.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/entity/jpa/Repair$RepairStatus.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/entity/jpa/Repair$RepairStatus.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/entity/jpa/Repair.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/entity/jpa/Repair.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/entity/jpa/RepairDbFile$RepairDbFileBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/entity/jpa/RepairDbFile$RepairDbFileBuilder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/entity/jpa/RepairDbFile.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/entity/jpa/RepairDbFile.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/entity/jpa/User$UserBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/entity/jpa/User$UserBuilder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/entity/jpa/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/entity/jpa/User.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/entity/jpa/UserInfo$UserInfoBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/entity/jpa/UserInfo$UserInfoBuilder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/entity/jpa/UserInfo.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/entity/jpa/UserInfo.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/event/listeners/RepairStatusChangedEventListener.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/event/listeners/RepairStatusChangedEventListener.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/event/listeners/ResetPasswordEventListener.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/event/listeners/ResetPasswordEventListener.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/service/CostServiceDefault.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/service/CostServiceDefault.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/service/DeviceService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/service/DeviceService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/service/DeviceServiceDefault.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/service/DeviceServiceDefault.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/service/EmailServiceDefault.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/service/EmailServiceDefault.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/service/RepairDbFileServiceDefault.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/service/RepairDbFileServiceDefault.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/service/RepairServiceDefault.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/service/RepairServiceDefault.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/data.sql" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/data.sql" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,8 +34,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Interface" />
-        <option value="Enum" />
         <option value="Class" />
+        <option value="Enum" />
       </list>
     </option>
   </component>
@@ -83,23 +53,23 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;Application.ApiApplication.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/kuba/Repos/inzynierka/serwisantBack&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "Application.ApiApplication.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/home/kuba/Repos/inzynierka/serwisantBack",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RunManager">
     <configuration name="ApiApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.jakubwilk.serwisant.api.ApiApplication" />

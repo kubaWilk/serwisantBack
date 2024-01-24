@@ -61,6 +61,9 @@ public class Repair {
     @Enumerated(EnumType.STRING)
     private RepairStatus repairStatus;
 
+    @Column(name = "status_modified_at")
+    private LocalDateTime statusModifiedAt;
+
     @Column(name="description")
     private String description;
 
@@ -74,14 +77,6 @@ public class Repair {
     @LastModifiedDate
     @Column(name="modified_at")
     private LocalDateTime lastModifiedDate;
-
-    public enum RepairStatus {
-        OPEN,
-        WAITING_FOR_CUSTOMER,
-        WAITING_FOR_SUPLIER,
-        CANCELED,
-        CLOSED
-    }
 
     @PreRemove
     private void preRemove(){

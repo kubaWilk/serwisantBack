@@ -80,6 +80,7 @@ public class SecurityConfiguration {
                 .csrf(csrf-> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/auth/login").permitAll()
+//                        .requestMatchers("/files/resource").permitAll()
                         .anyRequest().authenticated())
                 .oauth2ResourceServer((oauth2) -> oauth2.jwt(Customizer.withDefaults()))
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))

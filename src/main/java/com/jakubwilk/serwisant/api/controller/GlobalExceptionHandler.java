@@ -6,6 +6,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import java.io.IOException;
+
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
@@ -35,5 +37,13 @@ public class GlobalExceptionHandler {
                 System.currentTimeMillis());
 
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<ErrorResponse> ioException(IOException exception){
+        ErrorResponse error = new ErrorResponse(HttpStatus.NOT_ACCEPTABLE.value(),
+                exception.getMessage(), System.currentTimeMillis());
+
+        return new ResponseEntity<>(error, HttpStatus.NOT_ACCEPTABLE);
     }
 }

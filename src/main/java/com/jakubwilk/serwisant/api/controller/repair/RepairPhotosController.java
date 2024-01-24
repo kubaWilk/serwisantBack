@@ -74,7 +74,7 @@ public class RepairPhotosController {
 
         List<FileResponse> responseClasses = files.stream().map(product -> {
             String downloadURL = ServletUriComponentsBuilder.fromCurrentContextPath()
-                    .path("/repair/" + repairId + "/files/")
+                    .path("/repair/" + repairId + "/files/resource/")
                     .path(product.getId().toString())
                     .toUriString();
             return new FileResponse(product.getFileName(),
@@ -87,7 +87,7 @@ public class RepairPhotosController {
     }
 
     @GetMapping(
-            value = "/{fileId}",
+            value = "/resource/{fileId}",
             produces = MediaType.IMAGE_JPEG_VALUE)
     public @ResponseBody byte[] getSingleFile(@PathVariable("fileId") UUID fileId) throws IOException {
         return fileService.getFileAsResource(fileId).getContentAsByteArray();

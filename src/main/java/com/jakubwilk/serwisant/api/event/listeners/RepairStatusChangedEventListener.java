@@ -1,6 +1,7 @@
 package com.jakubwilk.serwisant.api.event.listeners;
 
 import com.jakubwilk.serwisant.api.entity.jpa.Repair;
+import com.jakubwilk.serwisant.api.entity.jpa.RepairStatus;
 import com.jakubwilk.serwisant.api.event.events.RepairStatusChangedEvent;
 import com.jakubwilk.serwisant.api.service.EmailService;
 import com.jakubwilk.serwisant.api.utils.ApplicationProperties;
@@ -17,7 +18,7 @@ public class RepairStatusChangedEventListener implements ApplicationListener<Rep
     @Override
     public void onApplicationEvent(RepairStatusChangedEvent event) {
         int repairId = event.getRepair().getId();
-        Repair.RepairStatus repairStatus = event.getRepair().getRepairStatus();
+        RepairStatus repairStatus = event.getRepair().getRepairStatus();
         String frontUrl = new ApplicationProperties().getFrontUrl();
         String to = event.getUser().getEmail();
         String subject = "Zmienił się status naprawy #" + repairId;

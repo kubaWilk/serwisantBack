@@ -1,13 +1,10 @@
 package com.jakubwilk.serwisant.api.service;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.jakubwilk.serwisant.api.entity.jpa.Cost;
+import com.jakubwilk.serwisant.api.entity.jpa.*;
 import com.jakubwilk.serwisant.api.exception.RepairNotFoundException;
 import com.jakubwilk.serwisant.api.repository.RepairRepository;
 import com.jakubwilk.serwisant.api.repository.UserRepository;
-import com.jakubwilk.serwisant.api.entity.jpa.Device;
-import com.jakubwilk.serwisant.api.entity.jpa.Repair;
-import com.jakubwilk.serwisant.api.entity.jpa.User;
 import com.jakubwilk.serwisant.api.event.events.RepairCreatedEvent;
 import com.jakubwilk.serwisant.api.event.events.RepairStatusChangedEvent;
 import jakarta.transaction.Transactional;
@@ -15,6 +12,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -71,7 +69,7 @@ public class RepairServiceDefault implements RepairService {
         Repair newRepair = Repair.builder()
                 .issuer(issuer)
                 .device(device)
-                .repairStatus(Repair.RepairStatus.OPEN)
+                .repairStatus(RepairStatus.OPEN)
                 .description(description)
                 .estimatedCost(estimatedCost)
                 .build();
@@ -103,11 +101,11 @@ public class RepairServiceDefault implements RepairService {
         if(!toUpdate.containsKey("status")) throw new IllegalArgumentException("To update a repair you must provide a valid status!");
 
         int repairId;
-        Repair.RepairStatus status;
+        RepairStatus status;
 
         try {
             repairId = Integer.parseInt(toUpdate.get("id"));
-            status = Repair.RepairStatus.valueOf(toUpdate.get("status"));
+            status = RepairStatus.valueOf(toUpdate.get("status"));
         }catch(NumberFormatException exception){
             throw new IllegalArgumentException("ID must be a valid repair number!", exception);
         }catch(IllegalArgumentException exception){
@@ -116,6 +114,7 @@ public class RepairServiceDefault implements RepairService {
 
         Repair toUpdateStatus = findById(repairId);
         toUpdateStatus.setRepairStatus(status);
+        toUpdateStatus.setStatusModifiedAt(LocalDateTime.now());
         Repair updated = repository.save(toUpdateStatus);
         eventPublisher.publishEvent(
                 new RepairStatusChangedEvent(RepairServiceDefault.class, updated.getIssuer(), updated));
