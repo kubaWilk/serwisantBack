@@ -4,10 +4,14 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.jakubwilk.serwisant.api.entity.Role;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Entity
@@ -19,13 +23,14 @@ import java.util.*;
 @ToString
 @Builder
 @EqualsAndHashCode
+@EntityListeners(AuditingEntityListener.class)
 public class User implements UserDetails{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private int id;
 
-    @Column(name="username")
+    @Column(name="username", unique = true)
     private String username;
 
     @Column(name="password")
@@ -36,7 +41,7 @@ public class User implements UserDetails{
     @Column(name="active")
     private boolean isActive;
 
-    @Column(name="email")
+    @Column(name="email", unique = true)
     private String email;
 
     @OneToOne(fetch = FetchType.EAGER ,cascade = CascadeType.ALL)
@@ -59,6 +64,14 @@ public class User implements UserDetails{
     @JsonIgnore
     @ToString.Exclude
     private List<Repair> repairs;
+
+    @CreatedDate
+    @Column(name="created_at")
+    private LocalDateTime createdDate;
+
+    @LastModifiedDate
+    @Column(name="modified_at")
+    private LocalDateTime lastModifiedDate;
 
     public void setRoles(Role role){
         if(this.roles == null){

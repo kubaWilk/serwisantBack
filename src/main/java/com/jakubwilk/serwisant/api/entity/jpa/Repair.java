@@ -3,7 +3,11 @@ package com.jakubwilk.serwisant.api.entity.jpa;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +18,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@EntityListeners(AuditingEntityListener.class)
 public class Repair {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,13 +38,12 @@ public class Repair {
 
     @ManyToOne(
             cascade = {
-            CascadeType.MERGE,
-            CascadeType.DETACH,
-            CascadeType.PERSIST,
-            CascadeType.REFRESH},
+                    CascadeType.MERGE,
+                    CascadeType.DETACH,
+                    CascadeType.PERSIST,
+                    CascadeType.REFRESH},
             fetch = FetchType.EAGER)
-    @JoinColumn(name="device_id")
-//    @Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
+    @JoinColumn(name="device_id", nullable = false)
     private Device device;
 
     @ToString.Exclude
@@ -63,12 +67,27 @@ public class Repair {
     @Column(name="estimated_cost")
     private double estimatedCost;
 
+    @CreatedDate
+    @Column(name="created_at")
+    private LocalDateTime createdDate;
+
+    @LastModifiedDate
+    @Column(name="modified_at")
+    private LocalDateTime lastModifiedDate;
+
     public enum RepairStatus {
         OPEN,
         WAITING_FOR_CUSTOMER,
         WAITING_FOR_SUPLIER,
         CANCELED,
         CLOSED
+    }
+
+    @PreRemove
+    private void preRemove(){
+        if(issuer != null) {
+            issuer.removeRepair(this);
+        }
     }
 
     public void addNote(Note theNote){

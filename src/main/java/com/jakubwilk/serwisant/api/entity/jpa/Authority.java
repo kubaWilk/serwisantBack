@@ -35,4 +35,9 @@ public class Authority {
         this.username = username;
         this.authority = authority;
     }
+
+    @Override
+    public String toString() {
+        return authority.toString();
+    }
 }

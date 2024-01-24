@@ -3,7 +3,11 @@ package com.jakubwilk.serwisant.api.entity.jpa;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -13,6 +17,7 @@ import java.util.List;
 @Setter
 @Getter
 @Builder
+@EntityListeners(AuditingEntityListener.class)
 public class Device {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,14 +37,15 @@ public class Device {
     @OneToMany(
             mappedBy = "device",
             fetch = FetchType.LAZY,
-            cascade = {
-                    CascadeType.ALL
-            })
+            cascade = CascadeType.ALL
+            , orphanRemoval = true)
     private List<Repair> repairs;
 
-    public void removeRepair(Repair repair){
-        if(repairs == null || repairs.isEmpty()) return;
+    @CreatedDate
+    @Column(name="created_at")
+    private LocalDateTime createdDate;
 
-        repairs.remove(repair);
-    }
+    @LastModifiedDate
+    @Column(name="modified_at")
+    private LocalDateTime lastModifiedDate;
 }

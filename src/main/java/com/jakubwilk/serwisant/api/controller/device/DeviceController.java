@@ -2,11 +2,9 @@ package com.jakubwilk.serwisant.api.controller.device;
 
 import com.jakubwilk.serwisant.api.entity.jpa.Device;
 import com.jakubwilk.serwisant.api.service.DeviceService;
-import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -53,7 +51,7 @@ public class DeviceController {
     @PutMapping("/{id}")
     @Secured("ROLE_EMPLOYEE")
     public ResponseEntity<Device> updateDevice(@PathVariable int id, @RequestBody Device device){
-        Device updated = deviceService.updateDevice(id, device);
+        Device updated = deviceService.handleDeviceUpdateByController(id, device);
         return ResponseEntity.ok(updated);
     }
 

@@ -140,16 +140,7 @@ public class RepairServiceDefault implements RepairService {
 
         if(result.isPresent()){
             Repair repair = result.get();
-            Device device = repair.getDevice();
-            User issuer = repair.getIssuer();
-            repair.setIssuer(null);
-            repair.setDevice(null);
             fileService.deleteAll(id);
-            device.removeRepair(repair);
-            issuer.removeRepair(repair);
-            repository.save(repair);
-            userRepository.save(issuer);
-            deviceService.saveDevice(device);
             repository.delete(repair);
         }else{
             throw new RuntimeException("No Repair found with id: " + id);

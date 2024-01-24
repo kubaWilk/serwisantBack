@@ -50,7 +50,7 @@ public class RepairServiceTests {
         userRepository = Mockito.mock(UserRepository.class);
         userService = Mockito.mock(UserServiceDefault.class);
         deviceRepository = Mockito.mock(DeviceRepository.class);
-        deviceService = new DeviceServiceDefault(deviceRepository);
+//        deviceService = new DeviceServiceDefault(deviceRepository);
         eventPublisher = Mockito.mock(eventPublisher);
 //        repairService = new RepairServiceDefault(repairRepository, userService,userRepository, deviceService, fileStorage, eventPublisher);
 

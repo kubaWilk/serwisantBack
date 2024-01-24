@@ -14,7 +14,7 @@ public class TemplateEngineConfiguration {
         templateResolver.setCacheable(false);
         templateResolver.setPrefix("classpath:/templates/");
         templateResolver.setSuffix(".html");
-        templateResolver.setTemplateMode("HTML5");
+        templateResolver.setTemplateMode("HTML");
         return templateResolver;
     }
 

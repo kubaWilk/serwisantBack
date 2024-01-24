@@ -1,8 +1,10 @@
 package com.jakubwilk.serwisant.api.service;
 
+import com.jakubwilk.serwisant.api.entity.jpa.Repair;
 import com.jakubwilk.serwisant.api.exception.DeviceNotFoundException;
 import com.jakubwilk.serwisant.api.repository.DeviceRepository;
 import com.jakubwilk.serwisant.api.entity.jpa.Device;
+import com.jakubwilk.serwisant.api.repository.RepairRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
@@ -15,9 +17,11 @@ import java.util.Optional;
 @Secured("ROLE_CUSTOMER")
 public class DeviceServiceDefault implements DeviceService{
     private final DeviceRepository repository;
+    private final RepairRepository repairRepository;
 
-    public DeviceServiceDefault(DeviceRepository repository) {
+    public DeviceServiceDefault(DeviceRepository repository, RepairRepository repairRepository) {
         this.repository = repository;
+        this.repairRepository = repairRepository;
     }
 
     @Override
@@ -48,7 +52,7 @@ public class DeviceServiceDefault implements DeviceService{
 
     @Override
     @Transactional
-    public Device updateDevice(int id, Device device) {
+    public Device handleDeviceUpdateByController(int id, Device device) {
         if(device == null) throw new NullPointerException("Device can't be null!");
         Optional<Device> result = repository.findById(id);
         if(result.isPresent()){
@@ -63,9 +67,26 @@ public class DeviceServiceDefault implements DeviceService{
     }
 
     @Override
+    @Transactional
+    public Device updateDevice(Device device){
+        if(device == null) throw new NullPointerException("Device can't be null!");
+        return repository.saveAndFlush(device);
+    }
+
+    @Override
+    @Transactional
     public void deleteDevice(int id) {
         repository.deleteById(id);
     }
+
+//    Optional<Device> result = repository.findById(id);
+//        if(result.isEmpty()) throw new DeviceNotFoundException("No device with id of: " + id +" has been found!");
+//
+//        Device device = result.get();
+//        for(Repair repair: device.getRepairs()){
+//            repairRepository.delete(repair);
+//        }
+
 
     @Override
     public Device searchDevice(Map<String,String> toSearch) {
