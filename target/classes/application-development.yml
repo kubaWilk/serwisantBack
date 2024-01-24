@@ -4,7 +4,8 @@ spring:
       mode: always
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create-drop
+    defer-datasource-initialization: true
     #      use to auto-generate db ddl
 #    properties:
 #      jakarta:
@@ -16,6 +17,6 @@ spring:
 #              drop-target: 'drop.sql'
 #              create-source: metadata
 #              drop-source: metadata
-logging:
-  level:
-    root: debug
+#logging:
+#  level:
+#    root: debug

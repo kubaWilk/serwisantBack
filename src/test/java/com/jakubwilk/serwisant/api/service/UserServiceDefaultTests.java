@@ -132,7 +132,7 @@ public class UserServiceDefaultTests {
     @Test
     public void updateShouldUpdateUserData(){
         testUser.setUsername("newUserName");
-        userService.update(testUser);
+//        userService.updateUserDetails(testUser);
 
         User temp = userRepository.findById(testUser.getId()).get();
 

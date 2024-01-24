@@ -68,6 +68,7 @@ public class User implements UserDetails{
         roles.add(new Authority(this, username, role));
     }
 
+
     public void removeRepair(Repair repair){
         if(repairs == null) return;
         this.repairs.remove(repair);

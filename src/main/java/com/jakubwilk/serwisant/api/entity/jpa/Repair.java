@@ -87,7 +87,7 @@ public class Repair {
         this.costs.add(theCost);
     }
 
-    public void deleteCost(Cost theCost){
+    public void removeCost(Cost theCost){
         if(this.costs == null) {
             throw new RuntimeException("Repair already has no costs!");
         }else{

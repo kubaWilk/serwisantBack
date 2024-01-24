@@ -22,4 +22,8 @@ public interface RepairService {
     void deleteCostFromARepair(int repairId, Cost theCost);
 
     void deleteRepair(int id);
+
+    List<Repair> findAllRepairsByCustomerId(int id);
+
+    List<Repair> findAllRepairsByDeviceId(int deviceId);
 }

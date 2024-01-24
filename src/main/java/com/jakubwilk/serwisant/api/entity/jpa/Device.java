@@ -31,7 +31,7 @@ public class Device {
     @ToString.Exclude
     @OneToMany(
             mappedBy = "device",
-            fetch = FetchType.EAGER,
+            fetch = FetchType.LAZY,
             cascade = {
                     CascadeType.ALL
             })

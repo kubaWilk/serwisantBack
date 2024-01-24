@@ -11,9 +11,11 @@ public interface UserService {
     User findByEmail(String email);
     List<User> findAll();
     User save(User user);
-    User update(User user);
+    User updateUserDetails(int id, User user);
     void delete(int id);
     void changePassword(String email, String password);
     User findByUsername(String username);
     Set<User> searchUser(Map<String, String> userToSearch);
+
+    List<User> findAllCustomers();
 }

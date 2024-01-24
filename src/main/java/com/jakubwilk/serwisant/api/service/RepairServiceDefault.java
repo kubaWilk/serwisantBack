@@ -128,7 +128,7 @@ public class RepairServiceDefault implements RepairService {
     public void deleteCostFromARepair(int repairId, Cost theCost){
         Optional<Repair> repair = repository.findById(repairId);
         if(repair.isEmpty()) throw new RuntimeException("Couldn't find repair with id of: " + repairId);
-        repair.get().deleteCost(theCost);
+        repair.get().removeCost(theCost);
 
         repository.save(repair.get());
     }
@@ -154,6 +154,16 @@ public class RepairServiceDefault implements RepairService {
         }else{
             throw new RuntimeException("No Repair found with id: " + id);
         }
+    }
+
+    @Override
+    public List<Repair> findAllRepairsByCustomerId(int id) {
+        return repository.findAllByIssuerId(id);
+    }
+
+    @Override
+    public List<Repair> findAllRepairsByDeviceId(int deviceId) {
+        return repository.findAllByDeviceId(deviceId);
     }
 
     private boolean checkForStatusUpdate(Repair repair){

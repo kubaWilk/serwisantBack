@@ -24,6 +24,5 @@ public class RepairCreatedEventListener implements ApplicationListener<RepairCre
         context.setVariable("serialNumber", repair.getDevice().getSerialNumber());
 
         emailService.sendEmail(to, subject, "RepairCreatedEmail", context);
-
     }
 }

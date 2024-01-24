@@ -11,6 +11,5 @@ public interface CostService {
     Cost updateCost(Cost cost);
     void deleteCost(int id);
     List<Cost> findAllCostsByRepairId(int repairId);
-
     Cost saveCost(Cost cost, int repairId);
 }

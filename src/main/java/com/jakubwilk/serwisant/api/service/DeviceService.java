@@ -9,7 +9,9 @@ public interface DeviceService {
     Device findById(int id);
     List<Device> findAllDevices();
     Device saveDevice(Device device);
-    Device updateDevice(Device device);
+
+    Device updateDevice(int id, Device device);
+
     void deleteDevice(int id);
     Device searchDevice(Map<String,String> toSearch);
 }

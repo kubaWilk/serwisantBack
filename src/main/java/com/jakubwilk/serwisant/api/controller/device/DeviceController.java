@@ -22,7 +22,7 @@ public class DeviceController {
         this.deviceService = deviceService;
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     @Secured("ROLE_CUSTOMER")
     public ResponseEntity<Device> findDeviceById(@PathVariable("id") int id){
         Device found = deviceService.findById(id);
@@ -50,10 +50,10 @@ public class DeviceController {
         return ResponseEntity.ok(device);
     }
 
-    @PutMapping("/")
+    @PutMapping("/{id}")
     @Secured("ROLE_EMPLOYEE")
-    public ResponseEntity<Device> updateDevice(@RequestBody Device device){
-        Device updated = deviceService.updateDevice(device);
+    public ResponseEntity<Device> updateDevice(@PathVariable int id, @RequestBody Device device){
+        Device updated = deviceService.updateDevice(id, device);
         return ResponseEntity.ok(updated);
     }
 

@@ -3,6 +3,7 @@ package com.jakubwilk.serwisant.api.service;
 import com.jakubwilk.serwisant.api.exception.DeviceNotFoundException;
 import com.jakubwilk.serwisant.api.repository.DeviceRepository;
 import com.jakubwilk.serwisant.api.entity.jpa.Device;
+import jakarta.transaction.Transactional;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 
@@ -46,9 +47,19 @@ public class DeviceServiceDefault implements DeviceService{
     }
 
     @Override
-    public Device updateDevice(Device device) {
+    @Transactional
+    public Device updateDevice(int id, Device device) {
         if(device == null) throw new NullPointerException("Device can't be null!");
-        return repository.save(device);
+        Optional<Device> result = repository.findById(id);
+        if(result.isPresent()){
+            Device toUpdate = result.get();
+            toUpdate.setManufacturer(device.getManufacturer());
+            toUpdate.setSerialNumber(device.getSerialNumber());
+            toUpdate.setModel(device.getModel());
+            return repository.save(device);
+        }else{
+            throw new DeviceNotFoundException("Can't find device with id: " + id);
+        }
     }
 
     @Override

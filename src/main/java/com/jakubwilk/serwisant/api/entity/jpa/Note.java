@@ -3,6 +3,11 @@ package com.jakubwilk.serwisant.api.entity.jpa;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name="note")
@@ -25,7 +30,7 @@ public class Note {
     private String message;
 
     @OneToOne
-    @JoinColumn(name="author_id")
+    @JoinColumn(name="author_id", unique = false)
     private User author;
 
     @ManyToOne(cascade = {
@@ -38,6 +43,14 @@ public class Note {
     @ToString.Exclude
     @JsonIgnore
     private Repair repair;
+
+    @CreatedDate
+    @Column(name="created_at")
+    private LocalDateTime createdDate;
+
+    @LastModifiedDate
+    @Column(name="modified_at")
+    private LocalDateTime lastModifiedDate;
 
     public enum Visibility{
         PUBLIC,

@@ -7,7 +7,10 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface RepairRepository extends JpaRepository<Repair, Integer> {
-    @Query("SELECT r FROM Repair r " +
-            "JOIN FETCH r.issuer JOIN FETCH r.device")
-    List<Repair> findAllReapirsEagerly();
+
+    @Query("SELECT r FROM Repair r WHERE r.issuer.id = ?1")
+    List<Repair> findAllByIssuerId(int customerId);
+
+    @Query("SELECT r FROM Repair r WHERE r.device.id = ?1")
+    List<Repair> findAllByDeviceId(int deviceId);
 }

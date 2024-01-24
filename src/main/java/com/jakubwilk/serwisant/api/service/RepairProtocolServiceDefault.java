@@ -1,5 +1,6 @@
 package com.jakubwilk.serwisant.api.service;
 
+import com.jakubwilk.serwisant.api.entity.ProtocolType;
 import com.jakubwilk.serwisant.api.entity.jpa.Device;
 import com.jakubwilk.serwisant.api.entity.jpa.Repair;
 import com.jakubwilk.serwisant.api.entity.jpa.UserInfo;
@@ -14,10 +15,26 @@ import java.io.File;
 public class RepairProtocolServiceDefault implements RepairProtocolService{
     private final TemplateEngine templateEngine;
     private final DocumentServiceDefault fileService;
+    private final RepairService repairService;
 
-    public RepairProtocolServiceDefault(TemplateEngine templateEngine, DocumentServiceDefault fileService){
+    public RepairProtocolServiceDefault(TemplateEngine templateEngine, DocumentServiceDefault fileService, RepairService repairService){
         this.templateEngine = templateEngine;
         this.fileService = fileService;
+        this.repairService = repairService;
+    }
+
+    @Override
+    public File getRepairProtocol(int id, ProtocolType protocolType){
+        Repair repair = repairService.findById(id);
+        switch(protocolType){
+            case REPAIR_OPENED -> {
+                return getRepairCreatedProtocol(repair);
+            }
+            case REPAIR_CLOSED -> {
+                return getRepairClosedProtocol(repair);
+            }
+        }
+        throw new RuntimeException("Couldn't create requested protocol");
     }
 
     @Override

@@ -70,7 +70,7 @@ public class UserServiceDefault implements UserService{
     @Transactional
     public User save(User user) {
         if(user == null) throw new IllegalArgumentException("User can't be null!");
-        if(doesUserExistWithGivenId(user)) throw new IllegalArgumentException("User has to be provided with no ID");
+        if(user.getId() != 0) throw new IllegalArgumentException("User has to be provided with no ID");
         if(doesUserExistWithGivenUsername(user)) throw new IllegalArgumentException("User with given username already exists!");
         if(doesUserExistWithGivenEMail(user)) throw new IllegalArgumentException("User has to have a unique e-mail address!");
 
@@ -108,14 +108,17 @@ public class UserServiceDefault implements UserService{
 
     @Override
     @Transactional
-    public User update(User user) {
-        if(user.getId() == 0) throw new IllegalArgumentException("Provide user id!");
+    public User updateUserDetails(int id, User user) {
+        Optional<User> result = userRepository.findById(id);
 
-        if(!doesUserExistWithGivenId(user)) {
-            throw new IllegalArgumentException("Can't find user with id: " + user.getId());
+        if(result.isPresent()){
+            User toUpdate = result.get();
+
+            toUpdate.setUserInfo(user.getUserInfo());
+            return userRepository.saveAndFlush(toUpdate);
+        }else {
+            throw new UserNotFoundException("Can't find user with id: " + id);
         }
-
-        return userRepository.saveAndFlush(user);
     }
 
     @Override
@@ -168,8 +171,12 @@ public class UserServiceDefault implements UserService{
         return result;
     }
 
-    private boolean doesUserExistWithGivenId(User user){
-        return userRepository.findById(user.getId()).isPresent();
+    @Override
+    public List<User> findAllCustomers() {
+        List<User> result = userRepository.findAllCustomers();
+
+        return result;
+
     }
 
     private boolean doesUserExistWithGivenId(int id){

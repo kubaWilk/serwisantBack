@@ -1,18 +1,25 @@
 package com.jakubwilk.serwisant.api.controller.repair;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.jakubwilk.serwisant.api.entity.ProtocolType;
 import com.jakubwilk.serwisant.api.entity.jpa.Repair;
+import com.jakubwilk.serwisant.api.service.RepairProtocolService;
 import com.jakubwilk.serwisant.api.service.RepairService;
 import lombok.AllArgsConstructor;
 import org.apache.coyote.Response;
 import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.File;
 import java.util.List;
 import java.util.Map;
 
@@ -22,6 +29,7 @@ import java.util.Map;
 @ControllerAdvice
 public class RepairController {
     private final RepairService repairService;
+    private final RepairProtocolService repairProtocolService;
 
     @GetMapping("/{id}")
     @Secured("ROLE_CUSTOMER")
@@ -38,6 +46,33 @@ public class RepairController {
         return repairs;
     }
 
+    @GetMapping("/customer/{customerId}")
+    @Secured("ROLE_CUSTOMER")
+    public ResponseEntity<List<Repair>> getAllRepairsByCustomerId(@PathVariable("customerId") int customerId){
+        List<Repair> result = repairService.findAllRepairsByCustomerId(customerId);
+        return ResponseEntity.ok(result);
+    }
+
+    @GetMapping("/device/{deviceId}")
+    @Secured("ROLE_CUSTOMER")
+    public ResponseEntity<List<Repair>> getAllRepairsByDeviceId(@PathVariable("deviceId") int deviceId){
+        List<Repair> result = repairService.findAllRepairsByDeviceId(deviceId);
+        return ResponseEntity.ok(result);
+    }
+
+    @GetMapping("{repairId}/protocol")
+    @Secured("ROLE_EMPLOYEE")
+    public ResponseEntity<Resource> getARepairProtocol(@PathVariable("repairId") int repairId, @RequestParam("protocolType")ProtocolType protocolType){
+        File result = repairProtocolService.getRepairProtocol(repairId, protocolType);
+        Resource resource = new FileSystemResource(result);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + result.getName()+".pdf");
+        headers.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_PDF_VALUE);
+
+        return ResponseEntity.ok().headers(headers).body(resource);
+    }
+
     @PostMapping("/")
     @Secured("ROLE_EMPLOYEE")
     public ResponseEntity<Repair> saveRepair(@RequestBody JsonNode repairJsonNode){
@@ -47,7 +82,7 @@ public class RepairController {
     }
 
     @PostMapping("/accept-cost/{id}")
-    @Secured("ROLE_EMPLOYEE")
+    @Secured("ROLE_CUSTOMER")
     public ResponseEntity acceptCost(@PathVariable("id") int repairId){
         return ResponseEntity.ok().build();
     }
