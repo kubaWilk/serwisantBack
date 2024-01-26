@@ -3,9 +3,7 @@ package com.jakubwilk.serwisant.api.service;
 import com.jakubwilk.serwisant.api.entity.jpa.Repair;
 import com.jakubwilk.serwisant.api.repository.CostRepository;
 import com.jakubwilk.serwisant.api.entity.jpa.Cost;
-import com.jakubwilk.serwisant.api.repository.RepairRepository;
 import jakarta.transaction.Transactional;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -69,7 +67,7 @@ public class CostServiceDefault implements CostService{
     @Override
     @Transactional
     public Cost saveCost(Cost cost, int repairId) {
-        Repair repair = repairService.findById(repairId);
+        Repair repair = repairService.findById(repairId, principal);
         cost.setRepair(repair);
         repair.addCost(cost);
         return costRepository.save(cost);

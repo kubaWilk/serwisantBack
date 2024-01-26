@@ -25,7 +25,7 @@ public class RepairProtocolServiceDefault implements RepairProtocolService{
 
     @Override
     public File getRepairProtocol(int id, ProtocolType protocolType){
-        Repair repair = repairService.findById(id);
+        Repair repair = repairService.findById(id, principal);
         switch(protocolType){
             case REPAIR_OPENED -> {
                 return getRepairCreatedProtocol(repair);

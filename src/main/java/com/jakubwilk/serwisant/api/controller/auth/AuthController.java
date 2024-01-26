@@ -34,7 +34,6 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-
     public ResponseEntity<Map<String,Object>> token(@RequestBody LoginRequest loginRequest){
         LOGGER.debug("Auth token request for: " + loginRequest.username());
         String username = loginRequest.username();

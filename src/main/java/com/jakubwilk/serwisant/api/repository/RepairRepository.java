@@ -12,6 +12,8 @@ public interface RepairRepository extends JpaRepository<Repair, Integer> {
 
     @Query("SELECT r FROM Repair r WHERE r.issuer.id = ?1")
     List<Repair> findAllByIssuerId(int customerId);
+    @Query("SELECT r FROM Repair r WHERE r.issuer.username = ?1")
+    List<Repair> findAllByIssuerUsername(String username);
 
     @Query("SELECT r FROM Repair r WHERE r.device.id = ?1")
     List<Repair> findAllByDeviceId(int deviceId);

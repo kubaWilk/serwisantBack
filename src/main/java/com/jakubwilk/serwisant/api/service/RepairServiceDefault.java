@@ -11,8 +11,12 @@ import com.jakubwilk.serwisant.api.event.events.RepairStatusChangedEvent;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.stereotype.Service;
 
+import javax.naming.AuthenticationException;
+import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
@@ -23,7 +27,6 @@ import java.util.Optional;
 public class RepairServiceDefault implements RepairService {
     private final RepairRepository repository;
     private final UserService userService;
-    private final UserRepository userRepository;
     private final DeviceService deviceService;
     private final RepairDbFileService fileService;
     private ApplicationEventPublisher eventPublisher;
@@ -35,7 +38,21 @@ public class RepairServiceDefault implements RepairService {
         if(result.isPresent()){
             return result.get();
         }else{
-            throw new RuntimeException("No repair with id: " + id);
+            throw new RepairNotFoundException("No repair with id: " + id);
+        }
+    }
+
+    @Override
+    public Repair findById(int id, Principal principal) {
+        Optional<Repair> result = repository.findById(id);
+
+        if(result.isPresent()){
+            Repair repair = result.get();
+            if(!repair.getIssuer().getUsername().equals(principal.getName()))
+                throw new RepairNotFoundException("You are not an issuer of that repair!");
+            return repair;
+        }else{
+            throw new RepairNotFoundException("No repair with id: " + id);
         }
     }
 
@@ -82,7 +99,7 @@ public class RepairServiceDefault implements RepairService {
     @Override
     @Transactional
     public Repair updateRepair(Repair repair) {
-        if(repair == null) throw new NullPointerException(("Repair can't be null!"));
+        if(repair == null) throw new IllegalArgumentException(("Repair can't be null!"));
         Repair updated;
 
         if(checkForStatusUpdate(repair)){
@@ -159,6 +176,16 @@ public class RepairServiceDefault implements RepairService {
     @Override
     public List<Repair> findAllRepairsByDeviceId(int deviceId) {
         return repository.findAllByDeviceId(deviceId);
+    }
+
+    @Override
+    public List<Repair> findAllCustomerRepairs(JwtAuthenticationToken authentication) {
+        String username = authentication.getName();
+        return repository.findAllByIssuerUsername(username);
+    }
+
+    @Override
+    public void acceptCosts(int repairId) {
     }
 
     private boolean checkForStatusUpdate(Repair repair){

@@ -2,6 +2,7 @@ package com.jakubwilk.serwisant.api.service;
 
 import com.jakubwilk.serwisant.api.entity.jpa.User;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -18,4 +19,6 @@ public interface UserService {
     Set<User> searchUser(Map<String, String> userToSearch);
 
     List<User> findAllCustomers();
+
+    User getInfoAboutUser(Principal theUser);
 }

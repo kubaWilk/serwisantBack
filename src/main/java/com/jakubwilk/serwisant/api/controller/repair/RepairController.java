@@ -4,13 +4,12 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.jakubwilk.serwisant.api.entity.ProtocolType;
 import com.jakubwilk.serwisant.api.entity.jpa.Repair;
 import com.jakubwilk.serwisant.api.entity.jpa.RepairDbFile;
+import com.jakubwilk.serwisant.api.entity.jpa.RepairStatus;
 import com.jakubwilk.serwisant.api.service.RepairDbFileService;
-import com.jakubwilk.serwisant.api.service.RepairDbFileServiceDefault;
 import com.jakubwilk.serwisant.api.service.RepairProtocolService;
 import com.jakubwilk.serwisant.api.service.RepairService;
 import lombok.AllArgsConstructor;
 import org.apache.coyote.Response;
-import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -18,17 +17,17 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.parameters.P;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.security.Principal;
 import java.util.List;
 import java.util.Map;
+
+import static com.jakubwilk.serwisant.api.entity.jpa.User.isOnlyCustomer;
 
 @RestController
 @RequestMapping("/repair")
@@ -39,30 +38,39 @@ public class RepairController {
     private final RepairProtocolService repairProtocolService;
     private final RepairDbFileService fileService;
 
+
+
     @GetMapping("/{id}")
     @Secured("ROLE_CUSTOMER")
-    public ResponseEntity<Repair> getRepairById(@PathVariable("id") int id){
-        Repair repair = repairService.findById(id);
-
-        return new ResponseEntity<Repair>(repair, HttpStatus.OK);
+    public ResponseEntity<Repair> getRepairById(@PathVariable("id") int id, JwtAuthenticationToken authenticationToken){
+        if(isOnlyCustomer(authenticationToken))
+            return new ResponseEntity<>(repairService.findById(id, (Principal) authenticationToken.getPrincipal()),
+                    HttpStatus.OK);
+        else {
+            return new ResponseEntity<Repair>(repairService.findById(id), HttpStatus.OK);
+        }
     }
 
     @GetMapping("/")
     @Secured("ROLE_CUSTOMER")
-    public List<Repair> getAllRepairs(){
-        List<Repair> repairs = repairService.findAllRepairs();
-        return repairs;
+    public List<Repair> getAllRepairs(JwtAuthenticationToken authentication){
+        if(isOnlyCustomer(authentication)) {
+            return repairService.findAllCustomerRepairs(authentication);
+        }
+        else {
+            return repairService.findAllRepairs();
+        }
     }
 
     @GetMapping("/customer/{customerId}")
-    @Secured("ROLE_CUSTOMER")
+    @Secured("ROLE_EMPLOYEE")
     public ResponseEntity<List<Repair>> getAllRepairsByCustomerId(@PathVariable("customerId") int customerId){
         List<Repair> result = repairService.findAllRepairsByCustomerId(customerId);
         return ResponseEntity.ok(result);
     }
 
     @GetMapping("/device/{deviceId}")
-    @Secured("ROLE_CUSTOMER")
+    @Secured("ROLE_EMPLOYEE")
     public ResponseEntity<List<Repair>> getAllRepairsByDeviceId(@PathVariable("deviceId") int deviceId){
         List<Repair> result = repairService.findAllRepairsByDeviceId(deviceId);
         return ResponseEntity.ok(result);
@@ -97,7 +105,9 @@ public class RepairController {
 
     @PostMapping("/accept-cost/{id}")
     @Secured("ROLE_CUSTOMER")
-    public ResponseEntity acceptCost(@PathVariable("id") int repairId){
+    public ResponseEntity<Object> acceptCost(@PathVariable("id") int repairId){
+        repairService.acceptCosts(repairId);
+
         return ResponseEntity.ok().build();
     }
 
@@ -120,4 +130,6 @@ public class RepairController {
         repairService.deleteRepair(id);
         return new ResponseEntity<>("Deleted repair: " + id, HttpStatus.OK);
     }
+
+
 }

@@ -10,6 +10,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -131,5 +132,10 @@ public class User implements UserDetails{
         return isActive;
     }
 
+    public static boolean isOnlyCustomer(JwtAuthenticationToken authentication){
+        Collection<? extends GrantedAuthority> roles = authentication.getAuthorities();
 
+        return roles.size() == 1 &&
+                roles.stream().anyMatch(role -> "SCOPE_ROLE_CUSTOMER".equals(role.getAuthority()));
+    }
 }

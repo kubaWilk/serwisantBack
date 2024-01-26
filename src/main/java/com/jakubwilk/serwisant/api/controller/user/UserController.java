@@ -8,8 +8,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -77,6 +81,16 @@ public class UserController {
 
         return ResponseEntity.ok("User with id :" + id + " deleted");
     }
+
+    @GetMapping("/me")
+    @Secured("ROLE_CUSTOMER")
+    public ResponseEntity<User> getInfoAboutUser(Principal theUser){
+        User result = userService.getInfoAboutUser(theUser);
+
+        return ResponseEntity.ok(result);
+    }
+
+
 }
 
 

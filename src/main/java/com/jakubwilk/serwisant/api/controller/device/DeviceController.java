@@ -2,11 +2,16 @@ package com.jakubwilk.serwisant.api.controller.device;
 
 import com.jakubwilk.serwisant.api.entity.jpa.Device;
 import com.jakubwilk.serwisant.api.service.DeviceService;
+import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -28,9 +33,9 @@ public class DeviceController {
     }
 
     @GetMapping("/")
-    @Secured("ROLE_CUSTOMER")
-    public ResponseEntity<List<Device>> findAllDevices(){
-        List<Device> found = deviceService.findAllDevices();
+    @Secured("ROLE_EMPLOYEE")
+    public ResponseEntity<List<Device>> findAllDevices(JwtAuthenticationToken authentication){
+        List<Device> found  = deviceService.findAllDevices();
         return ResponseEntity.ok(found);
     }
 

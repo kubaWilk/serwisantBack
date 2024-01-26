@@ -11,6 +11,7 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.security.Principal;
 import java.util.*;
 
 import static com.jakubwilk.serwisant.api.entity.Role.ROLE_CUSTOMER;
@@ -177,6 +178,12 @@ public class UserServiceDefault implements UserService{
 
         return result;
 
+    }
+
+    @Override
+    public User getInfoAboutUser(Principal theUser) {
+        User result = userRepository.findByUsername(theUser.getName());
+        return result;
     }
 
     private boolean doesUserExistWithGivenId(int id){
