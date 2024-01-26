@@ -1,4 +1,4 @@
-package com.jakubwilk.serwisant.api.controller;
+package com.jakubwilk.serwisant.api.controller.cost;
 
 import com.jakubwilk.serwisant.api.entity.jpa.Cost;
 import com.jakubwilk.serwisant.api.entity.jpa.Repair;

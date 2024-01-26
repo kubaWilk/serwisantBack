@@ -1,4 +1,4 @@
-package com.jakubwilk.serwisant.api.controller;
+package com.jakubwilk.serwisant.api.controller.note;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.jakubwilk.serwisant.api.entity.jpa.Note;

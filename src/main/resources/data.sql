@@ -22,11 +22,35 @@ insert into authorities (user_id, username, authority)
 insert into device(manufacturer, model, serial_number, created_at, modified_at)
     values('Lenovo', 'Thinkpad', 'L14GFR4', '2024-01-01', '2024-01-01');
 
-insert into repair (device_id, issuer_user_id, estimated_cost, description, repair_status, created_at, modified_at)
-    values (1, 1, 400, 'Komputer nie włącza się po wciśnięciu przycisku', 'OPEN', '2024-01-01', '2024-01-01');
+insert into repair (device_id, issuer_user_id, estimated_cost, description, repair_status, created_at, closed_at)
+    values (1, 1, 400, 'Komputer nie włącza się po wciśnięciu przycisku', 'CLOSED', '2023-12-30', '2024-01-01');
 
 insert into repair (device_id, issuer_user_id, estimated_cost, description, repair_status, created_at, modified_at)
-    values (1, 1, 400, 'Komputer nie włącza się po wciśnięciu przycisku', 'OPEN', '2024-01-01', '2024-01-01');
+    values (1, 1, 400, 'Komputer nie włącza się po wciśnięciu przycisku', 'OPEN', '2024-01-02', '2024-01-01');
+
+insert into repair (device_id, issuer_user_id, estimated_cost, description, repair_status, created_at, closed_at)
+    values (1, 1, 400, 'Komputer nie włącza się po wciśnięciu przycisku', 'CLOSED', '2024-01-02', '2024-01-02');
+
+insert into repair (device_id, issuer_user_id, estimated_cost, description, repair_status, created_at, modified_at)
+    values (1, 1, 400, 'Komputer nie włącza się po wciśnięciu przycisku', 'OPEN', '2024-01-02', '2024-01-01');
+
+insert into repair (device_id, issuer_user_id, estimated_cost, description, repair_status, created_at, modified_at)
+    values (1, 1, 400, 'Komputer nie włącza się po wciśnięciu przycisku', 'OPEN', '2024-01-03', '2024-01-01');
+
+insert into repair (device_id, issuer_user_id, estimated_cost, description, repair_status, created_at, closed_at)
+    values (1, 1, 400, 'Komputer nie włącza się po wciśnięciu przycisku', 'CLOSED', '2024-01-03', '2024-01-04');
+
+insert into repair (device_id, issuer_user_id, estimated_cost, description, repair_status, created_at, closed_at)
+    values (1, 1, 400, 'Komputer nie włącza się po wciśnięciu przycisku', 'CLOSED', '2024-01-04', '2024-01-05');
+
+insert into repair (device_id, issuer_user_id, estimated_cost, description, repair_status, created_at, modified_at)
+    values (1, 1, 400, 'Komputer nie włącza się po wciśnięciu przycisku', 'OPEN', '2024-01-04', '2024-01-01');
+
+insert into repair (device_id, issuer_user_id, estimated_cost, description, repair_status, created_at, modified_at)
+    values (1, 1, 400, 'Komputer nie włącza się po wciśnięciu przycisku', 'OPEN', '2024-01-05', '2024-01-01');
+
+insert into repair (device_id, issuer_user_id, estimated_cost, description, repair_status, created_at, closed_at)
+    values (1, 1, 400, 'Komputer nie włącza się po wciśnięciu przycisku', 'CLOSED', '2024-01-05', '2024-01-06');
 
 insert into note (author_id, repair_id, visibility, message, created_at,modified_at)
 values(1, 1, 1, 'Rozpoczęto diagnostykę sprzętu','2024-01-01', '2024-01-01');

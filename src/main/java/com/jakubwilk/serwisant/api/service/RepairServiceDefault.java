@@ -2,6 +2,7 @@ package com.jakubwilk.serwisant.api.service;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.jakubwilk.serwisant.api.entity.jpa.*;
+import com.jakubwilk.serwisant.api.exception.RepairAlreadyClosedException;
 import com.jakubwilk.serwisant.api.exception.RepairNotFoundException;
 import com.jakubwilk.serwisant.api.repository.RepairRepository;
 import com.jakubwilk.serwisant.api.repository.UserRepository;
@@ -113,9 +114,13 @@ public class RepairServiceDefault implements RepairService {
         }
 
         Repair toUpdateStatus = findById(repairId);
+        if(toUpdateStatus.getRepairStatus() == RepairStatus.CLOSED) throw new RepairAlreadyClosedException("This repair has already been closed, nothing changed");
+
         toUpdateStatus.setRepairStatus(status);
-        toUpdateStatus.setStatusModifiedAt(LocalDateTime.now());
+        if(status == RepairStatus.CLOSED) toUpdateStatus.setClosedAt(LocalDateTime.now());
+
         Repair updated = repository.save(toUpdateStatus);
+
         eventPublisher.publishEvent(
                 new RepairStatusChangedEvent(RepairServiceDefault.class, updated.getIssuer(), updated));
 

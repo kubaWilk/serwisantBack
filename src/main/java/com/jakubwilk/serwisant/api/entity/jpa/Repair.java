@@ -61,8 +61,8 @@ public class Repair {
     @Enumerated(EnumType.STRING)
     private RepairStatus repairStatus;
 
-    @Column(name = "status_modified_at")
-    private LocalDateTime statusModifiedAt;
+    @Column(name = "closed_at")
+    private LocalDateTime closedAt;
 
     @Column(name="description")
     private String description;
