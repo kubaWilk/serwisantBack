@@ -1,8 +1,10 @@
 package com.jakubwilk.serwisant.api.service;
 
 import com.jakubwilk.serwisant.api.entity.jpa.Repair;
+import com.jakubwilk.serwisant.api.exception.RepairNotFoundException;
 import com.jakubwilk.serwisant.api.repository.CostRepository;
 import com.jakubwilk.serwisant.api.entity.jpa.Cost;
+import com.jakubwilk.serwisant.api.repository.RepairRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -12,11 +14,11 @@ import java.util.Optional;
 @Service
 public class CostServiceDefault implements CostService{
     private final CostRepository costRepository;
-    private final RepairService repairService;
+    private final RepairRepository repairRepository;
 
-    public CostServiceDefault(CostRepository costRepository, RepairService repairService) {
+    public CostServiceDefault(CostRepository costRepository, RepairRepository repairRepository) {
         this.costRepository = costRepository;
-        this.repairService = repairService;
+        this.repairRepository = repairRepository;
     }
 
     @Override
@@ -59,15 +61,20 @@ public class CostServiceDefault implements CostService{
 
     @Override
     public List<Cost> findAllCostsByRepairId(int repairId) {
-        List<Cost> found = costRepository.findAllByRepairId(repairId);
-        if(found.isEmpty()) throw new RuntimeException("No costs found for repair with id" + repairId);
-        return found;
+        return costRepository.findAllByRepairId(repairId);
     }
 
     @Override
     @Transactional
     public Cost saveCost(Cost cost, int repairId) {
-        Repair repair = repairService.findById(repairId, principal);
+        Optional<Repair> result = repairRepository.findById(repairId);
+        if(result.isEmpty()) {
+            throw new RepairNotFoundException("Couldn't find repair with id: " + repairId);
+        }
+        Repair repair = result.get();
+        if(repair.isCostAccepted()) repair.setCostAccepted(false);
+        repairRepository.save(repair);
+
         cost.setRepair(repair);
         repair.addCost(cost);
         return costRepository.save(cost);

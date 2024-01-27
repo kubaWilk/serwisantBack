@@ -5,17 +5,14 @@ import com.jakubwilk.serwisant.api.entity.jpa.*;
 import com.jakubwilk.serwisant.api.exception.RepairAlreadyClosedException;
 import com.jakubwilk.serwisant.api.exception.RepairNotFoundException;
 import com.jakubwilk.serwisant.api.repository.RepairRepository;
-import com.jakubwilk.serwisant.api.repository.UserRepository;
 import com.jakubwilk.serwisant.api.event.events.RepairCreatedEvent;
 import com.jakubwilk.serwisant.api.event.events.RepairStatusChangedEvent;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.stereotype.Service;
 
-import javax.naming.AuthenticationException;
 import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -89,6 +86,7 @@ public class RepairServiceDefault implements RepairService {
                 .device(device)
                 .repairStatus(RepairStatus.OPEN)
                 .description(description)
+                .isCostAccepted(false)
                 .estimatedCost(estimatedCost)
                 .build();
 
@@ -185,7 +183,15 @@ public class RepairServiceDefault implements RepairService {
     }
 
     @Override
-    public void acceptCosts(int repairId) {
+    public void acceptCosts(int repairId, JwtAuthenticationToken token) {
+        Optional<Repair> result = repository.findById(repairId);
+        if(result.isEmpty()) throw new RepairNotFoundException("Couldn't find repair with id: " + repairId);
+        Repair repair = result.get();
+
+        if(!repair.getIssuer().getUsername().equals(token.getName())) throw new IllegalArgumentException("You are not an owner of this repair!");
+
+        repair.setCostAccepted(true);
+        repository.save(repair);
     }
 
     private boolean checkForStatusUpdate(Repair repair){

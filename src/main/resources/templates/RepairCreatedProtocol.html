@@ -1,15 +1,23 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
   <head>
-    <meta charset="UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Protokół przyjęcia sprzętu do naprawy</title>
+    <title>Protokol przyjecia sprzetu do naprawy</title>
     <style>
+      @font-face {
+        font-family: Roboto-Regular;
+        src: url(src/main/resources/fonts/Roboto/Roboto-Regular.ttf);
+        -fs-pdf-font-embed: embed;
+        -fs-pdf-font-encoding: Identity-H;
+      }
+
       body {
         display: flex;
         flex-direction: column;
         justify-content: center;
         width: 80vw;
+        font-family: "Roboto-Regular";
       }
 
       h1 {
@@ -17,12 +25,15 @@
       }
 
       .side-by-side {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: nowrap;
-        flex-basis: content;
-        justify-content: space-between;
+        text-align: justify;
         padding: 20px;
+      }
+
+      .column {
+        display: inline-block;
+        width: 48%;
+        box-sizing: border-box;
+        vertical-align: top;
       }
 
       ul {
@@ -39,21 +50,26 @@
     </style>
   </head>
   <body>
-    <h1>Protokół przyjęcia sprzętu do naprawy</h1>
+    <h1 style="text-transform: uppercase">
+      Protokół przyjęcia sprzętu do naprawy
+    </h1>
+
+    <h2 style="text-align: center">
+      Naprawa #<span th:text="${repairId}">ID</span>
+    </h2>
     <div class="side-by-side">
-      <div>
-        <p class="bold">Dane sprzętu:</p>
+      <div class="column">
+        <p class="bold">Dane sprzetu:</p>
         <ul>
           <li>Producent: <span th:text="${manufacturer}"></span></li>
           <li>Model: <span th:text="${model}"></span></li>
           <li>Nr seryjny: <span th:text="${serialNumber}"></span></li>
         </ul>
       </div>
-      <div></div>
-      <div>
+      <div class="column">
         <p class="bold">Dane klienta:</p>
         <ul>
-          <li>Imię: <span th:text="${firstName}"></span></li>
+          <li>Imie: <span th:text="${firstName}"></span></li>
           <li>Nazwisko: <span th:text="${lastName}"></span></li>
           <li>Ulica: <span th:text="${street}"></span></li>
           <li>Kod pocztowy: <span th:text="${postCode}"></span></li>
@@ -61,9 +77,35 @@
         </ul>
       </div>
     </div>
-    <div>
+    <div style="margin-bottom:10px">
       <p>Opis usterki: <span th:text="${description}"></span></p>
       <p>Przewidywany koszt: <span th:text="${estimatedCost}"></span>zł</p>
+    </div>
+
+    <div style="margin-top: 20px; max-width: 100%; overflow: hidden">
+      <p style="float: left; margin: 0; text-align: center">
+        <span
+          style="
+            border-bottom: 1px dashed #000;
+            display: block;
+            width: 200px;
+            margin-bottom: 10px;
+          "
+        ></span>
+        Podpis pracownika serwisu
+      </p>
+
+      <p style="float: right; margin: 0; text-align: center">
+        <span
+          style="
+            border-bottom: 1px dashed #000;
+            display: block;
+            width: 200px;
+            margin-bottom: 10px;
+          "
+        ></span
+        >Podpis klienta
+      </p>
     </div>
   </body>
 </html>

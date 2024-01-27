@@ -1,15 +1,17 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-  <style>
-    .bold {
-      font-weight: bold;
-    }
-
-    ul {
-      list-style: none;
-    }
-  </style>
   <head>
+    <style>
+      .bold {
+        font-weight: bold;
+      }
+
+      ul {
+        list-style: none;
+      }
+    </style>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Przyjęto naprawę</title>
   </head>
   <body>
@@ -21,11 +23,15 @@
         <li>Model: <span th:text="${model}">model</span></li>
         <li>Nr seryjny: <span th:text="${serialNumber}">nr seryjny</span></li>
       </ul>
+      <p class="bold">Opis usterki:</p>
+      <span th:text="${description}"></span>
+      <p class="bold">Przewidywany koszt:</p>
+      <span th:text="${estimatedCost}"></span>
     </div>
-    <div>
-      <p>Zdjęcia:</p>
-    </div>
-
+    <p>
+      Aby przejrzeć status naprawy lub skontaktować się z nami zapraszamy na
+      <a th:href="${frontURL}">nasz portal</a>
+    </p>
     <p>
       Pozdrawiamy! <br />
       Serwis komputerowy

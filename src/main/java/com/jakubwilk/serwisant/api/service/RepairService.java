@@ -3,7 +3,6 @@ package com.jakubwilk.serwisant.api.service;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.jakubwilk.serwisant.api.entity.jpa.Cost;
 import com.jakubwilk.serwisant.api.entity.jpa.Repair;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 
 import java.security.Principal;
@@ -31,5 +30,5 @@ public interface RepairService {
 
     List<Repair> findAllCustomerRepairs(JwtAuthenticationToken authentication);
 
-    void acceptCosts(int repairId);
+    void acceptCosts(int repairId, JwtAuthenticationToken token);
 }

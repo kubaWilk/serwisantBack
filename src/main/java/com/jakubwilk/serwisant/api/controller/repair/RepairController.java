@@ -38,13 +38,11 @@ public class RepairController {
     private final RepairProtocolService repairProtocolService;
     private final RepairDbFileService fileService;
 
-
-
     @GetMapping("/{id}")
     @Secured("ROLE_CUSTOMER")
-    public ResponseEntity<Repair> getRepairById(@PathVariable("id") int id, JwtAuthenticationToken authenticationToken){
+    public ResponseEntity<Repair> getRepairById(@PathVariable("id") int id, JwtAuthenticationToken authenticationToken, Principal principal){
         if(isOnlyCustomer(authenticationToken))
-            return new ResponseEntity<>(repairService.findById(id, (Principal) authenticationToken.getPrincipal()),
+            return new ResponseEntity<>(repairService.findById(id, principal),
                     HttpStatus.OK);
         else {
             return new ResponseEntity<Repair>(repairService.findById(id), HttpStatus.OK);
@@ -105,8 +103,8 @@ public class RepairController {
 
     @PostMapping("/accept-cost/{id}")
     @Secured("ROLE_CUSTOMER")
-    public ResponseEntity<Object> acceptCost(@PathVariable("id") int repairId){
-        repairService.acceptCosts(repairId);
+    public ResponseEntity<Object> acceptCost(@PathVariable("id") int repairId, JwtAuthenticationToken token){
+        repairService.acceptCosts(repairId, token);
 
         return ResponseEntity.ok().build();
     }
@@ -130,6 +128,4 @@ public class RepairController {
         repairService.deleteRepair(id);
         return new ResponseEntity<>("Deleted repair: " + id, HttpStatus.OK);
     }
-
-
 }

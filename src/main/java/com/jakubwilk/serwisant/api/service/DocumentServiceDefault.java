@@ -27,6 +27,7 @@ public class DocumentServiceDefault implements DocumentService {
             OutputStream stream = new FileOutputStream(myPdf);
 
             ITextRenderer renderer = new ITextRenderer();
+
             renderer.getFontResolver().addFont(applicationProperties.getFont(), BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
 
             renderer.setDocumentFromString(source);

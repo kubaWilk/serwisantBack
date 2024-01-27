@@ -54,7 +54,7 @@ public class NoteServiceDefault implements NoteService {
         checkNoteNode(noteJsonNode);
 
         int repairId = noteJsonNode.get("repairId").asInt();
-        Repair theRepair = repairService.findById(repairId, principal);
+        Repair theRepair = repairService.findById(repairId);
 
         int authorId = noteJsonNode.get("authorId").asInt();
         User author = userService.findById(authorId);
@@ -76,7 +76,7 @@ public class NoteServiceDefault implements NoteService {
             throw new IllegalArgumentException("Note to update has to be provided with id!");
 
         int repairId = toUpdate.get("repair").asInt();
-        Repair theRepair = repairService.findById(repairId, principal);
+        Repair theRepair = repairService.findById(repairId);
 
         Note theNote = Note.builder()
                 .id(toUpdate.get("id").asInt())

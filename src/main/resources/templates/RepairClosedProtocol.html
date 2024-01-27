@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:util="urn:java:org.thymeleaf.expression.UTils">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -51,7 +52,7 @@
   </head>
   <body>
     <h1 style="text-transform: uppercase">
-      Protokół przyjęcia sprzętu do naprawy
+      Protokół wydania sprzętu z serwisu
     </h1>
 
     <h2 style="text-align: center">
@@ -77,10 +78,23 @@
         </ul>
       </div>
     </div>
-    <div style="margin-bottom:10px">
-      <p>Opis usterki: <span th:text="${description}"></span></p>
-      <p>Przewidywany koszt: <span th:text="${estimatedCost}"></span>zł</p>
+    <div>
+      <p ><span class="bold">Opis usterki:</span> <span th:text="${description}"></span></p>
+      <div>
+        <p><span class="bold">Kosztorys:</span> <ul th:each="item:${costList}">
+            <li>
+                <span class="bold" th:text="${#strings.toString(item.costType)}">Typ</span>
+                <span th:text="${item.name}">nazwa</span>
+                <span th:text="${item.price}">cena</span> zł
+            </li>
+        </ul>
+        </p>
+        <p>
+          <span class="bold">Całkowity koszt:</span> <span th:text="${overalCost}"></span>zł
+        </p>
+      </div>
     </div>
+    <p style="text-align: center;">Potwierdzam odbiór sprzętu z serwisu</p>
 
     <div style="margin-top: 20px; max-width: 100%; overflow: hidden">
       <p style="float: left; margin: 0; text-align: center">

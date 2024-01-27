@@ -50,8 +50,18 @@ public class Cost {
     @Column(name="modified_at")
     private LocalDateTime lastModifiedDate;
 
+    @Getter
     public enum CostType{
-        PART,
-        SERVICE
+        PART("Część"),
+        SERVICE("Usługa");
+
+        private final String displayValue;
+        CostType(String displayValue) {
+            this.displayValue = displayValue;
+        }
+        @Override
+        public String toString() {
+            return displayValue;
+        }
     }
 }

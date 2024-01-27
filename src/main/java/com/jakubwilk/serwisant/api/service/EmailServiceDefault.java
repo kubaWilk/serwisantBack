@@ -27,7 +27,7 @@ public class EmailServiceDefault implements EmailService {
     public void sendEmail(String to, String subject, String templateName, Context context) {
         try {
             MimeMessage message = mailSender.createMimeMessage();
-            MimeMessageHelper helper = new MimeMessageHelper(message, true);
+            MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
             helper.setTo(to);
             helper.setSubject(subject);
 

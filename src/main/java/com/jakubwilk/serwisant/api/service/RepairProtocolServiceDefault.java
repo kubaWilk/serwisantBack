@@ -1,6 +1,7 @@
 package com.jakubwilk.serwisant.api.service;
 
 import com.jakubwilk.serwisant.api.entity.ProtocolType;
+import com.jakubwilk.serwisant.api.entity.jpa.Cost;
 import com.jakubwilk.serwisant.api.entity.jpa.Device;
 import com.jakubwilk.serwisant.api.entity.jpa.Repair;
 import com.jakubwilk.serwisant.api.entity.jpa.UserInfo;
@@ -25,7 +26,7 @@ public class RepairProtocolServiceDefault implements RepairProtocolService{
 
     @Override
     public File getRepairProtocol(int id, ProtocolType protocolType){
-        Repair repair = repairService.findById(id, principal);
+        Repair repair = repairService.findById(id);
         switch(protocolType){
             case REPAIR_OPENED -> {
                 return getRepairCreatedProtocol(repair);
@@ -42,6 +43,7 @@ public class RepairProtocolServiceDefault implements RepairProtocolService{
         Context context = new Context();
         Device device = repair.getDevice();
         UserInfo userInfo = repair.getIssuer().getUserInfo();
+        context.setVariable("repairId", repair.getId());
         context.setVariable("manufacturer", device.getManufacturer());
         context.setVariable("model", device.getModel());
         context.setVariable("serialNumber", device.getSerialNumber());
@@ -50,9 +52,8 @@ public class RepairProtocolServiceDefault implements RepairProtocolService{
         context.setVariable("street", userInfo.getStreet());
         context.setVariable("postCode", userInfo.getPostCode());
         context.setVariable("city", userInfo.getCity());
-        context.setVariable("description", repair.getDescription());
         context.setVariable("estimatedCost", repair.getEstimatedCost());
-
+        context.setVariable("description", repair.getDescription());
 
         String htmlProtocol = templateEngine.process("RepairCreatedProtocol", context);
 
@@ -64,6 +65,32 @@ public class RepairProtocolServiceDefault implements RepairProtocolService{
 
     @Override
     public File getRepairClosedProtocol(Repair repair){
-        return null;
+        Context context = new Context();
+        Device device = repair.getDevice();
+        UserInfo userInfo = repair.getIssuer().getUserInfo();
+        double overalCost = repair.getCosts()
+                .stream()
+                .mapToDouble(Cost::getPrice)
+                .sum();
+
+        context.setVariable("repairId", repair.getId());
+        context.setVariable("manufacturer", device.getManufacturer());
+        context.setVariable("model", device.getModel());
+        context.setVariable("serialNumber", device.getSerialNumber());
+        context.setVariable("firstName", userInfo.getFirstName());
+        context.setVariable("lastName", userInfo.getLastName());
+        context.setVariable("street", userInfo.getStreet());
+        context.setVariable("postCode", userInfo.getPostCode());
+        context.setVariable("city", userInfo.getCity());
+        context.setVariable("description", repair.getDescription());
+        context.setVariable("costList",repair.getCosts());
+        context.setVariable("overalCost", overalCost);
+
+        String htmlProtocol = templateEngine.process("RepairClosedProtocol", context);
+
+        return fileService.getTempPdfFromAString(
+                htmlProtocol,
+                "RepairClosed",
+                "_" + repair.getId());
     }
 }

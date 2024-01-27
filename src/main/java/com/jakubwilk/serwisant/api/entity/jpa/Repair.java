@@ -32,8 +32,7 @@ public class Repair {
             CascadeType.REFRESH},
             fetch = FetchType.EAGER
     )
-    @JoinColumn(name="issuer_user_id")
-//    @Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
+    @JoinColumn(name="issuer_user_id", nullable = false)
     private User issuer;
 
     @ManyToOne(
@@ -53,9 +52,11 @@ public class Repair {
             fetch = FetchType.LAZY)
     private List<Note> notes;
 
-    @OneToMany(
+    @OneToMany(mappedBy = "repair",
             cascade = CascadeType.ALL,
             fetch = FetchType.EAGER)
+    @ToString.Exclude
+    @JsonIgnore
     private List<Cost> costs;
 
     @Enumerated(EnumType.STRING)
@@ -77,6 +78,9 @@ public class Repair {
     @LastModifiedDate
     @Column(name="modified_at")
     private LocalDateTime lastModifiedDate;
+
+    @Column(name="cost_accepted")
+    private boolean isCostAccepted;
 
     @PreRemove
     private void preRemove(){

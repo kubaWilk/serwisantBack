@@ -1,62 +1,111 @@
-insert into user_details (first_name, last_name, street, post_code, city)
-    values ('Właściciel', 'Serwisu', 'Testowa 1', '00-000', 'Serwisowa');
+insert into user_details (first_name, last_name, street, post_code, city) values
+('Właściciel', 'Serwisu', 'Testowa 1', '00-000', 'Serwisowa'),
+('Pracownik', 'Serwisu', 'Testowa 1', '00-000', 'Warszawa'),
+('Andrzej', 'Kowalski', 'Testowa 1', '00-000', 'Warszawa'),
+('Brajan', 'Brzęczyszczykiewicz', 'Testowa 1', '00-000', 'Warszawa');
 
-insert into user_details (first_name, last_name, street, post_code, city)
-    values ('Andrzej', 'Kowalski', 'Testowa 1', '00-000', 'Warszawa');
+insert into users (username, password, active, email, user_detail_id, created_at, modified_at) values
+('root', '$2a$12$enZyMcOqcaSgS4oPxthFweOfCvY5zqkEHi1lwy7VZ2QWCfLF9P8/2', true, 'test@test.com', 1, '2024-01-01', '2024-01-01'),
+('empl', '$2a$12$enZyMcOqcaSgS4oPxthFweOfCvY5zqkEHi1lwy7VZ2QWCfLF9P8/2', true, 'test2@test.com', 2, '2024-01-01', '2024-01-01'),
+('cust', '$2a$12$enZyMcOqcaSgS4oPxthFweOfCvY5zqkEHi1lwy7VZ2QWCfLF9P8/2', true, 'jakub_wilk@outlook.com', 3, '2024-01-01', '2024-01-01'),
+('cust2', '$2a$12$enZyMcOqcaSgS4oPxthFweOfCvY5zqkEHi1lwy7VZ2QWCfLF9P8/2', true, 'test3@test.com', 4, '2024-01-01', '2024-01-01');
 
-insert into users (username, password, active, email, user_detail_id, created_at, modified_at)
-     values ('root', '$2a$12$enZyMcOqcaSgS4oPxthFweOfCvY5zqkEHi1lwy7VZ2QWCfLF9P8/2', true, 'test@test.com', 1, '2024-01-01', '2024-01-01');
+insert into authorities (user_id, username, authority) values
+(1, 'root', 'ROLE_CUSTOMER'),
+(1, 'root', 'ROLE_EMPLOYEE'),
+(1, 'root', 'ROLE_ADMIN'),
+(2, 'empl', 'ROLE_CUSTOMER'),
+(2, 'empl', 'ROLE_EMPLOYEE'),
+(3, 'cust', 'ROLE_CUSTOMER'),
+(3, 'cust2', 'ROLE_CUSTOMER');
 
- insert into users (username, password, active, email, user_detail_id, created_at, modified_at)
-      values ('root2', '$2a$12$enZyMcOqcaSgS4oPxthFweOfCvY5zqkEHi1lwy7VZ2QWCfLF9P8/2', true, 'jakub_wilk@outlook.com', 2, '2024-01-01', '2024-01-01');
+insert into device(manufacturer, model, serial_number, created_at, modified_at) values
+('Lenovo', 'Thinkpad', 'L14GFR4', '2024-01-01', '2024-01-01'),
+('Asus', 'Zenbook', 'AS87GY9S', '2024-01-01', '2024-01-01'),
+('Dell', 'Latitude', 'D89GZ9S', '2024-01-01', '2024-01-01');
 
-insert into authorities (user_id, username, authority)
-    values (1, 'root', 'ROLE_CUSTOMER');
+insert into  repair (device_id, issuer_user_id, estimated_cost, description, repair_status, created_at, closed_at, cost_accepted)
+values
+(1, 3, 400.0, 'Komputer nie włącza się po wciśnięciu przycisku', 'CLOSED', '2024-01-05', '2024-01-06', true),
+(2, 4, 300.0, 'Urządzenie nie uruchamia się', 'WAITING_FOR_CUSTOMER', '2023-12-15', NULL, false),
+(3, 3, 500.0, 'Rozbity ekran', 'OPEN', '2023-11-20', NULL, false),
+(1, 4, 450.0, 'Wolna praca', 'WAITING_FOR_SUPPLIER', '2024-01-10', NULL, false),
+(2, 3, 600.0, 'Klawiatura nie działa', 'CLOSED', '2023-10-25', '2023-10-27', true),
+(3, 4, 350.0, 'Wymiana baterii', 'WAITING_FOR_CUSTOMER', '2023-12-01', NULL, false),
+(1, 3, 200.0, 'Problem z oprogramowaniem', 'WAITING_FOR_SUPPLIER', '2024-01-02', NULL, false),
+(2, 4, 550.0, 'Migający ekran', 'WAITING_FOR_SUPPLIER', '2023-11-05', NULL, false),
+(3, 3, 700.0, 'Urządzenie nie bootuje', 'WAITING_FOR_CUSTOMER', '2023-12-18', NULL, false),
+(1, 4, 300.0, 'Uszkodzenie portu ładowania', 'CLOSED', '2023-11-12', '2023-11-14', true),
+(2, 3, 400.0, 'Restarty', 'WAITING_FOR_CUSTOMER', '2023-11-08', NULL, false),
+(3, 4, 600.0, 'Zepsuty zawias', 'WAITING_FOR_SUPPLIER', '2023-12-20', NULL, false),
+(1, 3, 350.0, 'Uszkodzenie przez zalanie', 'WAITING_FOR_SUPPLIER', '2023-12-05', NULL, false),
+(2, 4, 500.0, 'Przegrzewanie', 'CLOSED', '2023-11-02', '2023-11-04', true),
+(3, 3, 250.0, 'Głośna praca wentylatora', 'WAITING_FOR_CUSTOMER', '2023-10-28', NULL, false),
+(1, 4, 450.0, 'Nie działa touchpad', 'CLOSED', '2023-11-22', '2023-11-24', true),
+(2, 3, 300.0, 'Problemy z Bluetooth', 'WAITING_FOR_SUPPLIER', '2023-10-15', NULL, false),
+(3, 4, 700.0, 'Częste zawieszanie się komputera', 'WAITING_FOR_CUSTOMER', '2023-11-30', NULL, false),
+(1, 3, 400.0, 'Uszkodzenie dysku', 'CLOSED', '2023-10-20', '2023-10-22', true),
+(2, 4, 350.0, 'Awaria karty graficznej', 'WAITING_FOR_CUSTOMER', '2023-12-08', NULL, false),
+(3, 3, 550.0, 'Brak reakcji na przycisk zasilania', 'WAITING_FOR_SUPPLIER', '2023-11-10', NULL, false),
+(1, 4, 600.0, 'Urządzenie nie rozpoznaje urządzeń USB', 'WAITING_FOR_SUPPLIER', '2023-12-12', NULL, false),
+(2, 3, 200.0, 'Brak połączenia z Wi-Fi', 'WAITING_FOR_CUSTOMER', '2023-10-10', NULL, false),
+(3, 4, 500.0, 'Nagłe wyłączanie', 'CLOSED', '2023-11-15', '2023-11-17', true),
+(1, 3, 450.0, 'Problemy z wyświetlaczem', 'WAITING_FOR_CUSTOMER', '2023-10-30', NULL, false),
+(2, 4, 300.0, 'Awaria kamery internetowej', 'WAITING_FOR_SUPPLIER', '2023-12-03', NULL, false),
+(3, 3, 700.0, 'Brak reakcji na urządzenia USB', 'WAITING_FOR_CUSTOMER', '2023-11-25', NULL, false),
+(1, 4, 400.0, 'System operacyjny nie włącza się', 'CLOSED', '2023-10-18', '2023-10-20', true),
+(3, 4, 550.0, 'Wtyczka audio nie działa', 'WAITING_FOR_SUPPLIER', '2023-11-28', NULL, false),
+(1, 3, 600.0, 'Niska wydajność w grach', 'WAITING_FOR_SUPPLIER', '2023-10-12', NULL, false),
+(2, 4, 250.0, 'Szybkie rozładowywanie baterii', 'WAITING_FOR_CUSTOMER', '2023-12-17', NULL, false),
+(3, 3, 450.0, 'Błąd przy instalacji aktualizacji systemu', 'CLOSED', '2023-11-05', '2023-11-07', true);
 
-insert into authorities (user_id, username, authority)
-    values (1, 'root', 'ROLE_EMPLOYEE');
+insert into note (repair_id, author_id, visibility, message, created_at) values
+(1, 2, 0, 'Notatka widoczna dla wszystkich','2024-01-01'),
+(1, 2, 1, 'Notatka widoczna tylko dla pracowników serwisu','2024-01-01'),
+(2, 2, 0, 'Notatka widoczna dla wszystkich','2024-01-01'),
+(2, 2, 1, 'Notatka widoczna tylko dla pracowników serwisu','2024-01-01'),
+(3, 2, 0, 'Notatka widoczna dla wszystkich','2024-01-01'),
+(3, 2, 1, 'Notatka widoczna tylko dla pracowników serwisu','2024-01-01'),
+(4, 2, 0, 'Notatka widoczna dla wszystkich','2024-01-01'),
+(4, 2, 1, 'Notatka widoczna tylko dla pracowników serwisu','2024-01-01'),
+(5, 2, 0, 'Notatka widoczna dla wszystkich','2024-01-01'),
+(5, 2, 1, 'Notatka widoczna tylko dla pracowników serwisu','2024-01-01'),
+(6, 2, 0, 'Notatka widoczna dla wszystkich','2024-01-01'),
+(6, 2, 1, 'Notatka widoczna tylko dla pracowników serwisu','2024-01-01'),
+(7, 2, 0, 'Notatka widoczna dla wszystkich','2024-01-01'),
+(7, 2, 1, 'Notatka widoczna tylko dla pracowników serwisu','2024-01-01'),
+(8, 2, 0, 'Notatka widoczna dla wszystkich','2024-01-01'),
+(8, 2, 1, 'Notatka widoczna tylko dla pracowników serwisu','2024-01-01'),
+(9, 2, 0, 'Notatka widoczna dla wszystkich','2024-01-01'),
+(9, 2, 1, 'Notatka widoczna tylko dla pracowników serwisu','2024-01-01'),
+(10, 2, 0, 'Notatka widoczna dla wszystkich','2024-01-01'),
+(10, 2, 1, 'Notatka widoczna tylko dla pracowników serwisu','2024-01-01'),
+(11, 2, 0, 'Notatka widoczna dla wszystkich','2024-01-01'),
+(11, 2, 1, 'Notatka widoczna tylko dla pracowników serwisu','2024-01-01'),
+(12, 2, 0, 'Notatka widoczna dla wszystkich','2024-01-01'),
+(12, 2, 1, 'Notatka widoczna tylko dla pracowników serwisu','2024-01-01'),
+(13, 2, 0, 'Notatka widoczna dla wszystkich','2024-01-01'),
+(13, 2, 1, 'Notatka widoczna tylko dla pracowników serwisu','2024-01-01'),
+(14, 2, 0, 'Notatka widoczna dla wszystkich','2024-01-01'),
+(14, 2, 1, 'Notatka widoczna tylko dla pracowników serwisu','2024-01-01'),
+(15, 2, 0, 'Notatka widoczna dla wszystkich','2024-01-01'),
+(15, 2, 1, 'Notatka widoczna tylko dla pracowników serwisu','2024-01-01'),
+(16, 2, 0, 'Notatka widoczna dla wszystkich','2024-01-01'),
+(16, 2, 1, 'Notatka widoczna tylko dla pracowników serwisu','2024-01-01'),
+(17, 2, 0, 'Notatka widoczna dla wszystkich','2024-01-01'),
+(17, 2, 1, 'Notatka widoczna tylko dla pracowników serwisu','2024-01-01'),
+(18, 2, 0, 'Notatka widoczna dla wszystkich','2024-01-01'),
+(18, 2, 1, 'Notatka widoczna tylko dla pracowników serwisu','2024-01-01'),
+(19, 2, 0, 'Notatka widoczna dla wszystkich','2024-01-01'),
+(19, 2, 1, 'Notatka widoczna tylko dla pracowników serwisu','2024-01-01'),
+(20, 2, 0, 'Notatka widoczna dla wszystkich','2024-01-01'),
+(21, 2, 1, 'Notatka widoczna tylko dla pracowników serwisu','2024-01-01'),
+(21, 2, 0, 'Notatka widoczna dla wszystkich','2024-01-01'),
+(22, 2, 1, 'Notatka widoczna tylko dla pracowników serwisu','2024-01-01'),
+(23, 2, 0, 'Notatka widoczna dla wszystkich','2024-01-01'),
+(23, 2, 1, 'Notatka widoczna tylko dla pracowników serwisu','2024-01-01'),
+(24, 2, 0, 'Notatka widoczna dla wszystkich','2024-01-01'),
+(24, 2, 1, 'Notatka widoczna tylko dla pracowników serwisu','2024-01-01'),
+(24, 2, 0, 'Notatka widoczna dla wszystkich','2024-01-01'),
+(24, 2, 1, 'Notatka widoczna tylko dla pracowników serwisu','2024-01-01');
 
-insert into authorities (user_id, username, authority)
-    values (1, 'root', 'ROLE_ADMIN');
-
-insert into device(manufacturer, model, serial_number, created_at, modified_at)
-    values('Lenovo', 'Thinkpad', 'L14GFR4', '2024-01-01', '2024-01-01');
-
-insert into repair (device_id, issuer_user_id, estimated_cost, description, repair_status, created_at, closed_at)
-    values (1, 1, 400, 'Komputer nie włącza się po wciśnięciu przycisku', 'CLOSED', '2023-12-30', '2024-01-01');
-
-insert into repair (device_id, issuer_user_id, estimated_cost, description, repair_status, created_at, modified_at)
-    values (1, 1, 400, 'Komputer nie włącza się po wciśnięciu przycisku', 'OPEN', '2024-01-02', '2024-01-01');
-
-insert into repair (device_id, issuer_user_id, estimated_cost, description, repair_status, created_at, closed_at)
-    values (1, 1, 400, 'Komputer nie włącza się po wciśnięciu przycisku', 'CLOSED', '2024-01-02', '2024-01-02');
-
-insert into repair (device_id, issuer_user_id, estimated_cost, description, repair_status, created_at, modified_at)
-    values (1, 1, 400, 'Komputer nie włącza się po wciśnięciu przycisku', 'OPEN', '2024-01-02', '2024-01-01');
-
-insert into repair (device_id, issuer_user_id, estimated_cost, description, repair_status, created_at, modified_at)
-    values (1, 1, 400, 'Komputer nie włącza się po wciśnięciu przycisku', 'OPEN', '2024-01-03', '2024-01-01');
-
-insert into repair (device_id, issuer_user_id, estimated_cost, description, repair_status, created_at, closed_at)
-    values (1, 1, 400, 'Komputer nie włącza się po wciśnięciu przycisku', 'CLOSED', '2024-01-03', '2024-01-04');
-
-insert into repair (device_id, issuer_user_id, estimated_cost, description, repair_status, created_at, closed_at)
-    values (1, 1, 400, 'Komputer nie włącza się po wciśnięciu przycisku', 'CLOSED', '2024-01-04', '2024-01-05');
-
-insert into repair (device_id, issuer_user_id, estimated_cost, description, repair_status, created_at, modified_at)
-    values (1, 1, 400, 'Komputer nie włącza się po wciśnięciu przycisku', 'OPEN', '2024-01-04', '2024-01-01');
-
-insert into repair (device_id, issuer_user_id, estimated_cost, description, repair_status, created_at, modified_at)
-    values (1, 1, 400, 'Komputer nie włącza się po wciśnięciu przycisku', 'OPEN', '2024-01-05', '2024-01-01');
-
-insert into repair (device_id, issuer_user_id, estimated_cost, description, repair_status, created_at, closed_at)
-    values (1, 1, 400, 'Komputer nie włącza się po wciśnięciu przycisku', 'CLOSED', '2024-01-05', '2024-01-06');
-
-insert into note (author_id, repair_id, visibility, message, created_at,modified_at)
-values(1, 1, 1, 'Rozpoczęto diagnostykę sprzętu','2024-01-01', '2024-01-01');
-
-insert into note (author_id, repair_id, visibility, message, created_at, modified_at)
-values(1, 1, 0, 'Podejrzewam uszkodzenie baterii', '2024-01-01', '2024-01-01');
-
-insert into note (author_id, repair_id, visibility, message, created_at, modified_at)
-values(1, 2, 1, 'test Note', '2024-01-01', '2024-01-01');
