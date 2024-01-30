@@ -1,5 +1,6 @@
 package com.jakubwilk.serwisant.api.service;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.jakubwilk.serwisant.api.entity.jpa.User;
 
 import java.security.Principal;
@@ -21,4 +22,6 @@ public interface UserService {
     List<User> findAllCustomers();
 
     User getInfoAboutUser(Principal theUser);
+
+    User updateUser(int userId, JsonNode node);
 }

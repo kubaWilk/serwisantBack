@@ -17,7 +17,7 @@ insert into authorities (user_id, username, authority) values
 (2, 'empl', 'ROLE_CUSTOMER'),
 (2, 'empl', 'ROLE_EMPLOYEE'),
 (3, 'cust', 'ROLE_CUSTOMER'),
-(3, 'cust2', 'ROLE_CUSTOMER');
+(4, 'cust2', 'ROLE_CUSTOMER');
 
 insert into device(manufacturer, model, serial_number, created_at, modified_at) values
 ('Lenovo', 'Thinkpad', 'L14GFR4', '2024-01-01', '2024-01-01'),

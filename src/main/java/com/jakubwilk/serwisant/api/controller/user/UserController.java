@@ -1,6 +1,8 @@
 package com.jakubwilk.serwisant.api.controller.user;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.jakubwilk.serwisant.api.entity.jpa.User;
+import com.jakubwilk.serwisant.api.entity.jpa.UserInfo;
 import com.jakubwilk.serwisant.api.service.UserService;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
@@ -9,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 
@@ -61,10 +64,18 @@ public class UserController {
 
     @PutMapping("/{id}")
     @Secured("ROLE_EMPLOYEE")
-    public ResponseEntity<User> updateUser(@PathVariable("id") int id ,@RequestBody User toSave){
+    public ResponseEntity<User> updateUserDetails(@PathVariable("id") int id ,@RequestBody User toSave){
         User user = userService.updateUserDetails(id, toSave);
 
-        return new ResponseEntity<User>(user, HttpStatus.CREATED);
+        return ResponseEntity.ok(user);
+    }
+
+    @PutMapping("/admin/{id}")
+    @Secured("ROLE_ADMIN")
+    public ResponseEntity<User> updateUser(@PathVariable("id") int id , @RequestBody JsonNode node){
+        User user = userService.updateUser(id, node);
+
+        return ResponseEntity.ok(user);
     }
 
     @PostMapping("/search")
@@ -89,8 +100,6 @@ public class UserController {
 
         return ResponseEntity.ok(result);
     }
-
-
 }
 
 

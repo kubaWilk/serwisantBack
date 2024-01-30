@@ -1,6 +1,11 @@
 package com.jakubwilk.serwisant.api.service;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.jakubwilk.serwisant.api.entity.Role;
+import com.jakubwilk.serwisant.api.entity.jpa.Authority;
 import com.jakubwilk.serwisant.api.entity.jpa.User;
+import com.jakubwilk.serwisant.api.entity.jpa.UserInfo;
 import com.jakubwilk.serwisant.api.event.events.UserRegisteredEvent;
 import com.jakubwilk.serwisant.api.exception.UserNotFoundException;
 import com.jakubwilk.serwisant.api.repository.UserRepository;
@@ -13,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import java.security.Principal;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static com.jakubwilk.serwisant.api.entity.Role.ROLE_CUSTOMER;
 
@@ -79,7 +85,8 @@ public class UserServiceDefault implements UserService{
         User persisted;
 
         try{
-            user.setRoles(ROLE_CUSTOMER);
+//            Authority newUser = new Authority(user, user.getUsername(), ROLE_CUSTOMER);
+            user.addRole(ROLE_CUSTOMER);
             user.setActive(true);
 
             persisted = userRepository.saveAndFlush(user);
@@ -184,6 +191,48 @@ public class UserServiceDefault implements UserService{
     public User getInfoAboutUser(Principal theUser) {
         User result = userRepository.findByUsername(theUser.getName());
         return result;
+    }
+
+    @Override
+    @Transactional
+    public User updateUser(int id, JsonNode node) {
+        User user;
+        Optional<User> result = userRepository.findById(id);
+        if(result.isEmpty()) throw new UserNotFoundException("User with id: " + id+ " not found.");
+
+        user = result.get();
+        UserInfo userInfo = user.getUserInfo();
+        JsonNode userInfoJson = node.get("userInfo");
+
+        userInfo.setFirstName(userInfoJson.get("firstName").asText());
+        userInfo.setLastName(userInfoJson.get("lastName").asText());
+        userInfo.setPhoneNumber(userInfoJson.get("phoneNumber").asText());
+        userInfo.setStreet(userInfoJson.get("street").asText());
+        userInfo.setPostCode(userInfoJson.get("postCode").asText());
+        userInfo.setCity(userInfoJson.get("city").asText());
+        user.setUserInfo(userInfo);
+
+        ArrayNode rolesJSON = (ArrayNode) node.get("roles");
+
+        Set<Role> obtainedRoles = new HashSet<>();
+        for(var element: rolesJSON){
+            Role role = Role.valueOf(element.asText());
+            obtainedRoles.add(role);
+        }
+
+        Set<Authority> roles = user.getAuthoritySet();
+
+        obtainedRoles.stream()
+                .filter(role -> roles.stream().noneMatch(authority -> authority.getAuthority() == role))
+                .forEach(role -> roles.add(new Authority(user, user.getUsername(), role)));
+
+        Set<Authority> rolesToRemove = roles.stream()
+                .filter(authority -> obtainedRoles.stream().noneMatch(role -> authority.getAuthority() == role))
+                .collect(Collectors.toSet());
+
+        rolesToRemove.forEach(element -> user.removeRole(element.getAuthority()));
+
+        return userRepository.save(user);
     }
 
     private boolean doesUserExistWithGivenId(int id){

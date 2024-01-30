@@ -5,48 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0edb056b-a24f-42fa-bc79-34e5c9ba43e3" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/jakubwilk/serwisant/api/utils/AuthoritySerializer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/jakubwilk/serwisant/api/utils/AuthoritySetDeserializer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/jakubwilk/serwisant/api/configuration/SecurityConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jakubwilk/serwisant/api/configuration/SecurityConfiguration.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/jakubwilk/serwisant/api/configuration/TemplateEngineConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jakubwilk/serwisant/api/configuration/TemplateEngineConfiguration.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/jakubwilk/serwisant/api/controller/repair/RepairController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jakubwilk/serwisant/api/controller/repair/RepairController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/jakubwilk/serwisant/api/entity/jpa/Cost.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jakubwilk/serwisant/api/entity/jpa/Cost.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/jakubwilk/serwisant/api/entity/jpa/Repair.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jakubwilk/serwisant/api/entity/jpa/Repair.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/jakubwilk/serwisant/api/entity/jpa/RepairStatus.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jakubwilk/serwisant/api/entity/jpa/RepairStatus.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/jakubwilk/serwisant/api/service/CostServiceDefault.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jakubwilk/serwisant/api/service/CostServiceDefault.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/jakubwilk/serwisant/api/service/DocumentServiceDefault.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jakubwilk/serwisant/api/service/DocumentServiceDefault.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/jakubwilk/serwisant/api/service/EmailServiceDefault.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jakubwilk/serwisant/api/service/EmailServiceDefault.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/jakubwilk/serwisant/api/service/NoteServiceDefault.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jakubwilk/serwisant/api/service/NoteServiceDefault.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/jakubwilk/serwisant/api/service/RepairProtocolServiceDefault.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jakubwilk/serwisant/api/service/RepairProtocolServiceDefault.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/jakubwilk/serwisant/api/service/RepairService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jakubwilk/serwisant/api/service/RepairService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/jakubwilk/serwisant/api/service/RepairServiceDefault.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jakubwilk/serwisant/api/service/RepairServiceDefault.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/jakubwilk/serwisant/api/controller/user/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jakubwilk/serwisant/api/controller/user/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/jakubwilk/serwisant/api/entity/Role.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jakubwilk/serwisant/api/entity/Role.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/jakubwilk/serwisant/api/entity/jpa/Authority.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jakubwilk/serwisant/api/entity/jpa/Authority.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/jakubwilk/serwisant/api/entity/jpa/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jakubwilk/serwisant/api/entity/jpa/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/jakubwilk/serwisant/api/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jakubwilk/serwisant/api/service/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/jakubwilk/serwisant/api/service/UserServiceDefault.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jakubwilk/serwisant/api/service/UserServiceDefault.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/data.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/data.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/RepairCreatedEmail.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/RepairCreatedEmail.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/RepairCreatedProtocol.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/RepairCreatedProtocol.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/RepairStatusChangedEmail.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/RepairStatusChangedEmail.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/ResetPasswordEmail.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/ResetPasswordEmail.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/UserRegisteredEmail.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/UserRegisteredEmail.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/configuration/TemplateEngineConfiguration.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/configuration/TemplateEngineConfiguration.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/controller/device/DeviceController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/controller/device/DeviceController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/controller/repair/RepairController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/controller/repair/RepairController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/controller/user/UserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/controller/user/UserController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/entity/Role.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/entity/Role.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/entity/jpa/User$UserBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/entity/jpa/User$UserBuilder.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/entity/jpa/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/entity/jpa/User.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/repository/RepairRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/repository/RepairRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/service/CostServiceDefault.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/service/CostServiceDefault.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/service/DocumentServiceDefault.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/service/DocumentServiceDefault.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/service/EmailServiceDefault.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/service/EmailServiceDefault.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/service/RepairService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/service/RepairService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/service/RepairServiceDefault.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/service/RepairServiceDefault.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/data.sql" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/data.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/RepairCreatedEmail.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/RepairCreatedEmail.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/RepairCreatedProtocol.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/RepairCreatedProtocol.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/RepairStatusChangedEmail.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/RepairStatusChangedEmail.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/ResetPasswordEmail.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/ResetPasswordEmail.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/UserRegisteredEmail.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/UserRegisteredEmail.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/service/UserServiceDefault.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/service/UserServiceDefault.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -79,7 +52,7 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "ASKED_ADD_EXTERNAL_FILES": "true",
-    "Application.ApiApplication.executor": "Debug",
+    "Application.ApiApplication.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
@@ -153,7 +126,6 @@
   <component name="XDebuggerManager">
     <pin-to-top-manager>
       <pinned-members>
-        <PinnedItemInfo parentTag="org.springframework.security.web.firewall.StrictHttpFirewall$StrictFirewalledRequest" memberName="request" />
         <PinnedItemInfo parentTag="org.springframework.security.authentication.UsernamePasswordAuthenticationToken" memberName="principal" />
         <PinnedItemInfo parentTag="org.xhtmlrenderer.pdf.ITextRenderer" memberName="_outputDevice" />
       </pinned-members>

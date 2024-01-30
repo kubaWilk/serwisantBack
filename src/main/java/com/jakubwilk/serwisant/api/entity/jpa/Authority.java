@@ -19,7 +19,7 @@ public class Authority {
 
     @JsonIgnore
     @ToString.Exclude
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name="user_id")
     private User user;
 

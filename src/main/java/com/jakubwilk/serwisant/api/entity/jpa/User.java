@@ -1,7 +1,11 @@
 package com.jakubwilk.serwisant.api.entity.jpa;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.jakubwilk.serwisant.api.entity.Role;
+import com.jakubwilk.serwisant.api.utils.AuthoritySerializer;
+import com.jakubwilk.serwisant.api.utils.AuthoritySetDeserializer;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -51,7 +55,8 @@ public class User implements UserDetails{
 
     @OneToMany(mappedBy = "user",
             cascade = CascadeType.ALL,
-            fetch = FetchType.EAGER)
+            fetch = FetchType.EAGER,
+            orphanRemoval = true)
     private Set<Authority> roles;
 
     @OneToOne(fetch = FetchType.LAZY)
@@ -61,7 +66,7 @@ public class User implements UserDetails{
 
     @OneToMany(mappedBy = "issuer",
             cascade = CascadeType.ALL,
-            fetch = FetchType.EAGER)
+            fetch = FetchType.LAZY)
     @JsonIgnore
     @ToString.Exclude
     private List<Repair> repairs;
@@ -74,14 +79,21 @@ public class User implements UserDetails{
     @Column(name="modified_at")
     private LocalDateTime lastModifiedDate;
 
-    public void setRoles(Role role){
+    public void addRole(Role role){
         if(this.roles == null){
             roles = new HashSet<>();
         }
 
-        roles.add(new Authority(this, username, role));
+        boolean hasRole = roles.stream().anyMatch(authority ->
+                authority.getAuthority() == role);
+        if(!hasRole) roles.add(new Authority(this, username, role));
     }
 
+    public void removeRole(Role theRole){
+        if(this.roles == null) return;
+
+        this.roles.removeIf(role -> role.getAuthority() == theRole);
+    }
 
     public void removeRepair(Repair repair){
         if(repairs == null) return;
@@ -94,6 +106,15 @@ public class User implements UserDetails{
             authorities.add(role.getAuthority().toString());
         }
         return authorities;
+    }
+
+    @JsonIgnore
+    public Set<Authority> getAuthoritySet(){
+        return roles;
+    }
+
+    public void setAuthoritySet(Set<Authority> authorities){
+        this.roles = authorities;
     }
 
     @Override
