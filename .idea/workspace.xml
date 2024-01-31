@@ -6,12 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="0edb056b-a24f-42fa-bc79-34e5c9ba43e3" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/jakubwilk/serwisant/api/configuration/SecurityConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jakubwilk/serwisant/api/configuration/SecurityConfiguration.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/jakubwilk/serwisant/api/controller/GlobalExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jakubwilk/serwisant/api/controller/GlobalExceptionHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/jakubwilk/serwisant/api/controller/auth/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jakubwilk/serwisant/api/controller/auth/AuthController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/jakubwilk/serwisant/api/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jakubwilk/serwisant/api/service/UserService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/jakubwilk/serwisant/api/service/UserServiceDefault.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jakubwilk/serwisant/api/service/UserServiceDefault.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/data.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/data.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/service/UserServiceDefault.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/service/UserServiceDefault.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -116,6 +112,19 @@
     <option name="LAST_COMMIT_MESSAGE" value="" />
   </component>
   <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/main/java/com/jakubwilk/serwisant/api/service/UserServiceDefault.java</url>
+          <line>143</line>
+          <properties class="com.jakubwilk.serwisant.api.service.UserServiceDefault" method="changePassword">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="9" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
     <pin-to-top-manager>
       <pinned-members>
         <PinnedItemInfo parentTag="org.springframework.security.authentication.UsernamePasswordAuthenticationToken" memberName="principal" />

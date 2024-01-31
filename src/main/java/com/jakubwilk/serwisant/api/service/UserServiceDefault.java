@@ -144,7 +144,6 @@ public class UserServiceDefault implements UserService{
     public void changePassword(String email, String password) {
         User user = userRepository.findByEmail(email);
         String encoded = passwordEncoder.encode(password);
-        System.out.println(passwordEncoder.matches(password,encoded));
         user.setPassword(encoded);
 
         userRepository.save(user);
