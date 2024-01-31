@@ -2,6 +2,7 @@ package com.jakubwilk.serwisant.api.service;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.jakubwilk.serwisant.api.entity.jpa.User;
+import jakarta.transaction.Transactional;
 
 import java.security.Principal;
 import java.util.List;
@@ -16,6 +17,10 @@ public interface UserService {
     User updateUserDetails(int id, User user);
     void delete(int id);
     void changePassword(String email, String password);
+
+    @Transactional
+    void changePassword(String email, String oldPassword, String password);
+
     User findByUsername(String username);
     Set<User> searchUser(Map<String, String> userToSearch);
 

@@ -28,10 +28,12 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
@@ -51,7 +53,7 @@ import java.util.Arrays;
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
-public class SecurityConfiguration {
+public class SecurityConfiguration{
     private RSAKey rsaKey;
 
     @Bean
@@ -69,7 +71,7 @@ public class SecurityConfiguration {
     @Bean
     public AuthenticationManager authenticationManager(UserDetailsService userDetailsManager){
         var authProvider = new DaoAuthenticationProvider();
-        authProvider.setPasswordEncoder(encoder());
+        authProvider.setPasswordEncoder(passwordEncoder());
         authProvider.setUserDetailsService(userDetailsManager);
         return new ProviderManager(authProvider);
     }
@@ -79,7 +81,8 @@ public class SecurityConfiguration {
         return http
                 .csrf(csrf-> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/login").permitAll()
+                        .requestMatchers("/auth/change-password").authenticated()
+                        .requestMatchers("/auth/**").permitAll()
                         .anyRequest().authenticated())
                 .oauth2ResourceServer((oauth2) -> oauth2.jwt(Customizer.withDefaults()))
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
@@ -105,7 +108,7 @@ public class SecurityConfiguration {
     }
 
     @Bean
-    public PasswordEncoder encoder() {
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
@@ -127,17 +130,4 @@ public class SecurityConfiguration {
         return new NimbusJwtEncoder(jwks);
     }
 }
-
-//                            .requestMatchers( "/repair/**").hasAuthority("ROLE_EMPLOYEE")
-//                        .requestMatchers(HttpMethod.DELETE, "/user/**").hasRole("ADMIN")
-//                        .requestMatchers(HttpMethod.DELETE, "/repair").hasRole("ADMIN")
-//                        .requestMatchers(HttpMethod.DELETE, "/user").hasRole("ADMIN")
-//                        .requestMatchers(HttpMethod.DELETE,"/device/**").hasRole("ADMIN")
-//                        .requestMatchers( HttpMethod.GET, "/repair/**").hasRole("CUSTOMER")
-//                        .requestMatchers( HttpMethod.POST, "/repair/accept-cost/**").hasRole("CUSTOMER")
-//                        .requestMatchers("/note").hasRole("CUSTOMER")
-//                        .requestMatchers( "/user/**").hasRole("USER")
-//                        .requestMatchers("/notes").hasRole("USER")
-//                        .requestMatchers("/cost/**").hasRole("USER")
-//                        .requestMatchers("/device/**").hasRole("USER")
 

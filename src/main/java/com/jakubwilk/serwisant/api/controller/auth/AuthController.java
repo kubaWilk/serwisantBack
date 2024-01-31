@@ -14,6 +14,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -60,5 +61,13 @@ public class AuthController {
         authService.handlePasswordReset(token, newPassword);
 
         return ResponseEntity.ok("Password changed.");
+    }
+
+    @PutMapping("/change-password")
+    public ResponseEntity<String> changePassword(@RequestBody Map<String,String> password, Principal principal){
+        User user = userService.findByUsername(principal.getName());
+        userService.changePassword(user.getEmail(), password.get("oldPassword"), password.get("newPassword"));
+
+        return ResponseEntity.ok().build();
     }
 }

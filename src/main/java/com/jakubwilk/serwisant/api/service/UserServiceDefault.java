@@ -140,11 +140,27 @@ public class UserServiceDefault implements UserService{
     }
 
     @Override
+    @Transactional
     public void changePassword(String email, String password) {
         User user = userRepository.findByEmail(email);
-        user.setPassword(passwordEncoder.encode(password));
+        String encoded = passwordEncoder.encode(password);
+        System.out.println(passwordEncoder.matches(password,encoded));
+        user.setPassword(encoded);
 
         userRepository.save(user);
+    }
+
+    @Override
+    @Transactional
+    public void changePassword(String email, String oldPassword, String password) {
+        User user = userRepository.findByEmail(email);
+        if(passwordEncoder.matches(oldPassword, user.getPassword())){
+            String encoded = passwordEncoder.encode(password);
+            user.setPassword(encoded);
+
+            userRepository.save(user);
+        }
+        else throw new IllegalArgumentException("Old password doesn't match the one in the database!");
     }
 
     @Override
