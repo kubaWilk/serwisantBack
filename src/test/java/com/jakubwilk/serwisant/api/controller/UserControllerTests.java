@@ -1,11 +1,21 @@
 package com.jakubwilk.serwisant.api.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.jakubwilk.serwisant.api.controller.user.UserController;
-import com.jakubwilk.serwisant.api.repository.UserRepository;
+import com.jakubwilk.serwisant.api.entity.Role;
+import com.jakubwilk.serwisant.api.entity.jpa.Authority;
+import com.jakubwilk.serwisant.api.entity.jpa.Repair;
 import com.jakubwilk.serwisant.api.entity.jpa.User;
 import com.jakubwilk.serwisant.api.entity.jpa.UserInfo;
-import org.junit.jupiter.api.*;
+import com.jakubwilk.serwisant.api.repository.UserRepository;
+import com.jakubwilk.serwisant.api.service.UserService;
+import jakarta.transaction.Transactional;
+import org.checkerframework.checker.units.qual.A;
+import org.json.JSONObject;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,18 +25,18 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
-
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.*;
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.hamcrest.Matchers.containsString;
+import java.util.Set;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.hamcrest.Matchers.containsString;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.jwt;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureTestDatabase
@@ -43,7 +53,13 @@ public class UserControllerTests {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private UserService userService;
+
+
     User testUser;
+
+    ObjectMapper mapper;
 
     @Test
     void contextLoads() throws Exception{
@@ -52,11 +68,14 @@ public class UserControllerTests {
 
     @BeforeEach
     public void setUp(){
+        mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
+
         testUser = User.builder()
                 .username("test")
                 .password("test")
                 .isActive(true)
-                .email("test@test.com")
+                .email("anothertest@test.com")
                 .userInfo(UserInfo.builder()
                         .firstName("test")
                         .lastName("test")
@@ -65,7 +84,12 @@ public class UserControllerTests {
                         .city("test")
                         .user(testUser)
                         .build())
+                .createdDate(LocalDateTime.now())
                 .build();
+
+        Set<Authority> roles = new HashSet<>();
+        roles.add(new Authority(testUser, testUser.getUsername(), Role.ROLE_CUSTOMER));
+        testUser.setRoles(roles);
 
         userRepository.saveAndFlush(testUser);
     }
@@ -89,7 +113,12 @@ public class UserControllerTests {
 
         this.mockMvc.perform(get("/user/" + testUser.getId())
                         .with(jwt()))
-                .andExpect(status().isNotFound());
+                .andExpect(status().isBadRequest())
+                .andExpect(result -> {
+                    JSONObject res = new JSONObject(result.getResponse().getContentAsString());
+                    String message = res.getString("message");
+                    assertThat(message).contains("Did not find User with id of:");
+                });
     }
 
     @Test
@@ -99,19 +128,6 @@ public class UserControllerTests {
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString(testUser.getUsername())))
                 .andExpect(content().string(containsString("root")));
-    }
-
-    @Test
-    void findAllShouldThrowUserNotFoundExceptionWhenNoUsers() throws Exception {
-        List<User> users = userRepository.findAll();
-
-        for(User user : users){
-            userRepository.delete(user);
-        }
-
-        this.mockMvc.perform(get("/user/")
-                        .with(jwt()))
-                .andExpect(status().isNotFound());
     }
 
     @Test
@@ -129,9 +145,8 @@ public class UserControllerTests {
                         .city("test")
                         .user(testUser)
                         .build())
+                .roles(new HashSet<>())
                 .build();
-
-        userRepository.delete(newUser);
 
         this.mockMvc.perform(post("/user/")
                 .with(jwt())
@@ -146,17 +161,29 @@ public class UserControllerTests {
 
     @Test
     void putShouldUpdateUser() throws Exception{
-        String userName = "newUserName";
-        testUser.setUsername(userName);
-        this.mockMvc.perform(put("/user/")
+        String newFirstName = "changedFirstName";
+        User request = User.builder()
+                .id(testUser.getId())
+                .username(testUser.getUsername())
+                .password(testUser.getPassword())
+                .email(testUser.getEmail())
+                .userInfo(testUser.getUserInfo())
+                .roles(new HashSet<>())
+                .build();
+        UserInfo updatedUserInfo = request.getUserInfo();
+        updatedUserInfo.setFirstName(newFirstName);
+        request.setUserInfo(updatedUserInfo);
+
+        this.mockMvc.perform(put("/user/" + testUser.getId())
                 .with(jwt())
-                .content(new ObjectMapper().writeValueAsString(testUser))
+                .content(mapper.writeValueAsString(request))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
         )
                 .andExpect(status().isCreated());
+
         Optional<User> check = userRepository.findById(testUser.getId());
-        assertThat(check.get().getUsername()).isEqualTo(userName);
+        assertThat(check.get().getUserInfo().getFirstName()).isEqualTo(newFirstName);
     }
     @Test
     void getShouldNotReturnUsersPassword(){

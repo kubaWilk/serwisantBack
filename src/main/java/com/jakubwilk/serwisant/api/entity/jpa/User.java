@@ -1,6 +1,7 @@
 package com.jakubwilk.serwisant.api.entity.jpa;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.jakubwilk.serwisant.api.entity.Role;
@@ -71,6 +72,11 @@ public class User implements UserDetails{
     @ToString.Exclude
     private List<Repair> repairs;
 
+    @JsonIgnore
+    @ToString.Exclude
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Note> notes;
+
     @CreatedDate
     @Column(name="created_at")
     private LocalDateTime createdDate;
@@ -98,6 +104,11 @@ public class User implements UserDetails{
     public void removeRepair(Repair repair){
         if(repairs == null) return;
         this.repairs.remove(repair);
+    }
+
+    public void removeNote(Note theNote){
+        if(notes == null) return;
+        this.notes.remove(theNote);
     }
 
     public List<String> getRoles() {

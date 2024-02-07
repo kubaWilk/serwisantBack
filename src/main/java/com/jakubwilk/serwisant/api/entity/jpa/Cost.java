@@ -52,8 +52,8 @@ public class Cost {
 
     @Getter
     public enum CostType{
-        PART("Część"),
-        SERVICE("Usługa");
+        PART("PART"),
+        SERVICE("SERVICE");
 
         private final String displayValue;
         CostType(String displayValue) {

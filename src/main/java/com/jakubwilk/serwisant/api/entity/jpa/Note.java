@@ -7,7 +7,6 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -35,12 +34,7 @@ public class Note {
     @JoinColumn(name="author_id")
     private User author;
 
-    @ManyToOne(cascade = {
-            CascadeType.MERGE,
-            CascadeType.DETACH,
-            CascadeType.PERSIST,
-            CascadeType.REFRESH},
-    fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name="repair_id")
     @ToString.Exclude
     @JsonIgnore

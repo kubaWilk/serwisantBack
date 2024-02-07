@@ -65,6 +65,8 @@ public class AuthController {
 
     @PutMapping("/change-password")
     public ResponseEntity<String> changePassword(@RequestBody Map<String,String> password, Principal principal){
+        if(!password.containsKey("oldPassword") || !password.containsKey("newPassword"))
+            throw new RuntimeException("Invalid request body! You must provide both old and new password!");
         User user = userService.findByUsername(principal.getName());
         userService.changePassword(user.getEmail(), password.get("oldPassword"), password.get("newPassword"));
 

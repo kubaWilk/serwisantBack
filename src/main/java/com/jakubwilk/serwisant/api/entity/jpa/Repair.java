@@ -49,12 +49,13 @@ public class Repair {
     @JsonIgnore
     @OneToMany(mappedBy = "repair",
             cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY)
+            fetch = FetchType.LAZY,
+            orphanRemoval = true)
     private List<Note> notes;
 
     @OneToMany(mappedBy = "repair",
             cascade = CascadeType.ALL,
-            fetch = FetchType.EAGER)
+            fetch = FetchType.LAZY)
     @ToString.Exclude
     @JsonIgnore
     private List<Cost> costs;
@@ -95,6 +96,14 @@ public class Repair {
         }
 
         this.notes.add(theNote);
+    }
+
+    public void removeNote(Note theNote){
+        if(this.notes == null) {
+            throw new RuntimeException("Repair already has no notes!");
+        }else{
+            this.notes.remove(theNote);
+        }
     }
 
     public void addCost(Cost theCost){

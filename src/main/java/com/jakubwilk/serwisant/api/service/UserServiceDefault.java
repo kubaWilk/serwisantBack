@@ -3,11 +3,11 @@ package com.jakubwilk.serwisant.api.service;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.jakubwilk.serwisant.api.entity.Role;
-import com.jakubwilk.serwisant.api.entity.jpa.Authority;
-import com.jakubwilk.serwisant.api.entity.jpa.User;
-import com.jakubwilk.serwisant.api.entity.jpa.UserInfo;
+import com.jakubwilk.serwisant.api.entity.jpa.*;
 import com.jakubwilk.serwisant.api.event.events.UserRegisteredEvent;
 import com.jakubwilk.serwisant.api.exception.UserNotFoundException;
+import com.jakubwilk.serwisant.api.repository.NoteRepository;
+import com.jakubwilk.serwisant.api.repository.RepairRepository;
 import com.jakubwilk.serwisant.api.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.context.ApplicationEventPublisher;
@@ -24,15 +24,19 @@ import static com.jakubwilk.serwisant.api.entity.Role.ROLE_CUSTOMER;
 
 @Service
 @Secured("ROLE_CUSTOMER")
-public class UserServiceDefault implements UserService{
+public class UserServiceDefault implements UserService {
     private final UserRepository userRepository;
     private final ApplicationEventPublisher eventPublisher;
     private final PasswordEncoder passwordEncoder;
+    private final NoteRepository noteRepository;
+    private final RepairRepository repairRepository;
 
-    public UserServiceDefault(UserRepository userRepository, ApplicationEventPublisher eventPublisher, PasswordEncoder passwordEncoder) {
+    public UserServiceDefault(UserRepository userRepository, ApplicationEventPublisher eventPublisher, PasswordEncoder passwordEncoder, RepairRepository repairRepository, NoteRepository noteRepository, RepairRepository repairRepository1) {
         this.userRepository = userRepository;
         this.eventPublisher = eventPublisher;
         this.passwordEncoder = passwordEncoder;
+        this.noteRepository = noteRepository;
+        this.repairRepository = repairRepository1;
     }
 
     @Override
@@ -41,10 +45,9 @@ public class UserServiceDefault implements UserService{
 
         User user;
 
-        if(result.isPresent()){
+        if (result.isPresent()) {
             user = result.get();
-        }
-        else{
+        } else {
             throw new UserNotFoundException("Did not find User with id of: " + id);
         }
 
@@ -55,36 +58,31 @@ public class UserServiceDefault implements UserService{
     public User findByEmail(String email) {
         User user = userRepository.findByEmail(email);
 
-        if(user == null)
-            throw new UserNotFoundException("User with email " + email + "was not found.");
+        if (user == null)
+            throw new UserNotFoundException("User with email " + email + " was not found.");
 
         return user;
     }
 
     @Override
     public List<User> findAll() {
-        List<User> users = userRepository.findAll();
-
-        if(users.isEmpty()){
-            throw new UserNotFoundException("Did not find any users, check database connection");
-        }
-        else{
-            return userRepository.findAll();
-        }
+        return  userRepository.findAll();
     }
 
     @Override
     @Transactional
     public User save(User user) {
-        if(user == null) throw new IllegalArgumentException("User can't be null!");
-        if(user.getId() != 0) throw new IllegalArgumentException("User has to be provided with no ID");
-        if(doesUserExistWithGivenUsername(user)) throw new IllegalArgumentException("User with given username already exists!");
-        if(doesUserExistWithGivenEMail(user)) throw new IllegalArgumentException("User has to have a unique e-mail address!");
+        if (user == null) throw new IllegalArgumentException("User can't be null!");
+        if (user.getId() != 0) throw new IllegalArgumentException("User has to be provided with no ID");
+        if (doesUserExistWithGivenUsername(user))
+            throw new IllegalArgumentException("User with given username already exists!");
+        if (doesUserExistWithGivenEMail(user))
+            throw new IllegalArgumentException("User has to have a unique e-mail address!");
 
         user.setPassword("Startowe@");
         User persisted;
 
-        try{
+        try {
 //            Authority newUser = new Authority(user, user.getUsername(), ROLE_CUSTOMER);
             user.addRole(ROLE_CUSTOMER);
             user.setActive(true);
@@ -95,7 +93,7 @@ public class UserServiceDefault implements UserService{
                     persisted, user.getPassword());
 
             eventPublisher.publishEvent(newUserEvent);
-        }catch(DataIntegrityViolationException exception){
+        } catch (DataIntegrityViolationException exception) {
             throw new IllegalArgumentException(
                     "User has to be provided with no ID, unique username and unique e-mail"
             );
@@ -119,12 +117,12 @@ public class UserServiceDefault implements UserService{
     public User updateUserDetails(int id, User user) {
         Optional<User> result = userRepository.findById(id);
 
-        if(result.isPresent()){
+        if (result.isPresent()) {
             User toUpdate = result.get();
 
             toUpdate.setUserInfo(user.getUserInfo());
             return userRepository.saveAndFlush(toUpdate);
-        }else {
+        } else {
             throw new UserNotFoundException("Can't find user with id: " + id);
         }
     }
@@ -132,8 +130,20 @@ public class UserServiceDefault implements UserService{
     @Override
     @Transactional
     public void delete(int id) {
-        if(!doesUserExistWithGivenId(id)){
-            throw new UserNotFoundException("Can't find user with id: " + id);
+        Optional<User> result = userRepository.findUserWithRepairsById(id);
+        if (result.isEmpty()) throw new UserNotFoundException("User with id: " + id + " not found!");
+
+        User user = result.get();
+
+        List<Note> notesToDelete = new ArrayList<>(user.getNotes());
+        List<Repair> repairsToDelete = new ArrayList<>(user.getRepairs());
+
+        for(Note note : notesToDelete){
+            noteRepository.delete(note);
+        }
+
+        for(Repair repair : repairsToDelete){
+            repairRepository.delete(repair);
         }
 
         userRepository.deleteById(id);
@@ -153,19 +163,18 @@ public class UserServiceDefault implements UserService{
     @Transactional
     public void changePassword(String email, String oldPassword, String password) {
         User user = userRepository.findByEmail(email);
-        if(passwordEncoder.matches(oldPassword, user.getPassword())){
+        if (passwordEncoder.matches(oldPassword, user.getPassword())) {
             String encoded = passwordEncoder.encode(password);
             user.setPassword(encoded);
 
             userRepository.save(user);
-        }
-        else throw new IllegalArgumentException("Old password doesn't match the one in the database!");
+        } else throw new IllegalArgumentException("Old password doesn't match the one in the database!");
     }
 
     @Override
     public User findByUsername(String username) {
         User toReturn = userRepository.findByUsername(username);
-        if(toReturn == null) {
+        if (toReturn == null) {
             throw new UserNotFoundException("User with username: " + username + " not found");
         }
 
@@ -176,18 +185,18 @@ public class UserServiceDefault implements UserService{
     public Set<User> searchUser(Map<String, String> userToSearch) {
         Set<User> result = new HashSet<>();
 
-        if(userToSearch.containsKey("username")){
+        if (userToSearch.containsKey("username")) {
             String property = userToSearch.get("username");
             User byUsername = userRepository.findByUsername(property);
-            if(byUsername != null) {
+            if (byUsername != null) {
                 result.add(byUsername);
             }
         }
 
-        if(userToSearch.containsKey("eMail")){
+        if (userToSearch.containsKey("eMail")) {
             String property = userToSearch.get("eMail");
             User byEmail = userRepository.findByEmail(property);
-            if(byEmail != null) {
+            if (byEmail != null) {
                 result.add(byEmail);
             }
         }
@@ -196,16 +205,12 @@ public class UserServiceDefault implements UserService{
 
     @Override
     public List<User> findAllCustomers() {
-        List<User> result = userRepository.findAllCustomers();
-
-        return result;
-
+        return userRepository.findAllCustomers();
     }
 
     @Override
     public User getInfoAboutUser(Principal theUser) {
-        User result = userRepository.findByUsername(theUser.getName());
-        return result;
+        return userRepository.findByUsername(theUser.getName());
     }
 
     @Override
@@ -213,7 +218,7 @@ public class UserServiceDefault implements UserService{
     public User updateUser(int id, JsonNode node) {
         User user;
         Optional<User> result = userRepository.findById(id);
-        if(result.isEmpty()) throw new UserNotFoundException("User with id: " + id+ " not found.");
+        if (result.isEmpty()) throw new UserNotFoundException("User with id: " + id + " not found.");
 
         user = result.get();
         UserInfo userInfo = user.getUserInfo();
@@ -230,7 +235,7 @@ public class UserServiceDefault implements UserService{
         ArrayNode rolesJSON = (ArrayNode) node.get("roles");
 
         Set<Role> obtainedRoles = new HashSet<>();
-        for(var element: rolesJSON){
+        for (var element : rolesJSON) {
             Role role = Role.valueOf(element.asText());
             obtainedRoles.add(role);
         }
@@ -248,10 +253,5 @@ public class UserServiceDefault implements UserService{
         rolesToRemove.forEach(element -> user.removeRole(element.getAuthority()));
 
         return userRepository.save(user);
-    }
-
-    private boolean doesUserExistWithGivenId(int id){
-        Optional<User> result = userRepository.findById(id);
-        return result.isPresent();
     }
 }

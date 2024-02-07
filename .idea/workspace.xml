@@ -5,9 +5,63 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0edb056b-a24f-42fa-bc79-34e5c9ba43e3" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/test/java/com/jakubwilk/serwisant/api/controller/AuthControllerTests.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/com/jakubwilk/serwisant/api/controller/CostControllerTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/create.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/drop.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/jakubwilk/serwisant/api/controller/auth/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jakubwilk/serwisant/api/controller/auth/AuthController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/jakubwilk/serwisant/api/controller/cost/CostController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jakubwilk/serwisant/api/controller/cost/CostController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/jakubwilk/serwisant/api/controller/user/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jakubwilk/serwisant/api/controller/user/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/jakubwilk/serwisant/api/entity/jpa/Cost.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jakubwilk/serwisant/api/entity/jpa/Cost.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/jakubwilk/serwisant/api/entity/jpa/Note.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jakubwilk/serwisant/api/entity/jpa/Note.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/jakubwilk/serwisant/api/entity/jpa/Repair.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jakubwilk/serwisant/api/entity/jpa/Repair.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/jakubwilk/serwisant/api/entity/jpa/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jakubwilk/serwisant/api/entity/jpa/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/jakubwilk/serwisant/api/repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jakubwilk/serwisant/api/repository/UserRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/jakubwilk/serwisant/api/service/AuthServiceDefault.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jakubwilk/serwisant/api/service/AuthServiceDefault.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/jakubwilk/serwisant/api/service/UserServiceDefault.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jakubwilk/serwisant/api/service/UserServiceDefault.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/data.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/data.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/dont use me.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/jakubwilk/serwisant/api/controller/AuthController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/jakubwilk/serwisant/api/controller/CostController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/jakubwilk/serwisant/api/controller/DeviceController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/jakubwilk/serwisant/api/controller/NoteController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/jakubwilk/serwisant/api/controller/RepairController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/jakubwilk/serwisant/api/controller/UserControllerTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/jakubwilk/serwisant/api/controller/UserControllerTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/jakubwilk/serwisant/api/service/RepairServiceTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/jakubwilk/serwisant/api/service/RepairServiceTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/controller/auth/AuthController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/controller/auth/AuthController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/controller/cost/CostController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/controller/cost/CostController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/controller/user/UserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/controller/user/UserController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/entity/jpa/Cost$CostType.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/entity/jpa/Cost$CostType.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/entity/jpa/Note$NoteBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/entity/jpa/Note$NoteBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/entity/jpa/Note$Visibility.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/entity/jpa/Note$Visibility.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/entity/jpa/Note.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/entity/jpa/Note.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/entity/jpa/Repair.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/entity/jpa/Repair.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/entity/jpa/User$UserBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/entity/jpa/User$UserBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/entity/jpa/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/entity/jpa/User.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/repository/UserRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/repository/UserRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/service/AuthServiceDefault.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/service/AuthServiceDefault.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/service/UserServiceDefault.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/jakubwilk/serwisant/api/service/UserServiceDefault.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/data.sql" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/data.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/dont use me.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/jakubwilk/serwisant/api/ApiApplicationTests.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/jakubwilk/serwisant/api/controller/AuthController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/jakubwilk/serwisant/api/controller/CostController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/jakubwilk/serwisant/api/controller/DeviceController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/jakubwilk/serwisant/api/controller/NoteController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/jakubwilk/serwisant/api/controller/RepairController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/jakubwilk/serwisant/api/controller/UserControllerTests.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/jakubwilk/serwisant/api/service/AuthServiceDefaultTests.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/jakubwilk/serwisant/api/service/CostServiceDefaultTests.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/jakubwilk/serwisant/api/service/DeviceServiceTests.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/jakubwilk/serwisant/api/service/NoteServiceTests.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/jakubwilk/serwisant/api/service/RepairServiceTestOnDb.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/jakubwilk/serwisant/api/service/RepairServiceTests.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/jakubwilk/serwisant/api/service/UserServiceDefaultTests.class" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,6 +74,7 @@
         <option value="Enum" />
         <option value="Interface" />
         <option value="Class" />
+        <option value="JUnit5 Test Class" />
       </list>
     </option>
   </component>
@@ -40,28 +95,96 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "ASKED_ADD_EXTERNAL_FILES": "true",
-    "Application.ApiApplication.executor": "Debug",
+    "Application.ApiApplication.executor": "Run",
+    "Application.MainConfig.executor": "Coverage",
+    "Application.Unnamed.executor": "Run",
+    "JUnit.AuthController.executor": "Run",
+    "JUnit.AuthController.loginWithValidCredentialsShouldPass.executor": "Run",
+    "JUnit.AuthControllerTests.executor": "Run",
+    "JUnit.AuthControllerTests.invalidArgumentShouldReturnBadRequst.executor": "Run",
+    "JUnit.AuthControllerTests.invalidEmailAddressShouldReturnBadRequest.executor": "Run",
+    "JUnit.AuthControllerTests.invalidEmailAddressShouldReturnBadRequestWithMessageThatUserWasNotFound.executor": "Run",
+    "JUnit.AuthControllerTests.invalidPasswordsShouldReturnBadRequest.executor": "Run",
+    "JUnit.AuthControllerTests.invalidPasswordsShouldReturnBadRequestOnChangePasswd.executor": "Run",
+    "JUnit.AuthControllerTests.invalidRequestBodyShouldReturnBadRequestOnChangePasswd.executor": "Run",
+    "JUnit.AuthControllerTests.invalidResetRequestShouldReturnBadRequest.executor": "Run",
+    "JUnit.AuthControllerTests.invalidTokenShouldReturnBadRequest.executor": "Run",
+    "JUnit.AuthControllerTests.loginWithInvalidCredentialsShouldPass.executor": "Run",
+    "JUnit.AuthControllerTests.loginWithValidCredentialsShouldPass.executor": "Run",
+    "JUnit.AuthControllerTests.loginWithValidCredentialsShouldReturnOkStatus.executor": "Run",
+    "JUnit.AuthControllerTests.nullCredentialsShouldReturnBadRequest.executor": "Run",
+    "JUnit.AuthControllerTests.validEmailAddressShouldReturnOk.executor": "Run",
+    "JUnit.AuthControllerTests.validPasswordsShouldReturnOk.executor": "Run",
+    "JUnit.CostControllerTests.deleteCost.executor": "Run",
+    "JUnit.CostControllerTests.deleteShouldUseAuth.executor": "Run",
+    "JUnit.CostControllerTests.executor": "Run",
+    "JUnit.CostControllerTests.findCostById.executor": "Run",
+    "JUnit.CostControllerTests.findCostByIdShouldPassWithValidId.executor": "Run",
+    "JUnit.CostControllerTests.findCostByIdShouldReturnBadRequestWithInvalidId.executor": "Run",
+    "JUnit.CostControllerTests.findCostByIdShouldReturnValidCostItem.executor": "Run",
+    "JUnit.CostControllerTests.findCostsByIdShouldUseAuth.executor": "Run",
+    "JUnit.CostControllerTests.getAllCostsByRepairId.executor": "Coverage",
+    "JUnit.CostControllerTests.getAllCostsShouldReturnAUnauthorized.executor": "Run",
+    "JUnit.CostControllerTests.getAllCostsShouldReturnCostList.executor": "Run",
+    "JUnit.CostControllerTests.getAllCostsShouldUseAuthentication.executor": "Run",
+    "JUnit.CostControllerTests.saveCostShouldPersistCost.executor": "Run",
+    "JUnit.CostControllerTests.saveShouldReturnBadRequestOnNoRequestParam.executor": "Run",
+    "JUnit.CostControllerTests.saveShouldUseAuth.executor": "Run",
+    "JUnit.CostControllerTests.updateCostShouldPassOnValidBody.executor": "Run",
+    "JUnit.CostControllerTests.updateCostShouldUseAuth.executor": "Run",
+    "JUnit.UserControllerTests.contextLoads.executor": "Run",
+    "JUnit.UserControllerTests.executor": "Run",
+    "JUnit.UserControllerTests.findAllShouldThrowUserNotFoundExceptionWhenNoUsers.executor": "Run",
+    "JUnit.UserControllerTests.findByIdShouldReturnNotFoundIfNoUser.executor": "Run",
+    "JUnit.UserControllerTests.postShouldSaveTheUser.executor": "Run",
+    "JUnit.UserControllerTests.putShouldUpdateUser.executor": "Run",
+    "JUnit.api in api.executor": "Coverage",
+    "JUnit.com.jakubwilk.serwisant.api.controller in api.executor": "Run",
+    "JUnit.controller in api.executor": "Run",
+    "JUnit.java in api.executor": "Coverage",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
     "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/home/kuba/Repos/inzynierka/serwisantBack",
+    "last_opened_file_path": "/home/kuba/Repos/inzynierka/serwisantBack/src/test/resources",
     "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Project",
+    "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.0",
     "project.structure.side.proportion": "0.0",
     "settings.editor.selected.configurable": "preferences.pluginManager",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="RunManager">
-    <configuration name="ApiApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/test/resources" />
+    </key>
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="com.jakubwilk.serwisant.api.controller" />
+    </key>
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="com.jakubwilk.serwisant.api.controller.cost" />
+    </key>
+  </component>
+  <component name="RunManager" selected="JUnit.com.jakubwilk.serwisant.api.controller in api">
+    <configuration name="MainConfig" type="Application" factoryName="Application">
+      <option name="ALTERNATIVE_JRE_PATH" value="17" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
       <option name="MAIN_CLASS_NAME" value="com.jakubwilk.serwisant.api.ApiApplication" />
       <module name="api" />
-      <extension name="coverage">
+      <extension name="coverage" sample_coverage="false">
         <pattern>
-          <option name="PATTERN" value="com.jakubwilk.serwisant.api.*" />
+          <option name="PATTERN" value="com.jakubwilk.serwisant.api.controller.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+        <pattern>
+          <option name="PATTERN" value="com.jakubwilk.serwisant.api.service.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -69,9 +192,98 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="AuthControllerTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="api" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.jakubwilk.serwisant.api.controller.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.jakubwilk.serwisant.api.controller" />
+      <option name="MAIN_CLASS_NAME" value="com.jakubwilk.serwisant.api.controller.AuthControllerTests" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CostControllerTests.deleteCost" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="api" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.jakubwilk.serwisant.api.controller.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.jakubwilk.serwisant.api.controller" />
+      <option name="MAIN_CLASS_NAME" value="com.jakubwilk.serwisant.api.controller.CostControllerTests" />
+      <option name="METHOD_NAME" value="deleteCost" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CostControllerTests.deleteShouldUseAuth" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="api" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.jakubwilk.serwisant.api.controller.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.jakubwilk.serwisant.api.controller" />
+      <option name="MAIN_CLASS_NAME" value="com.jakubwilk.serwisant.api.controller.CostControllerTests" />
+      <option name="METHOD_NAME" value="deleteShouldUseAuth" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CostControllerTests.updateCostShouldUseAuth" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="api" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.jakubwilk.serwisant.api.controller.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.jakubwilk.serwisant.api.controller" />
+      <option name="MAIN_CLASS_NAME" value="com.jakubwilk.serwisant.api.controller.CostControllerTests" />
+      <option name="METHOD_NAME" value="updateCostShouldUseAuth" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="com.jakubwilk.serwisant.api.controller in api" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="api" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.jakubwilk.serwisant.api.controller.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.jakubwilk.serwisant.api.controller" />
+      <option name="TEST_OBJECT" value="package" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Application.MainConfig" />
+      <item itemvalue="JUnit.CostControllerTests.deleteCost" />
+      <item itemvalue="JUnit.CostControllerTests.deleteShouldUseAuth" />
+      <item itemvalue="JUnit.CostControllerTests.updateCostShouldUseAuth" />
+      <item itemvalue="JUnit.com.jakubwilk.serwisant.api.controller in api" />
+      <item itemvalue="JUnit.AuthControllerTests" />
+    </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.ApiApplication" />
+        <item itemvalue="JUnit.com.jakubwilk.serwisant.api.controller in api" />
+        <item itemvalue="JUnit.CostControllerTests.deleteShouldUseAuth" />
+        <item itemvalue="JUnit.CostControllerTests.deleteCost" />
+        <item itemvalue="JUnit.CostControllerTests.updateCostShouldUseAuth" />
+        <item itemvalue="JUnit.AuthControllerTests" />
       </list>
     </recent_temporary>
   </component>
@@ -112,21 +324,9 @@
     <option name="LAST_COMMIT_MESSAGE" value="" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/main/java/com/jakubwilk/serwisant/api/service/UserServiceDefault.java</url>
-          <line>143</line>
-          <properties class="com.jakubwilk.serwisant.api.service.UserServiceDefault" method="changePassword">
-            <option name="EMULATED" value="true" />
-            <option name="WATCH_EXIT" value="false" />
-          </properties>
-          <option name="timeStamp" value="9" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
     <pin-to-top-manager>
       <pinned-members>
+        <PinnedItemInfo parentTag="com.jakubwilk.serwisant.api.entity.jpa.User" memberName="repairs" />
         <PinnedItemInfo parentTag="org.springframework.security.authentication.UsernamePasswordAuthenticationToken" memberName="principal" />
         <PinnedItemInfo parentTag="org.xhtmlrenderer.pdf.ITextRenderer" memberName="_outputDevice" />
       </pinned-members>
@@ -136,5 +336,16 @@
         <watch expression="repairsOpened.get(5)" />
       </configuration>
     </watches-manager>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/serwisantBack$MainConfig.ic" NAME="MainConfig Coverage Results" MODIFIED="1707268693507" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>com.jakubwilk.serwisant.api.controller.*</FILTER>
+      <FILTER>com.jakubwilk.serwisant.api.service.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/serwisantBack$CostControllerTests_getAllCostsByRepairId.ic" NAME="CostControllerTests.getAllCostsByRepairId Coverage Results" MODIFIED="1707268642650" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>com.jakubwilk.serwisant.api.controller.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/serwisantBack$api_in_api.ic" NAME="api in api Coverage Results" MODIFIED="1707268727363" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/serwisantBack$java_in_api.ic" NAME="java in api Coverage Results" MODIFIED="1707265823737" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
 </project>

@@ -32,7 +32,7 @@ public class CostController {
     }
 
     @GetMapping("/")
-    @Secured("ROLE_CUSTOMER")
+    @Secured("ROLE_ADMIN")
     public ResponseEntity<List<Cost>> getAllCosts(){
         List<Cost> found = costService.findAll();
         return ResponseEntity.ok(found);

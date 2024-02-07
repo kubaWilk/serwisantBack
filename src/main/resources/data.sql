@@ -6,9 +6,9 @@ insert into user_details (first_name, last_name, street, post_code, city) values
 
 insert into users (username, password, active, email, user_detail_id, created_at, modified_at) values
 ('root', '$2a$12$enZyMcOqcaSgS4oPxthFweOfCvY5zqkEHi1lwy7VZ2QWCfLF9P8/2', true, 'test@test.com', 1, '2024-01-01', '2024-01-01'),
-('empl', '{bcrypt}$2a$12$enZyMcOqcaSgS4oPxthFweOfCvY5zqkEHi1lwy7VZ2QWCfLF9P8/2', true, 'test2@test.com', 2, '2024-01-01', '2024-01-01'),
-('cust', '{bcrypt}$2a$12$enZyMcOqcaSgS4oPxthFweOfCvY5zqkEHi1lwy7VZ2QWCfLF9P8/2', true, 'jakub_wilk@outlook.com', 3, '2024-01-01', '2024-01-01'),
-('cust2', '{bcrypt}$2a$12$enZyMcOqcaSgS4oPxthFweOfCvY5zqkEHi1lwy7VZ2QWCfLF9P8/2', true, 'test3@test.com', 4, '2024-01-01', '2024-01-01');
+('empl', '$2a$12$enZyMcOqcaSgS4oPxthFweOfCvY5zqkEHi1lwy7VZ2QWCfLF9P8/2', true, 'test2@test.com', 2, '2024-01-01', '2024-01-01'),
+('cust', '$2a$12$enZyMcOqcaSgS4oPxthFweOfCvY5zqkEHi1lwy7VZ2QWCfLF9P8/2', true, 'jakub_wilk@outlook.com', 3, '2024-01-01', '2024-01-01'),
+('cust2', '$2a$12$enZyMcOqcaSgS4oPxthFweOfCvY5zqkEHi1lwy7VZ2QWCfLF9P8/2', true, 'test3@test.com', 4, '2024-01-01', '2024-01-01');
 
 insert into authorities (user_id, username, authority) values
 (1, 'root', 'ROLE_CUSTOMER'),
@@ -109,3 +109,10 @@ insert into note (repair_id, author_id, visibility, message, created_at) values
 (24, 2, 0, 'Notatka widoczna dla wszystkich','2024-01-01'),
 (24, 2, 1, 'Notatka widoczna tylko dla pracowników serwisu','2024-01-01');
 
+insert into cost(price, name, cost_type, repair_id, created_at) values
+(50, 'Element kosztorysu', 0, 1, '2024-01-06'),
+(100, 'Element kosztorysu', 1, 1, '2024-01-06'),
+(60, 'Element kosztorysu', 0, 5, '2023-10-27'),
+(110, 'Element kosztorysu', 1, 5, '2023-10-27'),
+(160, 'Element kosztorysu', 0, 10, '2023-11-14'),
+(70, 'Element kosztorysu', 1, 10, '2023-11-14');

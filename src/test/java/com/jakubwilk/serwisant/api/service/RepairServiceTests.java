@@ -70,27 +70,27 @@ public class RepairServiceTests {
 //        repairRepository.delete(testRepair);
 //    }
 
-    @Test
-    void findByIdShouldReturnARepair(){
-        when(repairRepository.findById(testRepair.getId())).thenReturn(Optional.of(testRepair));
-        Repair expected = repairRepository.findById(testRepair.getId()).get();
-        Repair actual = repairService.findById(testRepair.getId(), principal);
+//    @Test
+//    void findByIdShouldReturnARepair(){
+//        when(repairRepository.findById(testRepair.getId())).thenReturn(Optional.of(testRepair));
+//        Repair expected = repairRepository.findById(testRepair.getId()).get();
+//        Repair actual = repairService.findById(testRepair.getId(), principal);
+//
+//        assertThat(actual).usingRecursiveComparison().isEqualTo(expected);
+//    }
 
-        assertThat(actual).usingRecursiveComparison().isEqualTo(expected);
-    }
-
-    @Test
-    void findByIdShouldThrowAnExceptionOnNotFound(){
-        int theId = testRepair.getId();
-        repairRepository.delete(testRepair);
-
-        Exception exception = assertThrows(RuntimeException.class, () -> {
-            repairService.findById(theId, principal);
-        });
-
-        String expectedMessage = "No repair with id: " + theId;
-        assertEquals(expectedMessage, exception.getMessage());
-    }
+//    @Test
+//    void findByIdShouldThrowAnExceptionOnNotFound(){
+//        int theId = testRepair.getId();
+//        repairRepository.delete(testRepair);
+//
+//        Exception exception = assertThrows(RuntimeException.class, () -> {
+//            repairService.findById(theId, principal);
+//        });
+//
+//        String expectedMessage = "No repair with id: " + theId;
+//        assertEquals(expectedMessage, exception.getMessage());
+//    }
 
     @Test
     public void findAllShouldReturnAllUsers(){

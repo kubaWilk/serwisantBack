@@ -89,17 +89,18 @@ public class AuthServiceDefault implements AuthService {
         String firstPassword = request.get("firstPassword");
         String secondPassword = request.get("secondPassword");
 
-        if(firstPassword.isEmpty() || secondPassword.isEmpty()){
-            throw new IllegalArgumentException("E-Mail or password invalid!");
-        }
-
-        if(!firstPassword.equals(secondPassword)){
-            throw new IllegalArgumentException("Passwords doesn't match!");
+        if(firstPassword.isEmpty()
+                || secondPassword.isEmpty()
+                || !firstPassword.equals(secondPassword)){
+            throw new IllegalArgumentException("Provided passwords doesn't match!");
         }
 
         PasswordResetToken tokenInDb = tokenRepository.findByToken(token);
-        String email = tokenInDb.getUser().getEmail();
+        if(tokenInDb == null || tokenInDb.isExpired()) {
+            throw new RuntimeException("Could not find provided token or it's expired!");
+        }
 
+        String email = tokenInDb.getUser().getEmail();
         userService.changePassword(email, firstPassword);
     }
 }

@@ -67,7 +67,7 @@ public class UserController {
     public ResponseEntity<User> updateUserDetails(@PathVariable("id") int id ,@RequestBody User toSave){
         User user = userService.updateUserDetails(id, toSave);
 
-        return ResponseEntity.ok(user);
+        return ResponseEntity.status(HttpStatus.CREATED).body(user);
     }
 
     @PutMapping("/admin/{id}")
